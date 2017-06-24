@@ -154,4 +154,57 @@
     
   </entry>
   
+  <entry>
+    <title>cloud-server-configure</title>
+    <link href="http://yoursite.com/2016/11/07/cloud-server-configure/"/>
+    <id>http://yoursite.com/2016/11/07/cloud-server-configure/</id>
+    <published>2016-11-07T10:59:23.000Z</published>
+    <updated>2017-06-24T11:53:07.078Z</updated>
+    
+    <content type="html"><![CDATA[<h1 id="腾讯云ubuntu服务器配置"><a href="#腾讯云ubuntu服务器配置" class="headerlink" title="腾讯云ubuntu服务器配置"></a>腾讯云ubuntu服务器配置</h1><h3 id="零、域名绑定"><a href="#零、域名绑定" class="headerlink" title="零、域名绑定"></a>零、域名绑定</h3><p>从腾讯云服务的云解析里解析域名并绑定服务器公网即可。</p>
+<h3 id="一、安装mysql"><a href="#一、安装mysql" class="headerlink" title="一、安装mysql"></a>一、安装mysql</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">sudo apt-get install mysql-server</div><div class="line">sudo apt-get isntall mysql-client</div><div class="line">sudo apt-get install libmysqlclient-dev</div></pre></td></tr></table></figure>
+<p>第一部会提示输入密码。经过以上三部，如无意外，mysql就配置好了。</p>
+<h3 id="二、安装node"><a href="#二、安装node" class="headerlink" title="二、安装node"></a>二、安装node</h3><p>偷个懒先<sudo su="">进入root模式，大家不要学我，这样不好不好。(补：一下方法是使用ubuntu自带的node包进行安装，node版本可能比较低，可跳过，使用源码安装)</sudo></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">apt-get update</div><div class="line">apt-get install -y python-software-properties software-properties-common </div><div class="line">add-apt-repository ppa:chris-lea/node.js</div><div class="line">apt-get update</div><div class="line">apt-get install nodejs</div></pre></td></tr></table></figure>
+<p>安装过程有那么一些些慢。zzzZZZ……</p>
+<p>然而，安装完发现node版本低到离谱，只能从官网下载新版本源码，手动安装。如果下载过于缓慢，可以先上传到git，再从git上下载。(如<a href="https://nodejs.org/dist/v6.10.0/node-v6.10.0.tar.gz" target="_blank" rel="external">https://nodejs.org/dist/v6.10.0/node-v6.10.0.tar.gz</a>)</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">apt-get remove nodejs 			<span class="comment"># 先将原本的一波带走</span></div><div class="line">wget https://xxxxxxxx 			<span class="comment"># 下载node源码</span></div><div class="line">tar zxvf [<span class="built_in">source</span>] 				<span class="comment"># 解压</span></div><div class="line">apt-get install g++ make 		<span class="comment"># 安装编译工具</span></div><div class="line"><span class="built_in">cd</span> [<span class="built_in">source</span>]</div><div class="line">./configure</div><div class="line">make 							<span class="comment"># 完成之后找到&lt;node&gt;应用程序的地址</span></div><div class="line">make install</div><div class="line">ln -s [源地址] /usr/bin/node	<span class="comment"># 软链接到/usr/bin/以作用于全局</span></div></pre></td></tr></table></figure>
+<p>然后准备安装npm，先安装curl：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">apt-get install curl</div><div class="line">curl -L https://npmjs.org/install.sh | sh   </div><div class="line">ln -s [源地址] /usr/bin/npm</div></pre></td></tr></table></figure>
+<p>然而问题又出现了，npm的下载速度慢得实在蛋疼，故又还得下载cnpm。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">npm install -g cnpm --registry=https://registry.npm.taobao.org</div><div class="line">ln -s [源地址] /usr/bin/cnpm</div></pre></td></tr></table></figure>
+<h3 id="三、安装git"><a href="#三、安装git" class="headerlink" title="三、安装git"></a>三、安装git</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">apt-get update</div><div class="line">apt-get install git</div></pre></td></tr></table></figure>
+<h3 id="四、安装nginx"><a href="#四、安装nginx" class="headerlink" title="四、安装nginx"></a>四、安装nginx</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">apt-get install nginx</div></pre></td></tr></table></figure>
+<p>一条命令足以，安装nginx主要用于静态资源的管理和反向代理，其实只有node服务器也是可以的。</p>
+<p>安装完成后执行： <i>/etc/init.d/nginx  start</i> 即可启动服务器。</p>
+<p>默认的web文件路径为 <em>/usr/share/nginx/html</em>，个人不大习惯，想改一改。</p>
+<p>用 <i>ngnix -t</i> 可找到ngnix.conf配置文件的路径，然后用vim编辑。</p>
+<p>如果没有server段，则在http{}内自己添加</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div></pre></td><td class="code"><pre><div class="line">server &#123;   </div><div class="line"></div><div class="line">    listen       80;        </div><div class="line"></div><div class="line">    server_name  www.xx.com;</div><div class="line"></div><div class="line">        #设定本虚拟主机的访问日志      </div><div class="line"></div><div class="line">  #access_log  logs/www.xx.com.access.log  main;</div><div class="line"></div><div class="line">  location / &#123;       </div><div class="line"></div><div class="line">      root   /var/www/;     </div><div class="line"></div><div class="line">      index index.php index.html index.htm;  </div><div class="line"></div><div class="line">  &#125;</div><div class="line"></div><div class="line">  location ~ \.php$ &#123;</div><div class="line"></div><div class="line">      fastcgi_pass 127.0.0.1:9000 ###或者使用socket，要与www.conf中同步</div><div class="line"></div><div class="line">      fastcgi_index index.php</div><div class="line"></div><div class="line">      fastcgi_param SCRIPT_FILENAME $document_root$fastcgi_script_name;</div><div class="line"></div><div class="line">      include fastcgi_params;</div><div class="line"></div><div class="line">  &#125;</div><div class="line"></div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>或者直接更改nginx的默认文件<em>/etc/nginx/sites-available/default</em>，修改对应的server、location，<i>/etc/init.d/nginx restart</i> 重启服务器即可</p>
+<h3 id="五、配置php环境"><a href="#五、配置php环境" class="headerlink" title="五、配置php环境"></a>五、配置php环境</h3><p>官网下载php源码包，安装过程基本同node，略……</p>
+<p>php源码编译之前要安装libxml2</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">apt-get install libxml2* -y</div></pre></td></tr></table></figure>
+<p>对于php7，<strong>what is very important!!!</strong></p>
+<p>编译时使用 <i>./configure –enable-fpm</i></p>
+<p>php7自带fpm，无需另外下载。下载好之后开始配置。找到php-fpm.conf.default文件，一般位于<em>/usr/local/etc/</em>下</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">cp php-fpm.conf.default php-fpm.conf</div><div class="line">vim php-fpm.conf</div></pre></td></tr></table></figure>
+<p>将error_log注释打开，将include引向正确地址如：<em>include /usr/local/etc/php-fpm.d/*.conf</em></p>
+<p>找到www.conf.default文件，一般位于<em>/usr/local/etc/php-fpm.d/</em>下</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">cp www.conf.default www.conf</div><div class="line">vim www.conf</div></pre></td></tr></table></figure>
+<p>将user和group中的nobody改为<em>www-data</em>,执行<i>/usr/local/sbin/php-fpm</i>启动fpm</p>
+<h3 id="结语"><a href="#结语" class="headerlink" title="结语"></a>结语</h3><p>原本配置过一次腾讯云的服务器了，当时弄了好几天才弄好，结果实在是懒，几个月没搭理，就被腾讯给回收了，香菇。。。为了方便以后配置，故整合了一下网络资源，写下了此博客，无奈。。。</p>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;h1 id=&quot;腾讯云ubuntu服务器配置&quot;&gt;&lt;a href=&quot;#腾讯云ubuntu服务器配置&quot; class=&quot;headerlink&quot; title=&quot;腾讯云ubuntu服务器配置&quot;&gt;&lt;/a&gt;腾讯云ubuntu服务器配置&lt;/h1&gt;&lt;h3 id=&quot;零、域名绑定&quot;&gt;&lt;a href=&quot;
+    
+    </summary>
+    
+    
+      <category term="ubuntu" scheme="http://yoursite.com/tags/ubuntu/"/>
+    
+  </entry>
+  
 </feed>
