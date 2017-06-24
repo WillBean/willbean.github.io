@@ -1,0 +1,585 @@
+<!DOCTYPE html>
+<html>
+<head>
+    
+
+    
+
+    
+
+
+
+    <meta charset="utf-8">
+    
+    
+    
+    <title>react-native-summary | WillBean&#39;s Blog | 我可能是个假程序猿吧</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+    <meta name="theme-color" content="#cccccc">
+    
+    
+    <meta name="keywords" content="ReactNative">
+    <meta name="description" content="React Native实战总结入职有道数月，主要参与了精品课垂直页的改版，期间遇到了不少坑，虽然还未正式上线，但是也值得总结一波，故写下此文。 需求介绍 首页部分：加入日志控制工具以收集、统计用户操作；改写搜索框写法，将搜索框提取成独立的共用组件。 垂直页部分：此次改版集中在垂直页，新版垂直页将导航部分改版加入搜索框；重新设计了Banner部分；课程分类重新设计；课程入口信息增多样式改变；将原本">
+<meta name="keywords" content="ReactNative">
+<meta property="og:type" content="article">
+<meta property="og:title" content="react-native-summary">
+<meta property="og:url" content="http://yoursite.com/2017/06/24/react-native-summary/index.html">
+<meta property="og:site_name" content="WillBean&#39;s Blog">
+<meta property="og:description" content="React Native实战总结入职有道数月，主要参与了精品课垂直页的改版，期间遇到了不少坑，虽然还未正式上线，但是也值得总结一波，故写下此文。 需求介绍 首页部分：加入日志控制工具以收集、统计用户操作；改写搜索框写法，将搜索框提取成独立的共用组件。 垂直页部分：此次改版集中在垂直页，新版垂直页将导航部分改版加入搜索框；重新设计了Banner部分；课程分类重新设计；课程入口信息增多样式改变；将原本">
+<meta property="og:image" content="https://raw.githubusercontent.com/WillBean/react-native-summary.github.io/master/images/home1.jpg">
+<meta property="og:image" content="https://raw.githubusercontent.com/WillBean/react-native-summary.github.io/master/images/home2.jpg">
+<meta property="og:image" content="https://raw.githubusercontent.com/WillBean/react-native-summary.github.io/master/images/home3.jpg">
+<meta property="og:image" content="https://raw.githubusercontent.com/WillBean/react-native-summary.github.io/master/images/vertical3.jpg">
+<meta property="og:image" content="https://raw.githubusercontent.com/WillBean/react-native-summary.github.io/master/images/vertical1.jpg">
+<meta property="og:image" content="https://raw.githubusercontent.com/WillBean/react-native-summary.github.io/master/images/prototype.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/WillBean/react-native-summary.github.io/master/images/prototype2.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/WillBean/react-native-summary.github.io/master/images/vertical4.jpg">
+<meta property="og:image" content="https://raw.githubusercontent.com/WillBean/react-native-summary.github.io/master/images/android1.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/WillBean/react-native-summary.github.io/master/images/android2.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/WillBean/react-native-summary.github.io/master/images/android3.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/WillBean/react-native-summary.github.io/master/images/bundle.png">
+<meta property="og:updated_time" content="2017-06-24T08:19:09.233Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="react-native-summary">
+<meta name="twitter:description" content="React Native实战总结入职有道数月，主要参与了精品课垂直页的改版，期间遇到了不少坑，虽然还未正式上线，但是也值得总结一波，故写下此文。 需求介绍 首页部分：加入日志控制工具以收集、统计用户操作；改写搜索框写法，将搜索框提取成独立的共用组件。 垂直页部分：此次改版集中在垂直页，新版垂直页将导航部分改版加入搜索框；重新设计了Banner部分；课程分类重新设计；课程入口信息增多样式改变；将原本">
+<meta name="twitter:image" content="https://raw.githubusercontent.com/WillBean/react-native-summary.github.io/master/images/home1.jpg">
+    
+        <link rel="alternate" type="application/atom+xml" title="WillBean&#39;s Blog" href="/atom.xml">
+    
+    <link rel="shortcut icon" href="/favicon.ico">
+    <link rel="stylesheet" href="//unpkg.com/hexo-theme-material-indigo@latest/css/style.css">
+    <script>window.lazyScripts=[]</script>
+</head>
+
+<body>
+    <div id="loading" class="active"></div>
+
+    <aside id="menu" class="hide" >
+  <div class="inner flex-row-vertical">
+    <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menu-off">
+        <i class="icon icon-lg icon-close"></i>
+    </a>
+    <div class="brand-wrap" style="background-image:url(/img/brand.jpg)">
+      <div class="brand">
+        <a href="/" class="avatar waves-effect waves-circle waves-light">
+          <img src="/img/avatar.jpg">
+        </a>
+        <hgroup class="introduce">
+          <h5 class="nickname">WillBean</h5>
+          <a href="mailto:182769979@qq.com" title="182769979@qq.com" class="mail">182769979@qq.com</a>
+        </hgroup>
+      </div>
+    </div>
+    <div class="scroll-wrap flex-col">
+      <ul class="nav">
+        
+            <li class="waves-block waves-effect">
+              <a href="/"  >
+                <i class="icon icon-lg icon-home"></i>
+                主页
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/archives"  >
+                <i class="icon icon-lg icon-archives"></i>
+                Archives
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/tags"  >
+                <i class="icon icon-lg icon-tags"></i>
+                Tags
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/categories"  >
+                <i class="icon icon-lg icon-th-list"></i>
+                Categories
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="https://github.com/WillBean" target="_blank" >
+                <i class="icon icon-lg icon-github"></i>
+                Github
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="http://www.weibo.com/ysweb" target="_blank" >
+                <i class="icon icon-lg icon-weibo"></i>
+                Weibo
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/custom"  >
+                <i class="icon icon-lg icon-link"></i>
+                测试
+              </a>
+            </li>
+        
+      </ul>
+    </div>
+  </div>
+</aside>
+
+    <main id="main">
+        <header class="top-header" id="header">
+    <div class="flex-row">
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light on" id="menu-toggle">
+          <i class="icon icon-lg icon-navicon"></i>
+        </a>
+        <div class="flex-col header-title ellipsis">react-native-summary</div>
+        
+        <div class="search-wrap" id="search-wrap">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="back">
+                <i class="icon icon-lg icon-chevron-left"></i>
+            </a>
+            <input type="text" id="key" class="search-input" autocomplete="off" placeholder="输入感兴趣的关键字">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="search">
+                <i class="icon icon-lg icon-search"></i>
+            </a>
+        </div>
+        
+        
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menuShare">
+            <i class="icon icon-lg icon-share-alt"></i>
+        </a>
+        
+    </div>
+</header>
+<header class="content-header post-header">
+
+    <div class="container fade-scale">
+        <h1 class="title">react-native-summary</h1>
+        <h5 class="subtitle">
+            
+                <time datetime="2017-06-24T08:18:31.000Z" itemprop="datePublished" class="page-time">
+  2017-06-24
+</time>
+
+
+            
+        </h5>
+    </div>
+
+    
+
+
+</header>
+
+
+<div class="container body-wrap">
+    
+    <aside class="post-widget">
+        <nav class="post-toc-wrap" id="post-toc">
+            <h4>TOC</h4>
+            <ol class="post-toc"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#React-Native实战总结"><span class="post-toc-number">1.</span> <span class="post-toc-text">React Native实战总结</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#需求介绍"><span class="post-toc-number">1.1.</span> <span class="post-toc-text">需求介绍</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#实现方案及问题"><span class="post-toc-number">1.2.</span> <span class="post-toc-text">实现方案及问题</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#一、日志控制"><span class="post-toc-number">1.2.1.</span> <span class="post-toc-text">一、日志控制</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-5"><a class="post-toc-link" href="#首页布局"><span class="post-toc-number">1.2.1.1.</span> <span class="post-toc-text">首页布局</span></a></li><li class="post-toc-item post-toc-level-5"><a class="post-toc-link" href="#问题描述"><span class="post-toc-number">1.2.1.2.</span> <span class="post-toc-text">问题描述</span></a></li><li class="post-toc-item post-toc-level-5"><a class="post-toc-link" href="#相关代码"><span class="post-toc-number">1.2.1.3.</span> <span class="post-toc-text">相关代码</span></a></li><li class="post-toc-item post-toc-level-5"><a class="post-toc-link" href="#遇到问题及解决方案"><span class="post-toc-number">1.2.1.4.</span> <span class="post-toc-text">遇到问题及解决方案</span></a></li></ol></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#二、搜索框提取"><span class="post-toc-number">1.2.2.</span> <span class="post-toc-text">二、搜索框提取</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-5"><a class="post-toc-link" href="#问题描述-1"><span class="post-toc-number">1.2.2.1.</span> <span class="post-toc-text">问题描述</span></a></li><li class="post-toc-item post-toc-level-5"><a class="post-toc-link" href="#相关代码-1"><span class="post-toc-number">1.2.2.2.</span> <span class="post-toc-text">相关代码</span></a></li></ol></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#三、导航栏"><span class="post-toc-number">1.2.3.</span> <span class="post-toc-text">三、导航栏</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-5"><a class="post-toc-link" href="#布局"><span class="post-toc-number">1.2.3.1.</span> <span class="post-toc-text">布局</span></a></li><li class="post-toc-item post-toc-level-5"><a class="post-toc-link" href="#问题描述-2"><span class="post-toc-number">1.2.3.2.</span> <span class="post-toc-text">问题描述</span></a></li><li class="post-toc-item post-toc-level-5"><a class="post-toc-link" href="#遇到问题及解决方案-1"><span class="post-toc-number">1.2.3.3.</span> <span class="post-toc-text">遇到问题及解决方案</span></a></li></ol></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#四、Banner"><span class="post-toc-number">1.2.4.</span> <span class="post-toc-text">四、Banner</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-5"><a class="post-toc-link" href="#问题描述-3"><span class="post-toc-number">1.2.4.1.</span> <span class="post-toc-text">问题描述</span></a></li><li class="post-toc-item post-toc-level-5"><a class="post-toc-link" href="#相关代码-2"><span class="post-toc-number">1.2.4.2.</span> <span class="post-toc-text">相关代码</span></a></li></ol></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#五、其他部分"><span class="post-toc-number">1.2.5.</span> <span class="post-toc-text">五、其他部分</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-5"><a class="post-toc-link" href="#布局-1"><span class="post-toc-number">1.2.5.1.</span> <span class="post-toc-text">布局</span></a></li><li class="post-toc-item post-toc-level-5"><a class="post-toc-link" href="#问题描述-4"><span class="post-toc-number">1.2.5.2.</span> <span class="post-toc-text">问题描述</span></a></li></ol></li></ol></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#优化方案"><span class="post-toc-number">1.3.</span> <span class="post-toc-text">优化方案</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#一、减少过度绘制"><span class="post-toc-number">1.3.1.</span> <span class="post-toc-text">一、减少过度绘制</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#二、bundle拆包"><span class="post-toc-number">1.3.2.</span> <span class="post-toc-text">二、bundle拆包</span></a></li></ol></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#问题总览"><span class="post-toc-number">1.4.</span> <span class="post-toc-text">问题总览</span></a></li></ol></li></ol>
+        </nav>
+    </aside>
+    
+<article id="post-react-native-summary"
+  class="post-article article-type-post fade" itemprop="blogPost">
+
+    <div class="post-card">
+        <h1 class="post-card-title">react-native-summary</h1>
+        <div class="post-meta">
+            <time class="post-time" title="2017-06-24 16:18:31" datetime="2017-06-24T08:18:31.000Z"  itemprop="datePublished">2017-06-24</time>
+
+            
+
+
+            
+<span id="busuanzi_container_page_pv" title="文章总阅读量" style='display:none'>
+    <i class="icon icon-eye icon-pr"></i><span id="busuanzi_value_page_pv"></span>
+</span>
+
+
+        </div>
+        <div class="post-content" id="post-content" itemprop="postContent">
+            <h2 id="React-Native实战总结"><a href="#React-Native实战总结" class="headerlink" title="React Native实战总结"></a>React Native实战总结</h2><p>入职有道数月，主要参与了精品课垂直页的改版，期间遇到了不少坑，虽然还未正式上线，但是也值得总结一波，故写下此文。</p>
+<h3 id="需求介绍"><a href="#需求介绍" class="headerlink" title="需求介绍"></a>需求介绍</h3><ul>
+<li>首页部分：加入日志控制工具以收集、统计用户操作；改写搜索框写法，将搜索框提取成独立的共用组件。</li>
+<li>垂直页部分：此次改版集中在垂直页，新版垂直页将导航部分改版加入搜索框；重新设计了Banner部分；课程分类重新设计；课程入口信息增多样式改变；将原本的两列布局改成新版的一列布局，还加入了原本没有的（图片）小标题。</li>
+</ul>
+<h3 id="实现方案及问题"><a href="#实现方案及问题" class="headerlink" title="实现方案及问题"></a>实现方案及问题</h3><h4 id="一、日志控制"><a href="#一、日志控制" class="headerlink" title="一、日志控制"></a>一、日志控制</h4><h5 id="首页布局"><a href="#首页布局" class="headerlink" title="首页布局"></a>首页布局</h5><div align="center"><br><img src="https://raw.githubusercontent.com/WillBean/react-native-summary.github.io/master/images/home1.jpg" width="50%"><br></div>
+
+<div align="center"><br><img src="https://raw.githubusercontent.com/WillBean/react-native-summary.github.io/master/images/home2.jpg" width="50%"><br></div>
+
+<div align="center"><br><img src="https://raw.githubusercontent.com/WillBean/react-native-summary.github.io/master/images/home3.jpg" width="50%"><br></div>
+
+<h5 id="问题描述"><a href="#问题描述" class="headerlink" title="问题描述"></a>问题描述</h5><p>日志控制要求在Banner、课程分类列表、公开课列表、猜你喜欢、精选课程等模块出现在屏幕时发送一条日志，滑出屏幕再滑入也应该重新发送，其中Banner、课程分类列表和公开课列表是可以横向滑动的，滑动时要发送展示部分的日志，每个部分来回滚动也仅发送一次。</p>
+<p>因为要获取各个部分的offsetTop和height，所以目前使用的方案是使用EventEmitter，在各组件onLayout的时候将组件的offsetTop和height发送给日志管理(LogControl)组件，为了方便使用，组件使用了<a href="http://www.cnblogs.com/TomXu/archive/2012/02/20/2352817.html" target="_blank" rel="external">单例模式</a>,并继承了EventEmitter，在需要发送日志的组件下引入LogControl实例来传递信息，在Home组件的滚动事件下监听各组件的状态，如进入屏幕则发送日志。</p>
+<h5 id="相关代码"><a href="#相关代码" class="headerlink" title="相关代码"></a>相关代码</h5><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">import</span> Events <span class="keyword">from</span> <span class="string">'event-emitter'</span></div><div class="line"><span class="keyword">export</span> <span class="keyword">default</span> <span class="function"><span class="keyword">function</span> <span class="title">LogControl</span>(<span class="params"></span>) </span>&#123;</div><div class="line">    <span class="comment">// 判断是否存在实例</span></div><div class="line">    <span class="keyword">if</span> (<span class="keyword">typeof</span> LogControl.instance === <span class="string">'object'</span>) &#123;</div><div class="line">        <span class="keyword">return</span> LogControl.instance;</div><div class="line">    &#125;</div><div class="line">    </div><div class="line">    <span class="keyword">this</span>._listObject = &#123;&#125;;</div><div class="line">    <span class="keyword">this</span>._offsetTopList = &#123;&#125;;</div><div class="line"></div><div class="line">    <span class="comment">// 缓存</span></div><div class="line">    LogControl.instance = <span class="keyword">this</span>;</div><div class="line">&#125;</div><div class="line">LogControl.prototype = <span class="keyword">new</span> Events()</div><div class="line">LogControl.prototype.constructor = LogControl;</div></pre></td></tr></table></figure>
+<h5 id="遇到问题及解决方案"><a href="#遇到问题及解决方案" class="headerlink" title="遇到问题及解决方案"></a>遇到问题及解决方案</h5><ul>
+<li>安卓在组件滑动时会重复调用onLayout事件，导致日志重复发送。<br><br>解决方案：在组件内增加一个属性判断是否触发过onLayout事件，是则不再调用。</li>
+<li>安卓在初次进入首页加载完成后不会自动滚动，而IOS下会有滚动效果，导致安卓下只有在滑动了屏幕之后才会发送日志。<br><br>解决方案一：安卓在加载完毕后手动调用scrollTo方法去触发一次onScroll事件。(未采用)<br><br>解决方案二：在Home组件componentDidUpdate中调用一次LogControl中的方法去发送日志。</li>
+</ul>
+<h4 id="二、搜索框提取"><a href="#二、搜索框提取" class="headerlink" title="二、搜索框提取"></a>二、搜索框提取</h4><h5 id="问题描述-1"><a href="#问题描述-1" class="headerlink" title="问题描述"></a>问题描述</h5><p>因为垂直页改版后需要使用到搜索框，故将原本只是用于首页的搜索框组件提取为公用组件，将相关样式改为了可配置的形式，由父组件通过参数传入，因为首页和垂直页的搜索页一致，所以保留了其样式，日后如有需要再进行修改。</p>
+<h5 id="相关代码-1"><a href="#相关代码-1" class="headerlink" title="相关代码"></a>相关代码</h5><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div></pre></td><td class="code"><pre><div class="line">&lt;Search</div><div class="line">  isYoudaoCourseApp=&#123;<span class="keyword">this</span>.state.isYoudaoCourseApp&#125;</div><div class="line">  <span class="comment">// setScrollViewEnableFunc=&#123;this.setScrollViewEnableFunc&#125;</span></div><div class="line">  hasSearchBg=&#123;<span class="keyword">this</span>.state.hasSearchBg&#125;</div><div class="line">  setBarStyleFunc=&#123;<span class="keyword">this</span>.setBarStyleFunc&#125;</div><div class="line">  fadeAnim=&#123;<span class="keyword">this</span>.state.fadeAnim&#125;</div><div class="line"></div><div class="line">  searchContainerStyle=&#123;searchStyle.containerSearch&#125;</div><div class="line">  searchOuterHideBarStyle=&#123;searchStyle.outerHideBar&#125;</div><div class="line">  searchOuterStyle=&#123;searchStyle.outer&#125;</div><div class="line">  searchOuterBgStyle=&#123;searchStyle.outerBg&#125;</div><div class="line">  searchPlaceHolderStyle=&#123;searchStyle.searchPlaceHolder&#125;</div><div class="line">  searchInputContainerStyle=&#123;searchStyle.searchInputCon&#125;</div><div class="line">  searchInputStyle=&#123;[searchStyle.searchInput, &#123;<span class="attr">backgroundColor</span>: <span class="keyword">this</span>.state.hasSearchBg ? <span class="string">'rgba(233,233,233,.8)'</span> : <span class="string">'rgba(255,255,255,.8)'</span>&#125;]&#125;</div><div class="line">  searchIconStyle=&#123;searchStyle.icSearch&#125;</div><div class="line"> /&gt;</div></pre></td></tr></table></figure>
+<h4 id="三、导航栏"><a href="#三、导航栏" class="headerlink" title="三、导航栏"></a>三、导航栏</h4><h5 id="布局"><a href="#布局" class="headerlink" title="布局"></a>布局</h5><div align="center"><br><img src="https://raw.githubusercontent.com/WillBean/react-native-summary.github.io/master/images/vertical3.jpg" width="50%"><br><span>旧版</span><br></div>
+
+<div align="center"><br><img src="https://raw.githubusercontent.com/WillBean/react-native-summary.github.io/master/images/vertical1.jpg" width="50%"><br><span>新版</span><br></div>
+
+<h5 id="问题描述-2"><a href="#问题描述-2" class="headerlink" title="问题描述"></a>问题描述</h5><p>不同于旧版，新版导航去掉了原来的滚动条，改为了垂直标题+搜索框的形式。</p>
+<h5 id="遇到问题及解决方案-1"><a href="#遇到问题及解决方案-1" class="headerlink" title="遇到问题及解决方案"></a>遇到问题及解决方案</h5><ul>
+<li>React native的元素堆叠顺序无法通过zIndex，所以如果将导航组件写在最前面的话，搜索页会被下面的ScrollView遮盖。<br><br>解决方案：将搜索框改为绝对定位并置于文档最后。</li>
+<li>导航标题字数不一，如果搜索框宽度固定，可能会与标题重叠。<br><br>解决方案：在原有导航位置放置一个仅有背景色和高度的View组件，将标题和搜索框作为一个整体放置在文档最下面，然后通过绝对定位覆盖在View组件上层，此时搜索框就可以设置为自适应宽度了。</li>
+</ul>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">&lt;View style=&#123;[styles.container, Platform.OS === <span class="string">'android'</span> &amp;&amp; !isTeacher ? &#123;<span class="attr">marginTop</span>: tag.get(<span class="string">'hideStatusBar'</span>) ? statusBarHeight : <span class="number">0</span>&#125; : &#123;<span class="attr">marginTop</span>: <span class="number">0</span>&#125;]&#125;&gt;</div><div class="line">  &#123;isTeacher ? <span class="literal">null</span> : &lt;View style=&#123;styles.headNav&#125;/&gt;&#125; // 这个&lt;View&gt;仅用于占位</div><div class="line">  &lt;ScrollView&gt;</div><div class="line">  ...</div><div class="line">  &lt;/ScrollView&gt;</div><div class="line">  &#123;this._renderFixedNav(tag, this.state.isYoudaoCourseApp)&#125; // 真正的导航栏</div><div class="line">&lt;/View&gt;</div></pre></td></tr></table></figure>
+<h4 id="四、Banner"><a href="#四、Banner" class="headerlink" title="四、Banner"></a>四、Banner</h4><h5 id="问题描述-3"><a href="#问题描述-3" class="headerlink" title="问题描述"></a>问题描述</h5><p>如上图，新版Banner每个图片并不占据整个屏宽，两边露出上下两张图片的一小部分，以做WEB的滑动组件的经验来说，要实现这样的功能，无非也就是通过绝对定位设置滚动栏，滚动时通过改变left或者translate来改变位置，如下图：</p>
+<div align="center"><br><img src="https://raw.githubusercontent.com/WillBean/react-native-summary.github.io/master/images/prototype.png" width="95%"><br></div>
+
+<p>类推到这里，想要实现新版的效果，只需要将外层容器宽度设置成对应的数值，在设置overflow:visible即可，如下图：</p>
+<div align="center"><br><img src="https://raw.githubusercontent.com/WillBean/react-native-summary.github.io/master/images/prototype2.png" width="95%"><br></div>
+
+<p>在IOS端，一切正如我所料，相当之顺利，但是拿起安卓机一看，好像不太对劲，并没有出现预期的效果，Google一番得知，安卓不支持overflow属性！？</p>
+<p>由于原本使用的是第三方的<a href="https://github.com/leecade/react-native-swiper" target="_blank" rel="external">react-native-swiper组件</a>，出现这种情况赶紧翻看一下源码，看看能不能找到什么解决方案，然后发现在IOS端Swiper使用的是ScrollView，而在Android端使用的是ViewPagerAndroid，找了个安卓的朋友问了问，在原生安卓上使用ViewPager是可以实现这样的效果的(<a href="http://m.blog.csdn.net/hb8676086/article/details/50628429" target="_blank" rel="external">ViewPager实现一个页面多个Item的显示</a>)，然而，ViewPagerAndroid并没有提供诸如clipChildren、layerType的属性，只能寻求别的方案了。</p>
+<p>后来决定用Animate自己写一个滑动组件出来，写了个小demo，发现十分卡顿，可能姿势不对吧。</p>
+<p>奋斗几天无果，后来在网上看到<a href="https://github.com/race604/react-native-viewpager" target="_blank" rel="external">react-native-viewpager组件</a>，无奈之下下载来看看源码，居然也是用Animate写的，感觉有戏！为了实现设计稿的效果，改了一下源码并拷贝出来作为一个自己的组件来使用。</p>
+<p>用这个组件虽然实现了想要的效果，但是性能相较于ViewPagerAndroid确实要低一些，滑动过程中会有些许卡顿，为了不影响IOS端，IOS端还是保留了原来的写法，仅在Android端使用。</p>
+<h5 id="相关代码-2"><a href="#相关代码-2" class="headerlink" title="相关代码"></a>相关代码</h5><p>ViewPager组件源码修改<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> offset = <span class="keyword">this</span>.props.offset; <span class="comment">// 加入offset属性来设置偏移</span></div><div class="line"><span class="comment">// this.childIndex = hasLeft ? 1 : 0;</span></div><div class="line"><span class="comment">// this.state.scrollValue.setValue(this.childIndex);</span></div><div class="line"><span class="keyword">var</span> translateX = <span class="keyword">this</span>.state.scrollValue.interpolate(&#123;</div><div class="line">  <span class="attr">inputRange</span>: [<span class="number">0</span>, <span class="number">1</span>], <span class="attr">outputRange</span>: [offset, -viewWidth + offset] <span class="comment">// 修改了滑动范围</span></div><div class="line">&#125;);</div></pre></td></tr></table></figure></p>
+<p>ViewPager组件调用<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">&lt;ViewPager</div><div class="line">  dataSource=&#123;ds&#125;</div><div class="line">  renderPageIndicator=&#123;<span class="literal">false</span>&#125;</div><div class="line">  isLoop=&#123;ds.pageIdentities.length &gt; <span class="number">1</span>&#125;</div><div class="line">  autoPlay=&#123;<span class="literal">true</span>&#125;</div><div class="line">  offset=&#123;calculatePixel(<span class="number">16</span>)&#125;</div><div class="line">  childWidth=&#123;calculatePixel(<span class="number">328</span>)&#125; <span class="comment">// 定义每个子元素的实际宽度（加入了边距）</span></div><div class="line">  renderPage=&#123;<span class="keyword">this</span>._renderBannerItem.bind(<span class="keyword">this</span>)&#125;</div><div class="line">/&gt;</div></pre></td></tr></table></figure></p>
+<h4 id="五、其他部分"><a href="#五、其他部分" class="headerlink" title="五、其他部分"></a>五、其他部分</h4><h5 id="布局-1"><a href="#布局-1" class="headerlink" title="布局"></a>布局</h5><div align="center"><br><img src="https://raw.githubusercontent.com/WillBean/react-native-summary.github.io/master/images/vertical4.jpg" width="50%"><br></div>
+
+<h5 id="问题描述-4"><a href="#问题描述-4" class="headerlink" title="问题描述"></a>问题描述</h5><p>如上图布局，更新还包括了课程分类的更新、加入了图片标题、课程入口的更新。</p>
+<p>这一部分比较简单，似乎没啥好说的。</p>
+<h3 id="优化方案"><a href="#优化方案" class="headerlink" title="优化方案"></a>优化方案</h3><h4 id="一、减少过度绘制"><a href="#一、减少过度绘制" class="headerlink" title="一、减少过度绘制"></a>一、减少过度绘制</h4><p>在安卓机的开发者选项中可以开启“调试GPU过度绘制”，如下图：</p>
+<div align="center"><br><img src="https://raw.githubusercontent.com/WillBean/react-native-summary.github.io/master/images/android1.png" width="50%"><br></div>
+
+<p>关于安卓过度绘制的详情可以在<a href="http://blog.csdn.net/moyameizan/article/details/47807327" target="_blank" rel="external">这里</a>查看，简单来说就是界面元素的多重层叠，假设每层元素都有背景，那么对于用户来说，只有最上层的背景才是可以看到的，其它的背景虽然绘制了，但是却没有起到效果，就是过度绘制了。</p>
+<p>安卓GPU过度绘制的颜色信息大致如下：</p>
+<blockquote>
+<ul>
+<li>蓝色1x过度绘制</li>
+<li>绿色2x过度绘制</li>
+<li>淡红色3x过度绘制</li>
+<li>红色超过4x过度绘制</li>
+</ul>
+</blockquote>
+<p>颜色越浅表示过度绘制程度越低，原色表示没有过度绘制。</p>
+<p>现在来看看自己的APP会呈现出什么效果：</p>
+<div align="center"><br><img src="https://raw.githubusercontent.com/WillBean/react-native-summary.github.io/master/images/android2.png" width="50%"><br><span>首页</span><br></div>
+
+<div align="center"><br><img src="https://raw.githubusercontent.com/WillBean/react-native-summary.github.io/master/images/android3.png" width="50%"><br><span>垂直页</span><br></div>
+
+<p>首页和垂直页差距似乎有点大，这里看到垂直页基本满屏大红，导致这个问题的原因不是垂直页充满了大量的背景，而是路由切换并没有把首页隐藏，垂直页相当于一整个元素覆盖在首页上方，所以看到的满屏大红是首页绘制加上垂直页绘制的效果，所以我们似乎找到了一个可以优化的地方：<em>如何在路由切换的时候将首页隐藏或者像原生APP那样切换到一个新的界面？</em></p>
+<h4 id="二、bundle拆包"><a href="#二、bundle拆包" class="headerlink" title="二、bundle拆包"></a>二、bundle拆包</h4><p>一般来说，一个简单的RN应用，打包之后的bundle会有500+KB是属于RN的依赖，与业务无关，而我们的APP将安卓打包之后生成的bundle有900+KB，其中绝大部分应该也是来自各种依赖文件，如果能将依赖和业务文件拆分开来，生成一个common.bundle、一个或多个business.bundle，那么我们可以在一定程度上改善用户体验。</p>
+<blockquote>
+<ul>
+<li>减少初始时间（提前运行基础代码）</li>
+<li>部分更新</li>
+<li>在多个bundle之间共享公共模块</li>
+</ul>
+</blockquote>
+<div align="center"><br><img src="https://raw.githubusercontent.com/WillBean/react-native-summary.github.io/master/images/bundle.png" width="95%"><br></div>
+
+<p>上图引自<a href="https://github.com/facebook/react-native/issues/5399" target="_blank" rel="external">issue/5399</a>，在用户进入应用之前，我们就可以加载并运行common.bundle，并在用户进入应用之后加载指定的业务文件，而不必一次性把所有东西都加载进行，以提升性能。</p>
+<p>目前可参考的拆包方案有</p>
+<ul>
+<li><a href="https://zhuanlan.zhihu.com/p/23715716" target="_blank" rel="external">携程是如何做React Native优化的</a></li>
+<li>携程的<a href="https://github.com/ctripcorp/moles-packer" target="_blank" rel="external">moles-packer</a>(携程似乎已经放弃这个方案，改为以unbundle为基础的拆包方案)</li>
+<li><a href="https://blog.desmondyao.com/rn-split/" target="_blank" rel="external">【React Native】一个简单的拆分Bundle&amp;资源做法</a></li>
+<li><a href="http://coofee.github.io/post/react-native-bundle-split/" target="_blank" rel="external">React Native Bundle Split</a></li>
+<li><a href="https://github.com/desmond1121/react-native-split" target="_blank" rel="external">react-native-split</a></li>
+</ul>
+<h3 id="问题总览"><a href="#问题总览" class="headerlink" title="问题总览"></a>问题总览</h3><ul>
+<li>安卓RN不支持overflow属性</li>
+<li>安卓ScrollView等组件在滑动的时候会触发自己和其他组件的onLayout事件</li>
+<li>安卓line-height属性不支持小数</li>
+<li>安卓在背景色过度设置的时候会严重影响性能</li>
+</ul>
+
+        </div>
+
+        <blockquote class="post-copyright">
+    <div class="content">
+        
+<span class="post-time">
+    最后更新时间：<time datetime="2017-06-24T08:19:09.233Z" itemprop="dateUpdated">2017-06-24 16:19:09</time>
+</span><br>
+
+
+        
+        这里可以写作者留言，标签和 hexo 中所有变量及辅助函数等均可调用，示例：<a href="/2017/06/24/react-native-summary/" target="_blank" rel="external">http://yoursite.com/2017/06/24/react-native-summary/</a>
+        
+    </div>
+    <footer>
+        <a href="http://yoursite.com">
+            <img src="/img/avatar.jpg" alt="WillBean">
+            WillBean
+        </a>
+    </footer>
+</blockquote>
+
+        
+<div class="page-reward">
+    <a id="rewardBtn" href="javascript:;" class="page-reward-btn waves-effect waves-circle waves-light">赏</a>
+</div>
+
+
+
+        <div class="post-footer">
+            
+	<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/ReactNative/">ReactNative</a></li></ul>
+
+
+            
+<div class="page-share-wrap">
+    
+
+<div class="page-share" id="pageShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://yoursite.com/2017/06/24/react-native-summary/&title=《react-native-summary》 — WillBean's Blog&pic=http://yoursite.com/img/avatar.jpg" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://yoursite.com/2017/06/24/react-native-summary/&title=《react-native-summary》 — WillBean's Blog&source=准大四前端页面仔~" data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http://yoursite.com/2017/06/24/react-native-summary/" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《react-native-summary》 — WillBean's Blog&url=http://yoursite.com/2017/06/24/react-native-summary/&via=http://yoursite.com" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=http://yoursite.com/2017/06/24/react-native-summary/" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+
+    <a href="javascript:;" id="shareFab" class="page-share-fab waves-effect waves-circle">
+        <i class="icon icon-share-alt icon-lg"></i>
+    </a>
+</div>
+
+
+
+        </div>
+    </div>
+
+    
+<nav class="post-nav flex-row flex-justify-between flex-row-reverse">
+  
+
+  
+    <div class="waves-block waves-effect next">
+      <a href="/2017/06/24/hello-world/" id="post-next" class="post-nav-link">
+        <div class="tips">Next <i class="icon icon-angle-right icon-lg icon-pl"></i></div>
+        <h4 class="title">Hello World</h4>
+      </a>
+    </div>
+  
+</nav>
+
+
+
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</article>
+
+<div id="reward" class="page-modal reward-lay">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <h3 class="reward-title">
+        <i class="icon icon-quote-left"></i>
+        谢谢大爷~
+        <i class="icon icon-quote-right"></i>
+    </h3>
+    <div class="reward-content">
+        
+        <div class="reward-code">
+            <img id="rewardCode" src="/img/wechat.jpg" alt="打赏二维码">
+        </div>
+        
+        <label class="reward-toggle">
+            <input id="rewardToggle" type="checkbox" class="reward-toggle-check"
+                data-wechat="/img/wechat.jpg" data-alipay="/img/alipay.jpg">
+            <div class="reward-toggle-ctrol">
+                <span class="reward-toggle-item wechat">微信</span>
+                <span class="reward-toggle-label"></span>
+                <span class="reward-toggle-item alipay">支付宝</span>
+            </div>
+        </label>
+        
+    </div>
+</div>
+
+
+
+</div>
+
+        <footer class="footer">
+    <div class="top">
+        
+<p>
+    <span id="busuanzi_container_site_uv" style='display:none'>
+        站点总访客数：<span id="busuanzi_value_site_uv"></span>
+    </span>
+    <span id="busuanzi_container_site_pv" style='display:none'>
+        站点总访问量：<span id="busuanzi_value_site_pv"></span>
+    </span>
+</p>
+
+
+        <p>
+            
+                <span><a href="/atom.xml" target="_blank" class="rss" title="rss"><i class="icon icon-lg icon-rss"></i></a></span>
+            
+            <span>博客内容遵循 <a rel="license" href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh">知识共享 署名 - 非商业性 - 相同方式共享 4.0 国际协议</a></span>
+        </p>
+    </div>
+    <div class="bottom">
+        <p><span>WillBean &copy; 2017</span>
+            <span>
+                
+                Power by <a href="http://hexo.io/" target="_blank">Hexo</a> Theme <a href="https://github.com/yscoder/hexo-theme-indigo" target="_blank">indigo</a>
+            </span>
+        </p>
+    </div>
+</footer>
+
+    </main>
+    <div class="mask" id="mask"></div>
+<a href="javascript:;" id="gotop" class="waves-effect waves-circle waves-light"><span class="icon icon-lg icon-chevron-up"></span></a>
+
+
+
+<div class="global-share" id="globalShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://yoursite.com/2017/06/24/react-native-summary/&title=《react-native-summary》 — WillBean's Blog&pic=http://yoursite.com/img/avatar.jpg" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://yoursite.com/2017/06/24/react-native-summary/&title=《react-native-summary》 — WillBean's Blog&source=准大四前端页面仔~" data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http://yoursite.com/2017/06/24/react-native-summary/" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《react-native-summary》 — WillBean's Blog&url=http://yoursite.com/2017/06/24/react-native-summary/&via=http://yoursite.com" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=http://yoursite.com/2017/06/24/react-native-summary/" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+<div class="page-modal wx-share" id="wxShare">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAMYAAADGCAAAAACs8KCBAAACMklEQVR42u3a22rDMBAE0P7/T6fQp0LqZGblFCwfPxXnpuPCstrR11d8PX6u5zu/r6NXn7/h+f1Hnzr5wsDAuCzj8fI6WkSylNffk9xJ1oaBgXEfxusim8NaXss+vI+BgYEx++qyaGJgYGCcW3BnBTp5NBgYGBgrm9j8x9rymjedJ+zFMTAwLshog4H//PuD+QYGBsZFGLMR2FmNYF6I36wKAwNja0YeK54VXp77OKLzIBgYGFswZpHkrENrm8IEj4GBsTdjNo6flcV8ZJbHDxgYGPdhrBzMypvFthEsNsAYGBhbM/JDFXlj14aXs4101CBiYGBsxFjJBNu2rx3PLYWdGBgYWzBmA7K8jUuK+Ky5rJNYDAyMizPan88Xl5fjPPL841UMDIytGesHVZNDGyfHABgYGDdjrCxutn2dHeAYJrEYGBhbMNbjxjZOmBXr+j+DgYGxEWN2qCIPONtTW/nGddgaYmBgXJDRDtfagHMWMOTtJgYGxn0YeQFdKbVtPNkGpRgYGLsykkZtZazWnkdrN8kYGBj3YSSj+TZCSBa0EkUcjtswMDC2Y8yShNnxiLpjLYsyBgbGroz1kVkbc+afKkIIDAyMrRn51Y7V8qMYbSOYb6QxMDB2YqwU2TbszB9Z3T5iYGDcgJEvaFZkl1q6YGuNgYGBsb41bVvMPF7FwMDAWNnEtnfaGPW0gouBgXERRlvmZjO89QMZbwouBgbGpoxPBAPrDeWwQcTAwNiN8Q1QdMdl9j+vWAAAAABJRU5ErkJggg==" alt="微信分享二维码">
+</div>
+
+
+
+
+    <script src="//cdn.bootcss.com/node-waves/0.7.4/waves.min.js"></script>
+<script>
+var BLOG = { ROOT: '/', SHARE: true, REWARD: true };
+
+
+</script>
+
+<script src="//unpkg.com/hexo-theme-material-indigo@latest/js/main.min.js"></script>
+
+
+<div class="search-panel" id="search-panel">
+    <ul class="search-result" id="search-result"></ul>
+</div>
+<template id="search-tpl">
+<li class="item">
+    <a href="{path}" class="waves-block waves-effect">
+        <div class="title ellipsis" title="{title}">{title}</div>
+        <div class="flex-row flex-middle">
+            <div class="tags ellipsis">
+                {tags}
+            </div>
+            <time class="flex-col time">{date}</time>
+        </div>
+    </a>
+</li>
+</template>
+
+<script src="//unpkg.com/hexo-theme-material-indigo@latest/js/search.min.js" async></script>
+
+
+
+
+
+
+<script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+<script>
+(function() {
+    var OriginTitile = document.title, titleTime;
+    document.addEventListener('visibilitychange', function() {
+        if (document.hidden) {
+            document.title = '死鬼去哪里了！';
+            clearTimeout(titleTime);
+        } else {
+            document.title = '(つェ⊂)咦!又好了!';
+            titleTime = setTimeout(function() {
+                document.title = OriginTitile;
+            },2000);
+        }
+    });
+})();
+</script>
+
+
+
+</body>
+</html>
