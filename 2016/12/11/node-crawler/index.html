@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+<html>
+<head>
+    
+
+    
+
+    
+
+
+
+    <meta charset="utf-8">
+    
+    
+    
+    <title>node-crawler | WillBean&#39;s Blog | 我可能是个假程序猿吧</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+    
+    <meta name="keywords" content="Node, Crawler">
+    <meta name="description" content="Node爬虫爬取网页静态资源一、准备工作 首先当然是安装node，这一步忽略。 然后是各种模块，本实例用到了http、fs、url、cheerio、request、async、phantom，前三个是node自带的，无需install。 因为要服务器渲染，所以要用到phantomjs，这个需要自行安装一下，最后再配置一下全局环境。  二、模块解释 cheerio模块用于解析DOM树，进行DOM操作">
+<meta name="keywords" content="Node, Crawler">
+<meta property="og:type" content="article">
+<meta property="og:title" content="node-crawler">
+<meta property="og:url" content="https://willbean.github.io/2016/12/11/node-crawler/index.html">
+<meta property="og:site_name" content="WillBean&#39;s Blog">
+<meta property="og:description" content="Node爬虫爬取网页静态资源一、准备工作 首先当然是安装node，这一步忽略。 然后是各种模块，本实例用到了http、fs、url、cheerio、request、async、phantom，前三个是node自带的，无需install。 因为要服务器渲染，所以要用到phantomjs，这个需要自行安装一下，最后再配置一下全局环境。  二、模块解释 cheerio模块用于解析DOM树，进行DOM操作">
+<meta property="og:image" content="https://raw.githubusercontent.com/WillBean/react-native-summary.github.io/master/images/node-crawler/dir.png">
+<meta property="og:updated_time" content="2017-06-28T08:18:02.148Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="node-crawler">
+<meta name="twitter:description" content="Node爬虫爬取网页静态资源一、准备工作 首先当然是安装node，这一步忽略。 然后是各种模块，本实例用到了http、fs、url、cheerio、request、async、phantom，前三个是node自带的，无需install。 因为要服务器渲染，所以要用到phantomjs，这个需要自行安装一下，最后再配置一下全局环境。  二、模块解释 cheerio模块用于解析DOM树，进行DOM操作">
+<meta name="twitter:image" content="https://raw.githubusercontent.com/WillBean/react-native-summary.github.io/master/images/node-crawler/dir.png">
+    
+        <link rel="alternate" type="application/atom+xml" title="WillBean&#39;s Blog" href="/atom.xml">
+    
+    <link rel="shortcut icon" href="/">
+    <link rel="stylesheet" href="/css/style.css?v=1.6.10">
+    <script>window.lazyScripts=[]</script>
+</head>
+
+<body>
+    <div id="loading" class="active"></div>
+
+    <aside id="menu"  >
+  <div class="inner flex-row-vertical">
+    <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menu-off">
+        <i class="icon icon-lg icon-close"></i>
+    </a>
+    <div class="brand-wrap" style="background-image:url(/)">
+      <div class="brand">
+        <a href="/" class="avatar waves-effect waves-circle waves-light">
+          <img src="/">
+        </a>
+        <hgroup class="introduce">
+          <h5 class="nickname">WillBean</h5>
+          <a href="mailto:182769979@qq.com" title="182769979@qq.com" class="mail">182769979@qq.com</a>
+        </hgroup>
+      </div>
+    </div>
+    <div class="scroll-wrap flex-col">
+      <ul class="nav">
+        
+      </ul>
+    </div>
+  </div>
+</aside>
+
+    <main id="main">
+        <header class="top-header" id="header">
+    <div class="flex-row">
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light on" id="menu-toggle">
+          <i class="icon icon-lg icon-navicon"></i>
+        </a>
+        <div class="flex-col header-title ellipsis">node-crawler</div>
+        
+        
+    </div>
+</header>
+<header class="content-header post-header">
+
+    <div class="container fade-scale">
+        <h1 class="title">node-crawler</h1>
+        <h5 class="subtitle">
+            
+                <time datetime="2016-12-11T06:30:50.000Z" itemprop="datePublished" class="page-time">
+  2016-12-11
+</time>
+
+
+            
+        </h5>
+    </div>
+
+    
+
+
+</header>
+
+
+<div class="container body-wrap">
+    
+<article id="post-node-crawler"
+  class="post-article article-type-post fade" itemprop="blogPost">
+
+    <div class="post-card">
+        <h1 class="post-card-title">node-crawler</h1>
+        <div class="post-meta">
+            <time class="post-time" title="2016-12-11 14:30:50" datetime="2016-12-11T06:30:50.000Z"  itemprop="datePublished">2016-12-11</time>
+
+            
+
+
+            
+
+        </div>
+        <div class="post-content" id="post-content" itemprop="postContent">
+            <h1 id="Node爬虫爬取网页静态资源"><a href="#Node爬虫爬取网页静态资源" class="headerlink" title="Node爬虫爬取网页静态资源"></a>Node爬虫爬取网页静态资源</h1><h3 id="一、准备工作"><a href="#一、准备工作" class="headerlink" title="一、准备工作"></a>一、准备工作</h3><ol>
+<li>首先当然是安装node，这一步忽略。</li>
+<li>然后是各种模块，本实例用到了http、fs、url、cheerio、request、async、phantom，前三个是node自带的，无需install。</li>
+<li>因为要服务器渲染，所以要用到phantomjs，这个需要自行安装一下，最后再配置一下全局环境。</li>
+</ol>
+<h3 id="二、模块解释"><a href="#二、模块解释" class="headerlink" title="二、模块解释"></a>二、模块解释</h3><ol>
+<li>cheerio模块用于解析DOM树，进行DOM操作， 具体用法跟JQuery类似，对熟悉JQ的人来说，学会使用也就是几分钟的事。</li>
+<li>request模块，http模块的高级封装版，便于操作。</li>
+<li>async模块，解决“恶魔金字塔”问题。</li>
+<li>phantom模块，在服务器端渲染整个界面，为的是能够爬取到页面上一些通过js等动态加载的内容。</li>
+</ol>
+<h3 id="三、具体实现"><a href="#三、具体实现" class="headerlink" title="三、具体实现"></a>三、具体实现</h3><h4 id="1-公用接口"><a href="#1-公用接口" class="headerlink" title="1. 公用接口"></a>1. 公用接口</h4><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">exports.Strategy = &#123;<span class="comment">//js,css,images等文件的保存策略</span></div><div class="line"> <span class="string">"SAVE_IN_ROOT"</span>: <span class="number">1</span>,<span class="comment">//保存在根目录下</span></div><div class="line"> <span class="string">"SAVE_IN_SUB_DIR"</span>: <span class="number">2</span><span class="comment">//保存在各级子目录下</span></div><div class="line">&#125;;</div></pre></td></tr></table></figure>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line">exports.uniqueArray = <span class="function"><span class="keyword">function</span> (<span class="params">arr</span>) </span>&#123;<span class="comment">//数组去重</span></div><div class="line"> <span class="keyword">var</span> hash = &#123;&#125;,</div><div class="line">     len = arr.length,</div><div class="line">     result = [];</div><div class="line"></div><div class="line"> <span class="keyword">for</span> (<span class="keyword">var</span> i = <span class="number">0</span>; i &lt; len; i++)&#123;</div><div class="line">     <span class="keyword">if</span> (!hash[arr[i]])&#123;</div><div class="line">         hash[arr[i]] = <span class="literal">true</span>;</div><div class="line">         result.push(arr[i]);</div><div class="line">     &#125;</div><div class="line"> &#125;</div><div class="line"> <span class="keyword">return</span> result;</div><div class="line">&#125;;</div></pre></td></tr></table></figure>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">exports.timer = <span class="function"><span class="keyword">function</span> (<span class="params">date,msg</span>) </span>&#123;<span class="comment">//简易版计时器</span></div><div class="line"> <span class="built_in">console</span>.log(msg + <span class="string">" : "</span>+(<span class="keyword">new</span> <span class="built_in">Date</span>() - date) +<span class="string">"ms"</span> );</div><div class="line">&#125;;</div></pre></td></tr></table></figure>
+<h4 id="2-配置"><a href="#2-配置" class="headerlink" title="2. 配置"></a>2. 配置</h4><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> config = &#123;</div><div class="line"> <span class="attr">url</span>: <span class="string">"http://localhost:8081/dhay/"</span>,<span class="comment">//目的网站</span></div><div class="line"> savePath: <span class="string">"J:/nodejs/open-source-spider"</span>,<span class="comment">//保存路径</span></div><div class="line"> containOutLink: <span class="literal">false</span>, <span class="comment">//是否爬取外部链接</span></div><div class="line"> totalNum: <span class="number">10</span>, <span class="comment">//爬取页面上限，0为不限制</span></div><div class="line"> endWith: <span class="string">"html"</span>,<span class="comment">//文件结尾</span></div><div class="line"> saveStrategy: publicAPI.Strategy.SAVE_IN_ROOT,</div><div class="line"> <span class="attr">getOuterJs</span>: <span class="literal">false</span>,<span class="comment">//是否爬取远端js</span></div><div class="line"> getOuterCss: <span class="literal">false</span>,<span class="comment">//是否爬取远端Css</span></div><div class="line"> getOuterImages: <span class="literal">false</span><span class="comment">//是否爬取远端图片</span></div><div class="line">&#125;;</div></pre></td></tr></table></figure>
+<p>为了简化操作，判断是否为外部资源的方式简化为判断URL是否以http或https为开头，虽然不够严谨，但是能保证爬取下来的网页能根据URL获取到资源。</p>
+<p> 保存策略目前也只实现了SAVE_IN_ROOT而已，懒~</p>
+<h4 id="3-全局变量"><a href="#3-全局变量" class="headerlink" title="3. 全局变量"></a>3. 全局变量</h4> <figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"> <span class="keyword">var</span> list = [config.url]; <span class="comment">//所要爬取的网页链接队列</span></div><div class="line"><span class="keyword">var</span> count = <span class="number">0</span>; <span class="comment">//当前爬取的网页数</span></div><div class="line"><span class="keyword">var</span> date = <span class="literal">null</span>; </div><div class="line"><span class="keyword">var</span> urlInfo = url.parse(config.url); <span class="comment">//入口链接信息</span></div></pre></td></tr></table></figure>
+<h4 id="4-获取服务器渲染之后的页面"><a href="#4-获取服务器渲染之后的页面" class="headerlink" title="4. 获取服务器渲染之后的页面"></a>4. 获取服务器渲染之后的页面</h4><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">phantom.create().then(<span class="function"><span class="keyword">function</span> (<span class="params">ph</span>) </span>&#123;</div><div class="line">     ph.createPage().then(<span class="function"><span class="keyword">function</span> (<span class="params">page</span>) </span>&#123;</div><div class="line">         page.open(url).then(<span class="function"><span class="keyword">function</span> (<span class="params">status</span>) </span>&#123;    </div><div class="line">             <span class="keyword">if</span> (status == <span class="string">'success'</span>) &#123;</div><div class="line">                 page.property(<span class="string">'content'</span>).then(<span class="function"><span class="keyword">function</span> (<span class="params">html</span>) </span>&#123;</div><div class="line">                     <span class="built_in">console</span>.log(html);</div><div class="line">                 &#125;</div><div class="line">             &#125;</div><div class="line">         &#125;)</div><div class="line">     &#125;);</div></pre></td></tr></table></figure>
+<h4 id="5-解析DOM树"><a href="#5-解析DOM树" class="headerlink" title="5. 解析DOM树"></a>5. 解析DOM树</h4><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> $ = cheerio.load(html);</div><div class="line"><span class="keyword">var</span> js, css , images;</div><div class="line"><span class="comment">//获取js列表</span></div><div class="line"><span class="keyword">var</span> scripts = $(<span class="string">"script"</span>);</div><div class="line">js = getJs(scripts);</div><div class="line"><span class="built_in">console</span>.log(js);</div><div class="line"><span class="comment">//获取css</span></div><div class="line"><span class="keyword">var</span> stylesheets = $(<span class="string">"link[rel='stylesheet']"</span>);</div><div class="line">css = getCss(stylesheets);</div><div class="line"><span class="built_in">console</span>.log(css);</div><div class="line"><span class="comment">//获取图片</span></div><div class="line"><span class="keyword">var</span> imgs = $(<span class="string">"img"</span>);</div><div class="line">images = getImages(imgs);</div><div class="line"><span class="built_in">console</span>.log(images);</div><div class="line"><span class="comment">//获取链接</span></div><div class="line"><span class="keyword">if</span>(!config.totalNum || count &lt; config.totalNum)&#123;</div><div class="line">   <span class="keyword">var</span> links = $(<span class="string">"a"</span>);</div><div class="line">   getLink(links,url);</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>获取页面中所有的js、css和img，分别进行调用函数，返回所要爬取的文件的url数组。</p>
+<h4 id="6-getJs-等函数"><a href="#6-getJs-等函数" class="headerlink" title="6. getJs()等函数"></a>6. getJs()等函数</h4><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">getJs</span>(<span class="params">scripts</span>) </span>&#123;</div><div class="line"> <span class="keyword">var</span> res = [];</div><div class="line"> scripts.each(<span class="function"><span class="keyword">function</span> (<span class="params">i, script</span>) </span>&#123;</div><div class="line">     <span class="keyword">var</span> src = script.attribs.src;</div><div class="line">     <span class="keyword">if</span> (!src)</div><div class="line">         <span class="keyword">return</span>;</div><div class="line">     <span class="keyword">if</span> (!config.getOuterJs) &#123;</div><div class="line">         <span class="keyword">if</span> (<span class="regexp">/^https?/</span>.test(src))</div><div class="line">             <span class="keyword">return</span>;</div><div class="line">     &#125;</div><div class="line">     res.push(src);</div><div class="line"> &#125;);</div><div class="line"> <span class="keyword">return</span> publicAPI.uniqueArray(res);</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>getJs()函数，遍历每一个元素，判断其src属性是否存在，不存在则跳过，再根据配置判断是否获取外部文件，满足各条件的加入到res数组中，最后去重后返回结果。</p>
+<p> getCss、getImages和getLink方法与上述类似，不同的是getLink多了一些判断和URL格式化操作。</p>
+<h4 id="7-保存网页文本"><a href="#7-保存网页文本" class="headerlink" title="7. 保存网页文本"></a>7. 保存网页文本</h4> <figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div></pre></td><td class="code"><pre><div class="line"> <span class="keyword">var</span> saveHtml = <span class="function"><span class="keyword">function</span> (<span class="params">url, html, callback</span>) </span>&#123;</div><div class="line"> url = url.match(<span class="regexp">/https?:\/\/((?:(?![\?])[\S])*)/</span>)[<span class="number">1</span>];<span class="comment">//截取？以前的字符串</span></div><div class="line"> <span class="keyword">var</span> endWith = <span class="regexp">/\/$/</span>.test(url); <span class="comment">//判断是否以反斜杠结尾</span></div><div class="line"> url = endWith ? url.match(<span class="regexp">/(\S*)\/$/</span>)[<span class="number">1</span>] : url; <span class="comment">//去除反斜杠</span></div><div class="line"> <span class="keyword">var</span> reg = <span class="keyword">new</span> <span class="built_in">RegExp</span>(<span class="regexp">/\.html|\.htm|\.asp|\.jsp$/</span>); <span class="comment">//判断是否以这些字符串结尾</span></div><div class="line"> <span class="keyword">var</span> usePathAsName = reg.test(url);</div><div class="line"> <span class="keyword">var</span> array = url.split(<span class="string">"/"</span>); <span class="comment">//以反斜杠分割字符串</span></div><div class="line"> array[<span class="number">0</span>] = urlInfo.hostname;</div><div class="line"> <span class="keyword">var</span> length = usePathAsName ? array.length<span class="number">-1</span>: array.length;</div><div class="line"> <span class="keyword">var</span> currentPath = config.savePath;</div><div class="line"></div><div class="line"> <span class="keyword">for</span> (<span class="keyword">var</span> i = <span class="number">0</span>; i &lt; length; i++) &#123; <span class="comment">//遍历数组，逐层判断当前路径是否存在指定文件夹，不存在则创建</span></div><div class="line">     (<span class="function"><span class="keyword">function</span> (<span class="params">i</span>) </span>&#123;</div><div class="line">         currentPath += <span class="string">"/"</span> + array[i];</div><div class="line">         <span class="keyword">if</span> (fs.existsSync(currentPath)) &#123;</div><div class="line">             write(i, callback)</div><div class="line">         &#125; <span class="keyword">else</span> &#123;</div><div class="line">             <span class="keyword">try</span> &#123;</div><div class="line">                 fs.mkdirSync(currentPath);</div><div class="line">                 write(i, callback)</div><div class="line">             &#125;<span class="keyword">catch</span> (err)&#123;</div><div class="line">                 <span class="built_in">console</span>.log(err);</div><div class="line">             &#125;</div><div class="line">         &#125;</div><div class="line">     &#125;)(i)</div><div class="line"> &#125;</div><div class="line"></div><div class="line"> <span class="function"><span class="keyword">function</span> <span class="title">write</span>(<span class="params">index, callback</span>) </span>&#123; <span class="comment">// 若为最后一个元素，执行写入操作</span></div><div class="line">     <span class="keyword">if</span> (index == length - <span class="number">1</span>) &#123;</div><div class="line">         <span class="keyword">var</span> fileName = endWith ? <span class="string">"index."</span> + config.endWith : usePathAsName ? array[array.length<span class="number">-1</span>] : array[array.length<span class="number">-1</span>] + config.endWith; <span class="comment">//根据情况选择文件名</span></div><div class="line">         fs.writeFile(currentPath + <span class="string">"/"</span> + fileName, html, <span class="function"><span class="keyword">function</span> (<span class="params">err</span>) </span>&#123;</div><div class="line">             <span class="keyword">if</span> (err) &#123;</div><div class="line">                 <span class="built_in">console</span>.log(err, <span class="string">"appendFile"</span>);</div><div class="line">             &#125; <span class="keyword">else</span> &#123;</div><div class="line">                 callback();</div><div class="line">             &#125;</div><div class="line">         &#125;);</div><div class="line">     &#125;</div><div class="line"> &#125;</div><div class="line">&#125;;</div></pre></td></tr></table></figure>
+<h4 id="8-保存js等资源"><a href="#8-保存js等资源" class="headerlink" title="8. 保存js等资源"></a>8. 保存js等资源</h4><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div><div class="line">73</div><div class="line">74</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> saveJs = <span class="function"><span class="keyword">function</span> (<span class="params">url, js, callback ,callback2</span>) </span>&#123;</div><div class="line"> <span class="keyword">if</span>(!js.length)&#123;</div><div class="line">     callback2(<span class="literal">null</span>);</div><div class="line">     <span class="keyword">return</span>;</div><div class="line"> &#125;</div><div class="line"> <span class="keyword">var</span> length = js.length;</div><div class="line"> <span class="keyword">var</span> count = <span class="number">0</span>;</div><div class="line"> <span class="keyword">var</span> root = config.savePath + <span class="string">"/"</span> + urlInfo.hostname;</div><div class="line"> <span class="keyword">if</span>(config.saveStrategy == publicAPI.Strategy.SAVE_IN_ROOT)&#123;</div><div class="line">     <span class="keyword">if</span>(fs.existsSync(root))&#123;</div><div class="line">         write(callback,callback2)</div><div class="line">     &#125;<span class="keyword">else</span>&#123;</div><div class="line">         fs.mkdirSync(root);</div><div class="line">         write(callback,callback2)</div><div class="line">     &#125;</div><div class="line"> &#125;</div><div class="line"></div><div class="line"> <span class="function"><span class="keyword">function</span> <span class="title">write</span>(<span class="params">callback,callback2</span>) </span>&#123;</div><div class="line">     <span class="keyword">for</span>(<span class="keyword">var</span> i = <span class="number">0</span>;i&lt;length;i++)&#123;</div><div class="line">         (<span class="function"><span class="keyword">function</span> (<span class="params">i</span>) </span>&#123;</div><div class="line">             <span class="keyword">var</span> reg = <span class="keyword">new</span> <span class="built_in">RegExp</span>(<span class="regexp">/^\//</span>);</div><div class="line">             <span class="keyword">var</span> path = reg.test(js[i]) ? js[i].substring(<span class="number">1</span>) : js[i];</div><div class="line">             <span class="keyword">var</span> array = path.split(<span class="string">"/"</span>);</div><div class="line">             <span class="keyword">var</span> currentPath = root;</div><div class="line">             <span class="keyword">var</span> len = array.length;</div><div class="line">             <span class="keyword">for</span>(<span class="keyword">var</span> j =<span class="number">0</span>;j&lt;len<span class="number">-1</span>;j++)&#123; <span class="comment">//创建对应目录</span></div><div class="line">                 (<span class="function"><span class="keyword">function</span> (<span class="params">j</span>) </span>&#123;</div><div class="line">                     currentPath += <span class="string">"/"</span> + array[j];</div><div class="line">                     <span class="keyword">if</span> (fs.existsSync(currentPath)) &#123;</div><div class="line">                         <span class="keyword">if</span>(j == len<span class="number">-2</span>)&#123;</div><div class="line">                             fetch(js[i],<span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</div><div class="line">                                 callback(count, js[i])</div><div class="line">                             &#125;,callback2)</div><div class="line">                         &#125;</div><div class="line">                     &#125; <span class="keyword">else</span> &#123;</div><div class="line">                         <span class="keyword">try</span> &#123;</div><div class="line">                             fs.mkdirSync(currentPath);<span class="built_in">console</span>.log(j,<span class="number">4</span>);</div><div class="line">                             <span class="keyword">if</span>(j == len<span class="number">-2</span>)&#123;</div><div class="line">                                 fetch(js[i],<span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</div><div class="line">                                     callback(count, js[i])</div><div class="line">                                 &#125;,callback2)</div><div class="line">                             &#125;</div><div class="line">                         &#125;<span class="keyword">catch</span> (err)&#123;</div><div class="line">                             <span class="built_in">console</span>.log(<span class="string">"error!"</span>)</div><div class="line">                         &#125;</div><div class="line">                     &#125;</div><div class="line">                 &#125;)(j);</div><div class="line">             &#125;</div><div class="line">         &#125;)(i);</div><div class="line">     &#125;</div><div class="line"> &#125;</div><div class="line"></div><div class="line"> <span class="function"><span class="keyword">function</span> <span class="title">fetch</span>(<span class="params">js,callback,callback2</span>) </span>&#123;</div><div class="line">     request(url+js,<span class="function"><span class="keyword">function</span> (<span class="params">err,res,body</span>) </span>&#123; <span class="comment">//获取资源，再写入</span></div><div class="line">         <span class="comment">//console.log(body);</span></div><div class="line">         js = js.match(<span class="regexp">/((?:(?![\?])[\S])*)/</span>)[<span class="number">1</span>];</div><div class="line">         <span class="keyword">if</span>(err)&#123;</div><div class="line">             count++;</div><div class="line">         &#125;<span class="keyword">else</span>&#123;</div><div class="line">             fs.writeFile(root +<span class="string">"/"</span>+ js,body,<span class="function"><span class="keyword">function</span> (<span class="params">err</span>) </span>&#123;</div><div class="line">                 count++;</div><div class="line">                 <span class="keyword">if</span>(count == length)</div><div class="line">                     callback2(<span class="literal">null</span>);</div><div class="line">                 <span class="keyword">if</span>(err)&#123;</div><div class="line">                     <span class="built_in">console</span>.log(err);</div><div class="line">                 &#125;<span class="keyword">else</span>&#123;</div><div class="line">                     callback();</div><div class="line">                 &#125;</div><div class="line">             &#125;);</div><div class="line"></div><div class="line">         &#125;</div><div class="line">     &#125;)</div><div class="line"> &#125;</div><div class="line">&#125;;</div></pre></td></tr></table></figure>
+<p>保存js等资源的方法比保存网页的更为复杂，主要是因为一个页面可能存在多个js、css等资源，这里有两种保存的策略，一是直接将所有文件保存在根目录下，如根目录如localhost，现有js文件链接为“localhost:8080//abc/js/main/js”，将该js文件保存在localhost/js/下，另一种是保存在对应目录下，即localhost/abc/js/下，但是第二种方法会导致出现很多重复的文件，就没有实现出来。</p>
+<p> 获取css、images的方法类似，不做赘述。</p>
+<h4 id="9-并行执行写入操作"><a href="#9-并行执行写入操作" class="headerlink" title="9. 并行执行写入操作"></a>9. 并行执行写入操作</h4> <figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div></pre></td><td class="code"><pre><div class="line"> <span class="keyword">async</span>.parallel([</div><div class="line"> <span class="function"><span class="keyword">function</span> (<span class="params">callback</span>) </span>&#123;</div><div class="line">     saveHtml(url, html, <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</div><div class="line">         <span class="built_in">console</span>.log(<span class="string">"Page:"</span>+(count+<span class="number">1</span>)+<span class="string">"    Url:"</span>+url+<span class="string">"    success!\n"</span>);</div><div class="line">         callback(<span class="literal">null</span>);</div><div class="line">     &#125;);</div><div class="line"> &#125;,</div><div class="line"> <span class="function"><span class="keyword">function</span> (<span class="params">callback</span>) </span>&#123;</div><div class="line">     saveJs(url,js, <span class="function"><span class="keyword">function</span> (<span class="params">x, js</span>) </span>&#123;</div><div class="line">         <span class="built_in">console</span>.log(<span class="string">"Page:"</span>+(count+<span class="number">1</span>)+<span class="string">"    Js"</span>+(x+<span class="number">1</span>)+<span class="string">"     Src:"</span>+js+<span class="string">"    Success!\n"</span>);</div><div class="line">     &#125;,callback);</div><div class="line"> &#125;,</div><div class="line"> <span class="function"><span class="keyword">function</span> (<span class="params">callback</span>) </span>&#123;</div><div class="line">     saveCss(url, css, <span class="function"><span class="keyword">function</span> (<span class="params">x, css</span>) </span>&#123;</div><div class="line">         <span class="built_in">console</span>.log(<span class="string">"Page:"</span>+(count+<span class="number">1</span>)+<span class="string">"    Css"</span>+(x+<span class="number">1</span>)+<span class="string">"     Src:"</span>+css+<span class="string">"    Success!\n"</span>);</div><div class="line">     &#125;,callback);</div><div class="line"> &#125;,</div><div class="line"> <span class="function"><span class="keyword">function</span> (<span class="params">callback</span>) </span>&#123;</div><div class="line">     saveImage(url, images, <span class="function"><span class="keyword">function</span> (<span class="params">x,img</span>) </span>&#123;</div><div class="line">         <span class="built_in">console</span>.log(<span class="string">"Page:"</span>+(count+<span class="number">1</span>)+<span class="string">"    Images"</span>+(x+<span class="number">1</span>)+<span class="string">"     Src:"</span>+img+<span class="string">"    Success!\n"</span>);</div><div class="line">     &#125;,callback);</div><div class="line"> &#125;</div><div class="line">],<span class="function"><span class="keyword">function</span> (<span class="params">err</span>) </span>&#123;</div><div class="line"> page.close();</div><div class="line"> <span class="keyword">if</span>(err)&#123;</div><div class="line">     <span class="built_in">console</span>.log(err,<span class="string">"ERROR IN PARALLEL PAGE "</span>+(count+<span class="number">1</span>));</div><div class="line"> &#125;<span class="keyword">else</span> &#123;</div><div class="line">     count++;</div><div class="line">     <span class="built_in">console</span>.log(<span class="string">"Page:"</span>+(count)+<span class="string">" finished!"</span>);</div><div class="line">     <span class="keyword">var</span> cur = list.shift(),next = list[<span class="number">0</span>];</div><div class="line">     next = <span class="regexp">/^https?:/</span>.test(next) ? next : cur+<span class="string">'/'</span>+next;</div><div class="line">     <span class="keyword">if</span>( count &lt; config.totalNum)</div><div class="line">         requirePage(next);</div><div class="line"> &#125;</div><div class="line">&#125;)</div></pre></td></tr></table></figure>
+<p>用async模块，并行处理写入操作，当所有写入操作结束后，从list队列获取下一跳地址，循环操作。</p>
+<h4 id="10-测试-爬取http-localhost-8081-结果如图："><a href="#10-测试-爬取http-localhost-8081-结果如图：" class="headerlink" title="10. 测试 爬取http://localhost:8081/ 结果如图："></a>10. 测试 爬取<a href="http://localhost:8081/" target="_blank" rel="external">http://localhost:8081/</a> 结果如图：</h4><div align="center"><br><img src="https://raw.githubusercontent.com/WillBean/react-native-summary.github.io/master/images/node-crawler/dir.png" width="50%"><br></div>
+        </div>
+
+        <blockquote class="post-copyright">
+    <div class="content">
+        
+
+        
+    </div>
+    <footer>
+        <a href="https://willbean.github.io">
+            <img src="/" alt="WillBean">
+            WillBean
+        </a>
+    </footer>
+</blockquote>
+
+        
+
+
+        <div class="post-footer">
+            
+	<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Node-Crawler/">Node, Crawler</a></li></ul>
+
+
+            
+
+
+        </div>
+    </div>
+
+    
+<nav class="post-nav flex-row flex-justify-between">
+  
+    <div class="waves-block waves-effect prev">
+      <a href="/2017/06/24/react-native-summary/" id="post-prev" class="post-nav-link">
+        <div class="tips"><i class="icon icon-angle-left icon-lg icon-pr"></i> Prev</div>
+        <h4 class="title">react-native-summary</h4>
+      </a>
+    </div>
+  
+
+  
+    <div class="waves-block waves-effect next">
+      <a href="/2016/11/07/cloud-server-configure/" id="post-next" class="post-nav-link">
+        <div class="tips">Next <i class="icon icon-angle-right icon-lg icon-pl"></i></div>
+        <h4 class="title">cloud-server-configure</h4>
+      </a>
+    </div>
+  
+</nav>
+
+
+
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</article>
+
+
+
+</div>
+
+        <footer class="footer">
+    <div class="top">
+        
+
+        <p>
+            
+                <span><a href="/atom.xml" target="_blank" class="rss" title="rss"><i class="icon icon-lg icon-rss"></i></a></span>
+            
+            <span>博客内容遵循 <a rel="license" href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh">知识共享 署名 - 非商业性 - 相同方式共享 4.0 国际协议</a></span>
+        </p>
+    </div>
+    <div class="bottom">
+        <p><span>WillBean &copy; 2017</span>
+            <span>
+                
+                Power by <a href="http://hexo.io/" target="_blank">Hexo</a> Theme <a href="https://github.com/yscoder/hexo-theme-indigo" target="_blank">indigo</a>
+            </span>
+        </p>
+    </div>
+</footer>
+
+    </main>
+    <div class="mask" id="mask"></div>
+<a href="javascript:;" id="gotop" class="waves-effect waves-circle waves-light"><span class="icon icon-lg icon-chevron-up"></span></a>
+
+
+    <script src="//cdn.bootcss.com/node-waves/0.7.4/waves.min.js"></script>
+<script>
+var BLOG = { ROOT: '/', SHARE: , REWARD: false };
+
+
+</script>
+
+<script src="/js/main.min.js?v=1.6.10"></script>
+
+
+
+
+
+
+
+
+
+
+</body>
+</html>
