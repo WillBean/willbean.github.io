@@ -16,6 +16,8 @@
     <title>node-crawler | WillBean&#39;s Blog | 我可能是个假程序猿吧</title>
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
     
+    <meta name="theme-color" content="#cccccc">
+    
     
     <meta name="keywords" content="Node, Crawler">
     <meta name="description" content="Node爬虫爬取网页静态资源一、准备工作 首先当然是安装node，这一步忽略。 然后是各种模块，本实例用到了http、fs、url、cheerio、request、async、phantom，前三个是node自带的，无需install。 因为要服务器渲染，所以要用到phantomjs，这个需要自行安装一下，最后再配置一下全局环境。  二、模块解释 cheerio模块用于解析DOM树，进行DOM操作">
@@ -34,23 +36,23 @@
     
         <link rel="alternate" type="application/atom+xml" title="WillBean&#39;s Blog" href="/atom.xml">
     
-    <link rel="shortcut icon" href="/">
-    <link rel="stylesheet" href="/css/style.css?v=1.6.10">
+    <link rel="shortcut icon" href="/favicon.ico">
+    <link rel="stylesheet" href="//unpkg.com/hexo-theme-material-indigo@latest/css/style.css">
     <script>window.lazyScripts=[]</script>
 </head>
 
 <body>
     <div id="loading" class="active"></div>
 
-    <aside id="menu"  >
+    <aside id="menu" class="hide" >
   <div class="inner flex-row-vertical">
     <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menu-off">
         <i class="icon icon-lg icon-close"></i>
     </a>
-    <div class="brand-wrap" style="background-image:url(/)">
+    <div class="brand-wrap" style="background-image:url(/img/brand.jpg)">
       <div class="brand">
         <a href="/" class="avatar waves-effect waves-circle waves-light">
-          <img src="/">
+          <img src="/img/avatar.jpg">
         </a>
         <hgroup class="introduce">
           <h5 class="nickname">WillBean</h5>
@@ -60,6 +62,48 @@
     </div>
     <div class="scroll-wrap flex-col">
       <ul class="nav">
+        
+            <li class="waves-block waves-effect">
+              <a href="/"  >
+                <i class="icon icon-lg icon-home"></i>
+                主页
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/archives"  >
+                <i class="icon icon-lg icon-archives"></i>
+                Archives
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/tags"  >
+                <i class="icon icon-lg icon-tags"></i>
+                Tags
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/categories"  >
+                <i class="icon icon-lg icon-th-list"></i>
+                Categories
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="https://github.com/WillBean" target="_blank" >
+                <i class="icon icon-lg icon-github"></i>
+                Github
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/custom"  >
+                <i class="icon icon-lg icon-link"></i>
+                Repository
+              </a>
+            </li>
         
       </ul>
     </div>
@@ -74,6 +118,20 @@
         </a>
         <div class="flex-col header-title ellipsis">node-crawler</div>
         
+        <div class="search-wrap" id="search-wrap">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="back">
+                <i class="icon icon-lg icon-chevron-left"></i>
+            </a>
+            <input type="text" id="key" class="search-input" autocomplete="off" placeholder="输入感兴趣的关键字">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="search">
+                <i class="icon icon-lg icon-search"></i>
+            </a>
+        </div>
+        
+        
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menuShare">
+            <i class="icon icon-lg icon-share-alt"></i>
+        </a>
         
     </div>
 </header>
@@ -99,6 +157,13 @@
 
 
 <div class="container body-wrap">
+    
+    <aside class="post-widget">
+        <nav class="post-toc-wrap" id="post-toc">
+            <h4>TOC</h4>
+            <ol class="post-toc"><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#Node爬虫爬取网页静态资源"><span class="post-toc-number">1.</span> <span class="post-toc-text">Node爬虫爬取网页静态资源</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#一、准备工作"><span class="post-toc-number">1.0.1.</span> <span class="post-toc-text">一、准备工作</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#二、模块解释"><span class="post-toc-number">1.0.2.</span> <span class="post-toc-text">二、模块解释</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#三、具体实现"><span class="post-toc-number">1.0.3.</span> <span class="post-toc-text">三、具体实现</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#1-公用接口"><span class="post-toc-number">1.0.3.1.</span> <span class="post-toc-text">1. 公用接口</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#2-配置"><span class="post-toc-number">1.0.3.2.</span> <span class="post-toc-text">2. 配置</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#3-全局变量"><span class="post-toc-number">1.0.3.3.</span> <span class="post-toc-text">3. 全局变量</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#4-获取服务器渲染之后的页面"><span class="post-toc-number">1.0.3.4.</span> <span class="post-toc-text">4. 获取服务器渲染之后的页面</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#5-解析DOM树"><span class="post-toc-number">1.0.3.5.</span> <span class="post-toc-text">5. 解析DOM树</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#6-getJs-等函数"><span class="post-toc-number">1.0.3.6.</span> <span class="post-toc-text">6. getJs()等函数</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#7-保存网页文本"><span class="post-toc-number">1.0.3.7.</span> <span class="post-toc-text">7. 保存网页文本</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#8-保存js等资源"><span class="post-toc-number">1.0.3.8.</span> <span class="post-toc-text">8. 保存js等资源</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#9-并行执行写入操作"><span class="post-toc-number">1.0.3.9.</span> <span class="post-toc-text">9. 并行执行写入操作</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#10-测试-爬取http-localhost-8081-结果如图："><span class="post-toc-number">1.0.3.10.</span> <span class="post-toc-text">10. 测试 爬取http://localhost:8081/ 结果如图：</span></a></li></ol></li></ol></li></ol></li></ol>
+        </nav>
+    </aside>
     
 <article id="post-node-crawler"
   class="post-article article-type-post fade" itemprop="blogPost">
@@ -151,18 +216,28 @@
         <blockquote class="post-copyright">
     <div class="content">
         
+<span class="post-time">
+    最后更新时间：<time datetime="2017-06-28T08:18:02.148Z" itemprop="dateUpdated">2017-06-28 16:18:02</time>
+</span><br>
 
+
+        
+        这里可以写作者留言，标签和 hexo 中所有变量及辅助函数等均可调用，示例：<a href="/2016/12/11/node-crawler/" target="_blank" rel="external">https://willbean.github.io/2016/12/11/node-crawler/</a>
         
     </div>
     <footer>
         <a href="https://willbean.github.io">
-            <img src="/" alt="WillBean">
+            <img src="/img/avatar.jpg" alt="WillBean">
             WillBean
         </a>
     </footer>
 </blockquote>
 
         
+<div class="page-reward">
+    <a id="rewardBtn" href="javascript:;" class="page-reward-btn waves-effect waves-circle waves-light">赏</a>
+</div>
+
 
 
         <div class="post-footer">
@@ -171,6 +246,51 @@
 
 
             
+<div class="page-share-wrap">
+    
+
+<div class="page-share" id="pageShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=https://willbean.github.io/2016/12/11/node-crawler/&title=《node-crawler》 — WillBean's Blog&pic=https://willbean.github.io/img/avatar.jpg" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://willbean.github.io/2016/12/11/node-crawler/&title=《node-crawler》 — WillBean's Blog&source=这是一个准大四学生的前端博客。" data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https://willbean.github.io/2016/12/11/node-crawler/" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《node-crawler》 — WillBean's Blog&url=https://willbean.github.io/2016/12/11/node-crawler/&via=https://willbean.github.io" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=https://willbean.github.io/2016/12/11/node-crawler/" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+
+    <a href="javascript:;" id="shareFab" class="page-share-fab waves-effect waves-circle">
+        <i class="icon icon-share-alt icon-lg"></i>
+    </a>
+</div>
+
 
 
         </div>
@@ -211,10 +331,53 @@
 
 
 
+<section class="comments" id="comments">
+    <div id="gitment_thread"></div>
+    <link rel="stylesheet" href="//unpkg.com/gitment/style/default.css">
+    <script src="//unpkg.com/gitment/dist/gitment.browser.js"></script>
+    <script>
+        var gitment = new Gitment({
+            owner: '',
+            repo: '',
+            oauth: {
+                client_id: '',
+                client_secret: '',
+            },
+        })
+        gitment.render('comments')
+    </script>
+</section>
+
 
 
 
 </article>
+
+<div id="reward" class="page-modal reward-lay">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <h3 class="reward-title">
+        <i class="icon icon-quote-left"></i>
+        谢谢大爷~
+        <i class="icon icon-quote-right"></i>
+    </h3>
+    <div class="reward-content">
+        
+        <div class="reward-code">
+            <img id="rewardCode" src="/img/wechat.jpg" alt="打赏二维码">
+        </div>
+        
+        <label class="reward-toggle">
+            <input id="rewardToggle" type="checkbox" class="reward-toggle-check"
+                data-wechat="/img/wechat.jpg" data-alipay="/img/alipay.jpg">
+            <div class="reward-toggle-ctrol">
+                <span class="reward-toggle-item wechat">微信</span>
+                <span class="reward-toggle-label"></span>
+                <span class="reward-toggle-item alipay">支付宝</span>
+            </div>
+        </label>
+        
+    </div>
+</div>
 
 
 
@@ -232,7 +395,7 @@
         </p>
     </div>
     <div class="bottom">
-        <p><span>WillBean &copy; 2017</span>
+        <p><span>WillBean &copy; 2016 - 2017</span>
             <span>
                 
                 Power by <a href="http://hexo.io/" target="_blank">Hexo</a> Theme <a href="https://github.com/yscoder/hexo-theme-indigo" target="_blank">indigo</a>
@@ -246,14 +409,80 @@
 <a href="javascript:;" id="gotop" class="waves-effect waves-circle waves-light"><span class="icon icon-lg icon-chevron-up"></span></a>
 
 
+
+<div class="global-share" id="globalShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=https://willbean.github.io/2016/12/11/node-crawler/&title=《node-crawler》 — WillBean's Blog&pic=https://willbean.github.io/img/avatar.jpg" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://willbean.github.io/2016/12/11/node-crawler/&title=《node-crawler》 — WillBean's Blog&source=这是一个准大四学生的前端博客。" data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https://willbean.github.io/2016/12/11/node-crawler/" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《node-crawler》 — WillBean's Blog&url=https://willbean.github.io/2016/12/11/node-crawler/&via=https://willbean.github.io" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=https://willbean.github.io/2016/12/11/node-crawler/" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+<div class="page-modal wx-share" id="wxShare">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAMYAAADGCAAAAACs8KCBAAACLUlEQVR42u3aO27DMBAFwNz/0kqbIpbfW8pBRA2rALFNjYrF/r6+4nP8OMl/jxfn1XeTWy44GBgYt2Ucp6dlnH8rvyv/PAYGxnMYSShMrpm9oOTeN8+MgYGBMUrsEl4SsjEwMDBmjLZMPSed8zAwMDBWEri84GxfygdrcQwMjBsy8q773//9kfkGBgbGrRhHedrgOxtM1k+FgYGxNSMPcHlatl6sts+DgYGxN2O9oZa02NqkM7/lsr4gBgbGP2asjydnv9AunEVgDAyMTRltOTorQdsAnd+OgYHxBMa1yVn+iHkxXLwmDAyMxzDa8nXWVstL32LBAgMDY1NGO3RsB5mzV1YX0hgYGFsz8niVBL42vM7Cd9Q1xMDA2IgxW3coguCo6K1DMwYGxtaMlVZ+G6xnCx/1sgUGBsZ2jCM47QpFm97NBg+/pIYYGBibMmaDgZUVrnbMUBwMDIwHMFbCX9ueW1+2wMDAeBojac0nTf9Zky4pm4thAwYGxqaM5IJZOM4TxHwhrFi2wMDA2JSx0m/Pi952hBCVuBgYGA9gtGnfSkjNhxDFwBUDA2NTxlGevLDMG2qXJYUYGBibMlbmg0naNxtS5ssZNQYDA+O2jCTItj/dpnpRDnv+sjAwMB7AyANf+3DXpnrDwQAGBsbDGG1x26abs2UODAwMjGQwkA8sV17NmyIWAwNja8ZsALky1MzHAxe32zAwMG7IWCodyzJ1tgR22SATAwPjfoxvfgPbGd4cnewAAAAASUVORK5CYII=" alt="微信分享二维码">
+</div>
+
+
+
+
     <script src="//cdn.bootcss.com/node-waves/0.7.4/waves.min.js"></script>
 <script>
-var BLOG = { ROOT: '/', SHARE: , REWARD: false };
+var BLOG = { ROOT: '/', SHARE: true, REWARD: true };
 
 
 </script>
 
-<script src="/js/main.min.js?v=1.6.10"></script>
+<script src="//unpkg.com/hexo-theme-material-indigo@latest/js/main.min.js"></script>
+
+
+<div class="search-panel" id="search-panel">
+    <ul class="search-result" id="search-result"></ul>
+</div>
+<template id="search-tpl">
+<li class="item">
+    <a href="{path}" class="waves-block waves-effect">
+        <div class="title ellipsis" title="{title}">{title}</div>
+        <div class="flex-row flex-middle">
+            <div class="tags ellipsis">
+                {tags}
+            </div>
+            <time class="flex-col time">{date}</time>
+        </div>
+    </a>
+</li>
+</template>
+
+<script src="//unpkg.com/hexo-theme-material-indigo@latest/js/search.min.js" async></script>
 
 
 
@@ -261,6 +490,23 @@ var BLOG = { ROOT: '/', SHARE: , REWARD: false };
 
 
 
+
+<script>
+(function() {
+    var OriginTitile = document.title, titleTime;
+    document.addEventListener('visibilitychange', function() {
+        if (document.hidden) {
+            document.title = '死鬼去哪里了！';
+            clearTimeout(titleTime);
+        } else {
+            document.title = '(つェ⊂)咦!又好了!';
+            titleTime = setTimeout(function() {
+                document.title = OriginTitile;
+            },2000);
+        }
+    });
+})();
+</script>
 
 
 

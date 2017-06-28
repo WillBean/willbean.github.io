@@ -16,6 +16,8 @@
     <title>WillBean&#39;s Blog | 我可能是个假程序猿吧</title>
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
     
+    <meta name="theme-color" content="#cccccc">
+    
     
     <meta name="keywords" content="前端;">
     <meta name="description" content="这是一个准大四学生的前端博客。">
@@ -31,8 +33,8 @@
     
         <link rel="alternate" type="application/atom+xml" title="WillBean&#39;s Blog" href="/atom.xml">
     
-    <link rel="shortcut icon" href="/">
-    <link rel="stylesheet" href="/css/style.css?v=1.6.10">
+    <link rel="shortcut icon" href="/favicon.ico">
+    <link rel="stylesheet" href="//unpkg.com/hexo-theme-material-indigo@latest/css/style.css">
     <script>window.lazyScripts=[]</script>
 </head>
 
@@ -44,10 +46,10 @@
     <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menu-off">
         <i class="icon icon-lg icon-close"></i>
     </a>
-    <div class="brand-wrap" style="background-image:url(/)">
+    <div class="brand-wrap" style="background-image:url(/img/brand.jpg)">
       <div class="brand">
         <a href="/" class="avatar waves-effect waves-circle waves-light">
-          <img src="/">
+          <img src="/img/avatar.jpg">
         </a>
         <hgroup class="introduce">
           <h5 class="nickname">WillBean</h5>
@@ -57,6 +59,48 @@
     </div>
     <div class="scroll-wrap flex-col">
       <ul class="nav">
+        
+            <li class="waves-block waves-effect active">
+              <a href="/"  >
+                <i class="icon icon-lg icon-home"></i>
+                主页
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/archives"  >
+                <i class="icon icon-lg icon-archives"></i>
+                Archives
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/tags"  >
+                <i class="icon icon-lg icon-tags"></i>
+                Tags
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/categories"  >
+                <i class="icon icon-lg icon-th-list"></i>
+                Categories
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="https://github.com/WillBean" target="_blank" >
+                <i class="icon icon-lg icon-github"></i>
+                Github
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/custom"  >
+                <i class="icon icon-lg icon-link"></i>
+                Repository
+              </a>
+            </li>
         
       </ul>
     </div>
@@ -71,6 +115,20 @@
         </a>
         <div class="flex-col header-title ellipsis">WillBean&#39;s Blog</div>
         
+        <div class="search-wrap" id="search-wrap">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="back">
+                <i class="icon icon-lg icon-chevron-left"></i>
+            </a>
+            <input type="text" id="key" class="search-input" autocomplete="off" placeholder="输入感兴趣的关键字">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="search">
+                <i class="icon icon-lg icon-search"></i>
+            </a>
+        </div>
+        
+        
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menuShare">
+            <i class="icon icon-lg icon-share-alt"></i>
+        </a>
         
     </div>
 </header>
@@ -121,7 +179,10 @@
     <div class="post-content" id="post-content" itemprop="postContent">
 
     
-        React Native实战总结入职有道数月，主要参与...
+        React Native实战总结入职有道数月，主要参与了精品课垂直页的改版，期间遇到了不少坑，虽然还未正式上线，但是也值得总结一波，故写下此文。
+需求介绍
+首页部分：加入日志控制工具以收集、统计用户操作；改写搜索框写法，将搜索框提取成独立的共用组件。
+垂直页部分：此次改版集中在垂直页，新版垂直页将导航部分改版加入搜索框；重新设计了Banner部分；课程分类重新设计；课程入口信息增多样式改变；...
     
 
         <a href="/2017/06/24/react-native-summary/" class="post-more waves-effect waves-button">
@@ -167,7 +228,12 @@
 
     
         Node爬虫爬取网页静态资源一、准备工作
-首先当然是安...
+首先当然是安装node，这一步忽略。
+然后是各种模块，本实例用到了http、fs、url、cheerio、request、async、phantom，前三个是node自带的，无需install。
+因为要服务器渲染，所以要用到phantomjs，这个需要自行安装一下，最后再配置一下全局环境。
+
+二、模块解释
+cheerio模块用于解析DOM树，进行DO...
     
 
         <a href="/2016/12/11/node-crawler/" class="post-more waves-effect waves-button">
@@ -212,7 +278,9 @@
     <div class="post-content" id="post-content" itemprop="postContent">
 
     
-        腾讯云ubuntu服务器配置零、域名绑定从腾讯云服务的...
+        腾讯云ubuntu服务器配置零、域名绑定从腾讯云服务的云解析里解析域名并绑定服务器公网即可。
+一、安装mysql123sudo apt-get install mysql-serversudo apt-get isntall mysql-clientsudo apt-get install libmysqlclient-dev
+第一部会提示输入密码。经过以上三部，如无意外，mysql就配置好...
     
 
         <a href="/2016/11/07/cloud-server-configure/" class="post-more waves-effect waves-button">
@@ -248,7 +316,7 @@
         </p>
     </div>
     <div class="bottom">
-        <p><span>WillBean &copy; 2017</span>
+        <p><span>WillBean &copy; 2016 - 2017</span>
             <span>
                 
                 Power by <a href="http://hexo.io/" target="_blank">Hexo</a> Theme <a href="https://github.com/yscoder/hexo-theme-indigo" target="_blank">indigo</a>
@@ -262,14 +330,80 @@
 <a href="javascript:;" id="gotop" class="waves-effect waves-circle waves-light"><span class="icon icon-lg icon-chevron-up"></span></a>
 
 
+
+<div class="global-share" id="globalShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=https://willbean.github.io/&title=WillBean's Blog&pic=https://willbean.github.io/img/avatar.jpg" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://willbean.github.io/&title=WillBean's Blog&source=这是一个准大四学生的前端博客。" data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https://willbean.github.io/" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=WillBean's Blog&url=https://willbean.github.io/&via=https://willbean.github.io" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=https://willbean.github.io/" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+<div class="page-modal wx-share" id="wxShare">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAK4AAACuCAAAAACKZ2kyAAABuElEQVR42u3aW46DMAwFUPa/aWYBI+A6Tl0qnXxVgoYDH1b8OI54nRfr6ur//17teXxi4eLitrnn7erfc0Ws7o+LizvPvQ801Xs6vx9suLi4r+TmwWhtT1xc3N/lJqnL/T24uLjv5yaJzRprrbCyIVfDxcVtcPMq5UzCs62+i4uLu8Q9i6vaOKkGrIen4+LijnDXDij51V3pEy4u7iQ3L0z0X6lzkinXUXBxcbdyqy/QGdGoHoNwcXEnudXkpBpV8gLoQwEFFxf3S9xycAmuru15mfzg4uIOcju4TvO1nPzg4uJ+lbvWas2LJslrFwIZLi7uJm7SCNnVZO20b3Fxcee5uw4u9/R8wipqz+Di4g5yq2MTa0MVa+OhuLi4k9zq8aUanvLhregT4OLijnPzQ08S1KrJVSFXw8XFHecmhYnOoEZ+xIku4+LibuWexbVW/ljLXHBxcb/F7Y9E5I9J6FGTFRcXd4T7ueCVtGTKYxm4uLiD3F0Pzkuo23I1XFzc13CrIxRJ8hM1b3BxcV/M7bRhOgMZuLi4k9x8eCIPcGv/ffhYuLi4I9x+uTNnVUNbq76Li4u7wv0DkADiMfaI98kAAAAASUVORK5CYII=" alt="微信分享二维码">
+</div>
+
+
+
+
     <script src="//cdn.bootcss.com/node-waves/0.7.4/waves.min.js"></script>
 <script>
-var BLOG = { ROOT: '/', SHARE: , REWARD: false };
+var BLOG = { ROOT: '/', SHARE: true, REWARD: false };
 
 
 </script>
 
-<script src="/js/main.min.js?v=1.6.10"></script>
+<script src="//unpkg.com/hexo-theme-material-indigo@latest/js/main.min.js"></script>
+
+
+<div class="search-panel" id="search-panel">
+    <ul class="search-result" id="search-result"></ul>
+</div>
+<template id="search-tpl">
+<li class="item">
+    <a href="{path}" class="waves-block waves-effect">
+        <div class="title ellipsis" title="{title}">{title}</div>
+        <div class="flex-row flex-middle">
+            <div class="tags ellipsis">
+                {tags}
+            </div>
+            <time class="flex-col time">{date}</time>
+        </div>
+    </a>
+</li>
+</template>
+
+<script src="//unpkg.com/hexo-theme-material-indigo@latest/js/search.min.js" async></script>
 
 
 
@@ -277,6 +411,23 @@ var BLOG = { ROOT: '/', SHARE: , REWARD: false };
 
 
 
+
+<script>
+(function() {
+    var OriginTitile = document.title, titleTime;
+    document.addEventListener('visibilitychange', function() {
+        if (document.hidden) {
+            document.title = '死鬼去哪里了！';
+            clearTimeout(titleTime);
+        } else {
+            document.title = '(つェ⊂)咦!又好了!';
+            titleTime = setTimeout(function() {
+                document.title = OriginTitile;
+            },2000);
+        }
+    });
+})();
+</script>
 
 
 
