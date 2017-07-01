@@ -19,9 +19,9 @@
     <meta name="theme-color" content="#cccccc">
     
     
-    <meta name="keywords" content="ReactNative">
+    <meta name="keywords" content="ReactNative,Javascript,HTML">
     <meta name="description" content="入职有道数月，主要参与了精品课垂直页的改版，期间遇到了不少坑，虽然还未正式上线，但是也值得总结一波，故写下此文。 需求介绍 首页部分：加入日志控制工具以收集、统计用户操作；改写搜索框写法，将搜索框提取成独立的共用组件。 垂直页部分：此次改版集中在垂直页，新版垂直页将导航部分改版加入搜索框；重新设计了Banner部分；课程分类重新设计；课程入口信息增多样式改变；将原本的两列布局改成新版的一列布局，还">
-<meta name="keywords" content="ReactNative">
+<meta name="keywords" content="ReactNative,Javascript,HTML">
 <meta property="og:type" content="article">
 <meta property="og:title" content="React Native实战总结">
 <meta property="og:url" content="https://willbean.github.io/2017/06/24/react-native-summary/index.html">
@@ -39,7 +39,7 @@
 <meta property="og:image" content="https://raw.githubusercontent.com/WillBean/react-native-summary.github.io/master/images/react-native-summary/android2.png">
 <meta property="og:image" content="https://raw.githubusercontent.com/WillBean/react-native-summary.github.io/master/images/react-native-summary/android3.png">
 <meta property="og:image" content="https://raw.githubusercontent.com/WillBean/react-native-summary.github.io/master/images/react-native-summary/bundle.png">
-<meta property="og:updated_time" content="2017-07-01T06:24:11.552Z">
+<meta property="og:updated_time" content="2017-07-01T07:51:35.934Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="React Native实战总结">
 <meta name="twitter:description" content="入职有道数月，主要参与了精品课垂直页的改版，期间遇到了不少坑，虽然还未正式上线，但是也值得总结一波，故写下此文。 需求介绍 首页部分：加入日志控制工具以收集、统计用户操作；改写搜索框写法，将搜索框提取成独立的共用组件。 垂直页部分：此次改版集中在垂直页，新版垂直页将导航部分改版加入搜索框；重新设计了Banner部分；课程分类重新设计；课程入口信息增多样式改变；将原本的两列布局改成新版的一列布局，还">
@@ -220,7 +220,7 @@
 <li>React native的元素堆叠顺序无法通过zIndex，所以如果将导航组件写在最前面的话，搜索页会被下面的ScrollView遮盖。<br><br>解决方案：将搜索框改为绝对定位并置于文档最后。</li>
 <li>导航标题字数不一，如果搜索框宽度固定，可能会与标题重叠。<br><br>解决方案：在原有导航位置放置一个仅有背景色和高度的View组件，将标题和搜索框作为一个整体放置在文档最下面，然后通过绝对定位覆盖在View组件上层，此时搜索框就可以设置为自适应宽度了。</li>
 </ul>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">&lt;View style=&#123;[styles.container, Platform.OS === <span class="string">'android'</span> &amp;&amp; !isTeacher ? &#123;<span class="attr">marginTop</span>: tag.get(<span class="string">'hideStatusBar'</span>) ? statusBarHeight : <span class="number">0</span>&#125; : &#123;<span class="attr">marginTop</span>: <span class="number">0</span>&#125;]&#125;&gt;</div><div class="line">  &#123;isTeacher ? <span class="literal">null</span> : &lt;View style=&#123;styles.headNav&#125;/&gt;&#125; // 这个&lt;View&gt;仅用于占位</div><div class="line">  &lt;ScrollView&gt;</div><div class="line">  ...</div><div class="line">  &lt;/ScrollView&gt;</div><div class="line">  &#123;this._renderFixedNav(tag, this.state.isYoudaoCourseApp)&#125; // 真正的导航栏</div><div class="line">&lt;/View&gt;</div></pre></td></tr></table></figure>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">&lt;View style=&#123;[styles.container, Platform.OS === <span class="string">'android'</span> &amp;&amp; !isTeacher ? &#123;<span class="attr">marginTop</span>: tag.get(<span class="string">'hideStatusBar'</span>) ? statusBarHeight : <span class="number">0</span>&#125; : &#123;<span class="attr">marginTop</span>: <span class="number">0</span>&#125;]&#125;&gt;</div><div class="line">  &#123;isTeacher ? <span class="literal">null</span> : <span class="xml"><span class="tag">&lt;<span class="name">View</span> <span class="attr">style</span>=<span class="string">&#123;styles.headNav&#125;/</span>&gt;</span>&#125; // 这个<span class="tag">&lt;<span class="name">View</span>&gt;</span>仅用于占位</span></div><div class="line">  <span class="tag">&lt;<span class="name">ScrollView</span>&gt;</span></div><div class="line">  ...</div><div class="line">  <span class="tag">&lt;/<span class="name">ScrollView</span>&gt;</span></div><div class="line">  &#123;this._renderFixedNav(tag, this.state.isYoudaoCourseApp)&#125; // 真正的导航栏</div><div class="line"><span class="tag">&lt;/<span class="name">View</span>&gt;</span></div></pre></td></tr></table></figure>
 <h4 id="四、Banner"><a href="#四、Banner" class="headerlink" title="四、Banner"></a>四、Banner</h4><h5 id="问题描述-3"><a href="#问题描述-3" class="headerlink" title="问题描述"></a>问题描述</h5><p>如上图，新版Banner每个图片并不占据整个屏宽，两边露出上下两张图片的一小部分，以做WEB的滑动组件的经验来说，要实现这样的功能，无非也就是通过绝对定位设置滚动栏，滚动时通过改变left或者translate来改变位置，如下图：</p>
 <div align="center"><br><img src="https://raw.githubusercontent.com/WillBean/react-native-summary.github.io/master/images/react-native-summary/prototype.png" width="95%"><br></div>
 
@@ -290,7 +290,7 @@
     <div class="content">
         
 <span class="post-time">
-    最后更新时间：<time datetime="2017-07-01T06:24:11.552Z" itemprop="dateUpdated">2017-07-01 14:24:11</time>
+    最后更新时间：<time datetime="2017-07-01T07:51:35.934Z" itemprop="dateUpdated">2017-07-01 15:51:35</time>
 </span><br>
 
 
@@ -315,7 +315,7 @@
 
         <div class="post-footer">
             
-	<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/ReactNative/">ReactNative</a></li></ul>
+	<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/HTML/">HTML</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Javascript/">Javascript</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/ReactNative/">ReactNative</a></li></ul>
 
 
             

@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="https://willbean.github.io/"/>
-  <updated>2017-07-01T06:24:11.552Z</updated>
+  <updated>2017-07-01T07:51:35.934Z</updated>
   <id>https://willbean.github.io/</id>
   
   <author>
@@ -20,7 +20,7 @@
     <link href="https://willbean.github.io/2017/06/24/react-native-summary/"/>
     <id>https://willbean.github.io/2017/06/24/react-native-summary/</id>
     <published>2017-06-24T08:18:31.000Z</published>
-    <updated>2017-07-01T06:24:11.552Z</updated>
+    <updated>2017-07-01T07:51:35.934Z</updated>
     
     <content type="html"><![CDATA[<p>入职有道数月，主要参与了精品课垂直页的改版，期间遇到了不少坑，虽然还未正式上线，但是也值得总结一波，故写下此文。</p>
 <h3 id="需求介绍"><a href="#需求介绍" class="headerlink" title="需求介绍"></a>需求介绍</h3><ul>
@@ -51,7 +51,7 @@
 <li>React native的元素堆叠顺序无法通过zIndex，所以如果将导航组件写在最前面的话，搜索页会被下面的ScrollView遮盖。<br><br>解决方案：将搜索框改为绝对定位并置于文档最后。</li>
 <li>导航标题字数不一，如果搜索框宽度固定，可能会与标题重叠。<br><br>解决方案：在原有导航位置放置一个仅有背景色和高度的View组件，将标题和搜索框作为一个整体放置在文档最下面，然后通过绝对定位覆盖在View组件上层，此时搜索框就可以设置为自适应宽度了。</li>
 </ul>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">&lt;View style=&#123;[styles.container, Platform.OS === <span class="string">'android'</span> &amp;&amp; !isTeacher ? &#123;<span class="attr">marginTop</span>: tag.get(<span class="string">'hideStatusBar'</span>) ? statusBarHeight : <span class="number">0</span>&#125; : &#123;<span class="attr">marginTop</span>: <span class="number">0</span>&#125;]&#125;&gt;</div><div class="line">  &#123;isTeacher ? <span class="literal">null</span> : &lt;View style=&#123;styles.headNav&#125;/&gt;&#125; // 这个&lt;View&gt;仅用于占位</div><div class="line">  &lt;ScrollView&gt;</div><div class="line">  ...</div><div class="line">  &lt;/ScrollView&gt;</div><div class="line">  &#123;this._renderFixedNav(tag, this.state.isYoudaoCourseApp)&#125; // 真正的导航栏</div><div class="line">&lt;/View&gt;</div></pre></td></tr></table></figure>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">&lt;View style=&#123;[styles.container, Platform.OS === <span class="string">'android'</span> &amp;&amp; !isTeacher ? &#123;<span class="attr">marginTop</span>: tag.get(<span class="string">'hideStatusBar'</span>) ? statusBarHeight : <span class="number">0</span>&#125; : &#123;<span class="attr">marginTop</span>: <span class="number">0</span>&#125;]&#125;&gt;</div><div class="line">  &#123;isTeacher ? <span class="literal">null</span> : <span class="xml"><span class="tag">&lt;<span class="name">View</span> <span class="attr">style</span>=<span class="string">&#123;styles.headNav&#125;/</span>&gt;</span>&#125; // 这个<span class="tag">&lt;<span class="name">View</span>&gt;</span>仅用于占位</span></div><div class="line">  <span class="tag">&lt;<span class="name">ScrollView</span>&gt;</span></div><div class="line">  ...</div><div class="line">  <span class="tag">&lt;/<span class="name">ScrollView</span>&gt;</span></div><div class="line">  &#123;this._renderFixedNav(tag, this.state.isYoudaoCourseApp)&#125; // 真正的导航栏</div><div class="line"><span class="tag">&lt;/<span class="name">View</span>&gt;</span></div></pre></td></tr></table></figure>
 <h4 id="四、Banner"><a href="#四、Banner" class="headerlink" title="四、Banner"></a>四、Banner</h4><h5 id="问题描述-3"><a href="#问题描述-3" class="headerlink" title="问题描述"></a>问题描述</h5><p>如上图，新版Banner每个图片并不占据整个屏宽，两边露出上下两张图片的一小部分，以做WEB的滑动组件的经验来说，要实现这样的功能，无非也就是通过绝对定位设置滚动栏，滚动时通过改变left或者translate来改变位置，如下图：</p>
 <div align="center"><br><img src="https://raw.githubusercontent.com/WillBean/react-native-summary.github.io/master/images/react-native-summary/prototype.png" width="95%"><br></div>
 
@@ -126,6 +126,10 @@
     
       <category term="ReactNative" scheme="https://willbean.github.io/tags/ReactNative/"/>
     
+      <category term="Javascript" scheme="https://willbean.github.io/tags/Javascript/"/>
+    
+      <category term="HTML" scheme="https://willbean.github.io/tags/HTML/"/>
+    
   </entry>
   
   <entry>
@@ -133,7 +137,7 @@
     <link href="https://willbean.github.io/2017/04/02/ubuntu-open-telnet/"/>
     <id>https://willbean.github.io/2017/04/02/ubuntu-open-telnet/</id>
     <published>2017-04-02T06:35:14.000Z</published>
-    <updated>2017-07-01T06:40:57.823Z</updated>
+    <updated>2017-07-01T07:49:51.898Z</updated>
     
     <content type="html"><![CDATA[<h3 id="一、安装telnet服务"><a href="#一、安装telnet服务" class="headerlink" title="一、安装telnet服务"></a>一、安装telnet服务</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">sudo apt-get install xinetd telnetd</div></pre></td></tr></table></figure>
 <h3 id="二、修改-etc-xinetd-conf，在-log-type-SYSLOG-daemon-info下面添加内容"><a href="#二、修改-etc-xinetd-conf，在-log-type-SYSLOG-daemon-info下面添加内容" class="headerlink" title="二、修改/etc/xinetd.conf，在# log_type = SYSLOG daemon info下面添加内容"></a>二、修改/etc/xinetd.conf，在# log_type = SYSLOG daemon info下面添加内容</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">instances = 60   </div><div class="line">log_type = SYSLOG authpriv   </div><div class="line">log_on_success = HOST PID   </div><div class="line">log_on_failure = HOST   </div><div class="line">cps = 25 30</div></pre></td></tr></table></figure>
@@ -148,7 +152,13 @@
     </summary>
     
     
-      <category term="Ubuntu, Telnet" scheme="https://willbean.github.io/tags/Ubuntu-Telnet/"/>
+      <category term="Ubuntu" scheme="https://willbean.github.io/tags/Ubuntu/"/>
+    
+      <category term="Configure" scheme="https://willbean.github.io/tags/Configure/"/>
+    
+      <category term="Cloud Server" scheme="https://willbean.github.io/tags/Cloud-Server/"/>
+    
+      <category term="Telnet" scheme="https://willbean.github.io/tags/Telnet/"/>
     
   </entry>
   
@@ -186,7 +196,7 @@
     <link href="https://willbean.github.io/2017/03/09/long-polling-and-server-push/"/>
     <id>https://willbean.github.io/2017/03/09/long-polling-and-server-push/</id>
     <published>2017-03-09T06:42:06.000Z</published>
-    <updated>2017-07-01T06:51:12.625Z</updated>
+    <updated>2017-07-01T07:41:16.084Z</updated>
     
     <content type="html"><![CDATA[<h3 id="前言："><a href="#前言：" class="headerlink" title="前言："></a>前言：</h3><p>由于经常使用微信登录其他一些博客论坛什么的，就会经常遇到扫一扫登录的情况，大家都知道，我们平时访问的网页一般都是无连接的，也就是说需要数据的时候即便发出请求，服务器接受到请求之后便处理并返回相应的数据，这时连接就已经断开了，而使用扫一扫登陆的情况确是相反的，页面中的二维码一直等待着我们使用手机去扫描它，扫描过后页面完成登陆操作并进行一些跳转，那么问题来了，这是怎么实现的呢？怀着好奇心，先激活出二维码界面，再在浏览器上按下F12，切换到控制台，发现每隔几秒便有一个请求发出，稍微想想也就知道大致是怎么回事了，不就是长轮询嘛，实现的方法也挺多的，可以使用最原始的XMLHttpRequest，也可以使用WebSocket。最近也闲来没事做，就打算自己写个demo好了。</p>
 <h3 id="一、架构介绍"><a href="#一、架构介绍" class="headerlink" title="一、架构介绍"></a>一、架构介绍</h3><p>既然是demo，我们也没必要搞太复杂，就用客户端A、服务器B、服务器C、客户端D表示吧。</p>
@@ -226,7 +236,13 @@
     </summary>
     
     
-      <category term="长轮询, 服务器推送" scheme="https://willbean.github.io/tags/%E9%95%BF%E8%BD%AE%E8%AF%A2-%E6%9C%8D%E5%8A%A1%E5%99%A8%E6%8E%A8%E9%80%81/"/>
+      <category term="Javascript" scheme="https://willbean.github.io/tags/Javascript/"/>
+    
+      <category term="长轮询" scheme="https://willbean.github.io/tags/%E9%95%BF%E8%BD%AE%E8%AF%A2/"/>
+    
+      <category term="服务器推送" scheme="https://willbean.github.io/tags/%E6%9C%8D%E5%8A%A1%E5%99%A8%E6%8E%A8%E9%80%81/"/>
+    
+      <category term="HTML" scheme="https://willbean.github.io/tags/HTML/"/>
     
   </entry>
   
@@ -235,7 +251,7 @@
     <link href="https://willbean.github.io/2016/12/11/node-crawler/"/>
     <id>https://willbean.github.io/2016/12/11/node-crawler/</id>
     <published>2016-12-11T06:30:50.000Z</published>
-    <updated>2017-07-01T06:25:05.062Z</updated>
+    <updated>2017-07-01T07:44:59.022Z</updated>
     
     <content type="html"><![CDATA[<h3 id="一、准备工作"><a href="#一、准备工作" class="headerlink" title="一、准备工作"></a>一、准备工作</h3><ol>
 <li>首先当然是安装node，这一步忽略。</li>
@@ -278,7 +294,11 @@
     </summary>
     
     
-      <category term="Node, Crawler" scheme="https://willbean.github.io/tags/Node-Crawler/"/>
+      <category term="Crawler" scheme="https://willbean.github.io/tags/Crawler/"/>
+    
+      <category term="Javascript" scheme="https://willbean.github.io/tags/Javascript/"/>
+    
+      <category term="Node" scheme="https://willbean.github.io/tags/Node/"/>
     
   </entry>
   
@@ -287,7 +307,7 @@
     <link href="https://willbean.github.io/2016/11/07/cloud-server-configure/"/>
     <id>https://willbean.github.io/2016/11/07/cloud-server-configure/</id>
     <published>2016-11-07T10:59:23.000Z</published>
-    <updated>2017-07-01T06:27:05.203Z</updated>
+    <updated>2017-07-01T07:46:47.014Z</updated>
     
     <content type="html"><![CDATA[<h3 id="零、域名绑定"><a href="#零、域名绑定" class="headerlink" title="零、域名绑定"></a>零、域名绑定</h3><p>从腾讯云服务的云解析里解析域名并绑定服务器公网即可。</p>
 <h3 id="一、安装mysql"><a href="#一、安装mysql" class="headerlink" title="一、安装mysql"></a>一、安装mysql</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">sudo apt-get install mysql-server</div><div class="line">sudo apt-get isntall mysql-client</div><div class="line">sudo apt-get install libmysqlclient-dev</div></pre></td></tr></table></figure>
@@ -333,6 +353,10 @@
     
     
       <category term="Ubuntu" scheme="https://willbean.github.io/tags/Ubuntu/"/>
+    
+      <category term="Configure" scheme="https://willbean.github.io/tags/Configure/"/>
+    
+      <category term="Cloud Server" scheme="https://willbean.github.io/tags/Cloud-Server/"/>
     
   </entry>
   
