@@ -1,0 +1,513 @@
+<!DOCTYPE html>
+<html>
+<head>
+    
+
+    
+
+    
+
+
+
+    <meta charset="utf-8">
+    
+    
+    
+    <title>长轮询与服务器推送实现不同页面之间的通信 | WillBean&#39;s Blog | 我可能是个假程序猿吧</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+    <meta name="theme-color" content="#cccccc">
+    
+    
+    <meta name="keywords" content="长轮询, 服务器推送">
+    <meta name="description" content="前言：由于经常使用微信登录其他一些博客论坛什么的，就会经常遇到扫一扫登录的情况，大家都知道，我们平时访问的网页一般都是无连接的，也就是说需要数据的时候即便发出请求，服务器接受到请求之后便处理并返回相应的数据，这时连接就已经断开了，而使用扫一扫登陆的情况确是相反的，页面中的二维码一直等待着我们使用手机去扫描它，扫描过后页面完成登陆操作并进行一些跳转，那么问题来了，这是怎么实现的呢？怀着好奇心，先激活">
+<meta name="keywords" content="长轮询, 服务器推送">
+<meta property="og:type" content="article">
+<meta property="og:title" content="长轮询与服务器推送实现不同页面之间的通信">
+<meta property="og:url" content="https://willbean.github.io/2017/03/09/long-polling-and-server-push/index.html">
+<meta property="og:site_name" content="WillBean&#39;s Blog">
+<meta property="og:description" content="前言：由于经常使用微信登录其他一些博客论坛什么的，就会经常遇到扫一扫登录的情况，大家都知道，我们平时访问的网页一般都是无连接的，也就是说需要数据的时候即便发出请求，服务器接受到请求之后便处理并返回相应的数据，这时连接就已经断开了，而使用扫一扫登陆的情况确是相反的，页面中的二维码一直等待着我们使用手机去扫描它，扫描过后页面完成登陆操作并进行一些跳转，那么问题来了，这是怎么实现的呢？怀着好奇心，先激活">
+<meta property="og:image" content="https://raw.githubusercontent.com/WillBean/react-native-summary.github.io/master/images/long-polling-and-server-push/dir.png">
+<meta property="og:updated_time" content="2017-07-01T06:51:12.625Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="长轮询与服务器推送实现不同页面之间的通信">
+<meta name="twitter:description" content="前言：由于经常使用微信登录其他一些博客论坛什么的，就会经常遇到扫一扫登录的情况，大家都知道，我们平时访问的网页一般都是无连接的，也就是说需要数据的时候即便发出请求，服务器接受到请求之后便处理并返回相应的数据，这时连接就已经断开了，而使用扫一扫登陆的情况确是相反的，页面中的二维码一直等待着我们使用手机去扫描它，扫描过后页面完成登陆操作并进行一些跳转，那么问题来了，这是怎么实现的呢？怀着好奇心，先激活">
+<meta name="twitter:image" content="https://raw.githubusercontent.com/WillBean/react-native-summary.github.io/master/images/long-polling-and-server-push/dir.png">
+    
+        <link rel="alternate" type="application/atom+xml" title="WillBean&#39;s Blog" href="/atom.xml">
+    
+    <link rel="shortcut icon" href="/favicon.ico">
+    <link rel="stylesheet" href="//unpkg.com/hexo-theme-material-indigo@latest/css/style.css">
+    <script>window.lazyScripts=[]</script>
+</head>
+
+<body>
+    <div id="loading" class="active"></div>
+
+    <aside id="menu" class="hide" >
+  <div class="inner flex-row-vertical">
+    <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menu-off">
+        <i class="icon icon-lg icon-close"></i>
+    </a>
+    <div class="brand-wrap" style="background-image:url(/img/brand.jpg)">
+      <div class="brand">
+        <a href="/" class="avatar waves-effect waves-circle waves-light">
+          <img src="/img/avatar.jpg">
+        </a>
+        <hgroup class="introduce">
+          <h5 class="nickname">WillBean</h5>
+          <a href="mailto:182769979@qq.com" title="182769979@qq.com" class="mail">182769979@qq.com</a>
+        </hgroup>
+      </div>
+    </div>
+    <div class="scroll-wrap flex-col">
+      <ul class="nav">
+        
+            <li class="waves-block waves-effect">
+              <a href="/"  >
+                <i class="icon icon-lg icon-home"></i>
+                主页
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/archives"  >
+                <i class="icon icon-lg icon-archives"></i>
+                Archives
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/tags"  >
+                <i class="icon icon-lg icon-tags"></i>
+                Tags
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/categories"  >
+                <i class="icon icon-lg icon-th-list"></i>
+                Categories
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="https://github.com/WillBean" target="_blank" >
+                <i class="icon icon-lg icon-github"></i>
+                Github
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/custom"  >
+                <i class="icon icon-lg icon-link"></i>
+                Repository
+              </a>
+            </li>
+        
+      </ul>
+    </div>
+  </div>
+</aside>
+
+    <main id="main">
+        <header class="top-header" id="header">
+    <div class="flex-row">
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light on" id="menu-toggle">
+          <i class="icon icon-lg icon-navicon"></i>
+        </a>
+        <div class="flex-col header-title ellipsis">长轮询与服务器推送实现不同页面之间的通信</div>
+        
+        <div class="search-wrap" id="search-wrap">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="back">
+                <i class="icon icon-lg icon-chevron-left"></i>
+            </a>
+            <input type="text" id="key" class="search-input" autocomplete="off" placeholder="输入感兴趣的关键字">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="search">
+                <i class="icon icon-lg icon-search"></i>
+            </a>
+        </div>
+        
+        
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menuShare">
+            <i class="icon icon-lg icon-share-alt"></i>
+        </a>
+        
+    </div>
+</header>
+<header class="content-header post-header">
+
+    <div class="container fade-scale">
+        <h1 class="title">长轮询与服务器推送实现不同页面之间的通信</h1>
+        <h5 class="subtitle">
+            
+                <time datetime="2017-03-09T06:42:06.000Z" itemprop="datePublished" class="page-time">
+  2017-03-09
+</time>
+
+
+            
+        </h5>
+    </div>
+
+    
+
+
+</header>
+
+
+<div class="container body-wrap">
+    
+    <aside class="post-widget">
+        <nav class="post-toc-wrap" id="post-toc">
+            <h4>TOC</h4>
+            <ol class="post-toc"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#前言："><span class="post-toc-number">1.</span> <span class="post-toc-text">前言：</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#一、架构介绍"><span class="post-toc-number">2.</span> <span class="post-toc-text">一、架构介绍</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#二、技术栈介绍"><span class="post-toc-number">3.</span> <span class="post-toc-text">二、技术栈介绍</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#三、代码讲解"><span class="post-toc-number">4.</span> <span class="post-toc-text">三、代码讲解</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#总结："><span class="post-toc-number">5.</span> <span class="post-toc-text">总结：</span></a></li></ol>
+        </nav>
+    </aside>
+    
+<article id="post-long-polling-and-server-push"
+  class="post-article article-type-post fade" itemprop="blogPost">
+
+    <div class="post-card">
+        <h1 class="post-card-title">长轮询与服务器推送实现不同页面之间的通信</h1>
+        <div class="post-meta">
+            <time class="post-time" title="2017-03-09 14:42:06" datetime="2017-03-09T06:42:06.000Z"  itemprop="datePublished">2017-03-09</time>
+
+            
+
+
+            
+
+        </div>
+        <div class="post-content" id="post-content" itemprop="postContent">
+            <h3 id="前言："><a href="#前言：" class="headerlink" title="前言："></a>前言：</h3><p>由于经常使用微信登录其他一些博客论坛什么的，就会经常遇到扫一扫登录的情况，大家都知道，我们平时访问的网页一般都是无连接的，也就是说需要数据的时候即便发出请求，服务器接受到请求之后便处理并返回相应的数据，这时连接就已经断开了，而使用扫一扫登陆的情况确是相反的，页面中的二维码一直等待着我们使用手机去扫描它，扫描过后页面完成登陆操作并进行一些跳转，那么问题来了，这是怎么实现的呢？怀着好奇心，先激活出二维码界面，再在浏览器上按下F12，切换到控制台，发现每隔几秒便有一个请求发出，稍微想想也就知道大致是怎么回事了，不就是长轮询嘛，实现的方法也挺多的，可以使用最原始的XMLHttpRequest，也可以使用WebSocket。最近也闲来没事做，就打算自己写个demo好了。</p>
+<h3 id="一、架构介绍"><a href="#一、架构介绍" class="headerlink" title="一、架构介绍"></a>一、架构介绍</h3><p>既然是demo，我们也没必要搞太复杂，就用客户端A、服务器B、服务器C、客户端D表示吧。</p>
+<p>客户端A模拟触发登录操作，服务器B接收到A的请求，B再告知服务器C要进行操作了，C接收到指令后通过服务器推送告诉客户端D显示确认或取消登录的按钮，当用户点击按钮后，D再向C发送一条请求，告知其用户的操作结果，再从C到B，B到A的顺序一步步返回。在C、D进行通信时，A、B发起的请求处于挂起（等待）状态，如果超时的话，就重新进行链接。</p>
+<h3 id="二、技术栈介绍"><a href="#二、技术栈介绍" class="headerlink" title="二、技术栈介绍"></a>二、技术栈介绍</h3><p>服务器用到了node+koa，客户端仅仅使用了Html和js，客户端向服务器发送请求使用了XMLHttpRequest，服务器间通信使用request-promise模块，服务器向客户端推送数据使用EventSource，此demo没有使用WebSocket纯粹是因为从来没有用过EventSource想练练手，谁想踩了大坑，后文分解。</p>
+<h3 id="三、代码讲解"><a href="#三、代码讲解" class="headerlink" title="三、代码讲解"></a>三、代码讲解</h3><p>又到了最愉快的贴代码时间~</p>
+<p>先展示一下目录结构：</p>
+<div align="center"><br><img src="https://raw.githubusercontent.com/WillBean/react-native-summary.github.io/master/images/long-polling-and-server-push/dir.png" width="50%"><br></div>
+
+<p>1）request client &gt; index.html （客户端A代码）</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div></pre></td><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">body</span>&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">button</span> <span class="attr">id</span>=<span class="string">"send"</span>&gt;</span>发送请求<span class="tag">&lt;/<span class="name">button</span>&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">script</span>&gt;</span><span class="undefined"></span></div><div class="line">    var send = document.querySelector('#send')</div><div class="line">    send.onclick = function () &#123;</div><div class="line">        polling('http://localhost:8888/longPolling',5000)</div><div class="line">    &#125;</div><div class="line">    function polling(url,timeout) &#123;</div><div class="line">        var xhr = new XMLHttpRequest()</div><div class="line">        xhr.open("get",url)</div><div class="line">        xhr.timeout = timeout;</div><div class="line">        xhr.onreadystatechange = function () &#123;</div><div class="line">            if( xhr.readyState === 4 &amp;&amp; xhr.status === 200)&#123;</div><div class="line">                alert('对方选择了·确定·')</div><div class="line">            &#125;else if( xhr.readyState === 4 &amp;&amp; xhr.status === 204)&#123;</div><div class="line">                alert('对方选择了·取消·')</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line">        xhr.ontimeout = function () &#123;</div><div class="line">            console.log('Timeout resend '+ new Date());</div><div class="line">            polling(url,5000)</div><div class="line">        &#125;</div><div class="line">        xhr.send()</div><div class="line">    &#125;</div><div class="line"><span class="tag">&lt;/<span class="name">script</span>&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">body</span>&gt;</span></div></pre></td></tr></table></figure>
+<p>一个按钮，绑定了polling函数，传入请求地址与超时时间，超时则重新请求。</p>
+<p>2.1）request server &gt; app.js （服务器B代码）</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line"><span class="meta">'use strict'</span>;</div><div class="line"><span class="keyword">const</span> Koa = <span class="built_in">require</span>(<span class="string">'koa'</span>);</div><div class="line"><span class="keyword">const</span> app = <span class="keyword">new</span> Koa();</div><div class="line"><span class="keyword">const</span> router = <span class="built_in">require</span>(<span class="string">'koa-router'</span>)();</div><div class="line"><span class="keyword">const</span> cors = <span class="built_in">require</span>(<span class="string">'koa-cors'</span>);</div><div class="line"><span class="keyword">const</span> routers = <span class="built_in">require</span>(<span class="string">'./routes'</span>);</div><div class="line"></div><div class="line"><span class="keyword">let</span> repPort = <span class="number">8888</span>;</div><div class="line"></div><div class="line">router.use(<span class="string">'/'</span>, routers.routes(), routers.allowedMethods());</div><div class="line"></div><div class="line">app.use(cors());</div><div class="line">app.use(router.routes(), router.allowedMethods());</div><div class="line"></div><div class="line">app.listen(repPort)</div></pre></td></tr></table></figure>
+<p>2.2）request server &gt; routes &gt; index.js （服务器B路由）</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">const</span> router = <span class="built_in">require</span>(<span class="string">'koa-router'</span>)()</div><div class="line"><span class="keyword">const</span> rp = <span class="built_in">require</span>(<span class="string">'request-promise'</span>);</div><div class="line"></div><div class="line"><span class="keyword">let</span> resHostname = <span class="string">'localhost'</span>;</div><div class="line"><span class="keyword">let</span> resPort = <span class="number">8889</span>;</div><div class="line"></div><div class="line">router.get(<span class="string">'longPolling'</span>, <span class="function"><span class="keyword">function</span>* (<span class="params">next</span>)</span>&#123;</div><div class="line">    <span class="keyword">let</span> options = &#123;</div><div class="line">        <span class="attr">uri</span> : <span class="string">`http://<span class="subst">$&#123;resHostname&#125;</span>:<span class="subst">$&#123;resPort&#125;</span>/btServer`</span>,</div><div class="line">        <span class="attr">method</span> : <span class="string">'post'</span></div><div class="line">    &#125;;</div><div class="line">    </div><div class="line">    <span class="keyword">yield</span> rp(options).then(<span class="function"><span class="params">data</span>=&gt;</span>&#123;</div><div class="line">        <span class="keyword">this</span>.status = <span class="built_in">parseInt</span>(data);</div><div class="line">        <span class="built_in">console</span>.log(<span class="string">'Finished'</span>)</div><div class="line">    &#125;).catch(<span class="function"><span class="params">err</span>=&gt;</span>&#123;</div><div class="line">        <span class="built_in">console</span>.log(<span class="string">`error message:<span class="subst">$&#123;err&#125;</span>`</span>)</div><div class="line">    &#125;);</div><div class="line">&#125;);</div><div class="line"></div><div class="line"><span class="built_in">module</span>.exports = router;</div></pre></td></tr></table></figure>
+<p>接收A发来的请求，使用request-promise向C发送请求，同时挂起处理以等待响应。</p>
+<p>3.1）responce server &gt; app.js （服务器C代码）</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">const</span> Koa = <span class="built_in">require</span>(<span class="string">'koa'</span>);</div><div class="line"><span class="keyword">const</span> app = <span class="keyword">new</span> Koa();</div><div class="line"><span class="keyword">const</span> render = <span class="built_in">require</span>(<span class="string">'koa-render'</span>);</div><div class="line"><span class="keyword">const</span> router = <span class="built_in">require</span>(<span class="string">'koa-router'</span>)();</div><div class="line"><span class="keyword">const</span> routes = <span class="built_in">require</span>(<span class="string">'./routes'</span>);</div><div class="line"><span class="keyword">const</span> convert = <span class="built_in">require</span>(<span class="string">'koa-convert'</span>);</div><div class="line"><span class="keyword">const</span> bodyparser = <span class="built_in">require</span>(<span class="string">'koa-bodyparser'</span>)();</div><div class="line"></div><div class="line"><span class="keyword">let</span> port = <span class="number">8889</span>;</div><div class="line"></div><div class="line">router.use(<span class="string">'/'</span>, routes.routes());</div><div class="line"></div><div class="line">app.use(convert(bodyparser));</div><div class="line">app.use(<span class="built_in">require</span>(<span class="string">'koa-static'</span>)(__dirname + <span class="string">'/public'</span>));</div><div class="line">app.use(render());</div><div class="line">app.use(router.routes());</div><div class="line"></div><div class="line">app.listen(port);</div></pre></td></tr></table></figure>
+<p>3.2）responce server &gt; routes &gt; index.js （服务器C路由）</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">const</span> router = <span class="built_in">require</span>(<span class="string">'koa-router'</span>)()</div><div class="line"><span class="keyword">const</span> EL = <span class="built_in">require</span>(<span class="string">'../EventListener'</span>);</div><div class="line"><span class="keyword">const</span> el = <span class="keyword">new</span> EL();</div><div class="line"></div><div class="line">router.post(<span class="string">'btServer'</span>,  <span class="function"><span class="keyword">function</span> *(<span class="params">next</span>) </span>&#123;<span class="comment">// 客户端服务器请求</span></div><div class="line">    <span class="keyword">let</span> resBody = <span class="number">0</span>;</div><div class="line">    el.sendEnsureMsg();</div><div class="line">    <span class="keyword">yield</span> <span class="keyword">new</span> <span class="built_in">Promise</span>(<span class="function">(<span class="params">resolve, reject</span>)=&gt;</span> &#123;</div><div class="line">        el.once(<span class="string">'receive'</span>, ()=&gt; &#123;</div><div class="line">            <span class="keyword">if</span> (el.status === <span class="string">'yes'</span>) &#123;</div><div class="line">                resBody = <span class="number">200</span>;</div><div class="line">            &#125; <span class="keyword">else</span> <span class="keyword">if</span> (el.status === <span class="string">'no'</span>) &#123;</div><div class="line">                resBody = <span class="number">204</span>;</div><div class="line">            &#125;</div><div class="line">            resolve();</div><div class="line">        &#125;);</div><div class="line">    &#125;);</div><div class="line">    <span class="keyword">this</span>.body = resBody;</div><div class="line">    <span class="keyword">this</span>.status = <span class="number">200</span>;</div><div class="line">&#125;).get(<span class="string">'ensure'</span>,<span class="function"><span class="keyword">function</span>* (<span class="params">next</span>) </span>&#123; <span class="comment">//向客户端推送信息</span></div><div class="line">    <span class="keyword">let</span> self = <span class="keyword">this</span>;</div><div class="line">    <span class="keyword">this</span>.set(<span class="string">"content-type"</span>,<span class="string">"text/event-stream"</span>);</div><div class="line">    <span class="keyword">yield</span> <span class="keyword">new</span> <span class="built_in">Promise</span>(<span class="function">(<span class="params">resolve, reject</span>)=&gt;</span> &#123;</div><div class="line">        el.once(<span class="string">'ensure'</span>, ()=&gt; &#123;</div><div class="line">            <span class="built_in">console</span>.log(<span class="string">'Has send'</span>);</div><div class="line">            resolve();</div><div class="line">        &#125;);</div><div class="line">    &#125;);</div><div class="line">    self.body = <span class="string">'data: ensure\n\n'</span>;</div><div class="line">    <span class="keyword">this</span>.status = <span class="number">200</span>;</div><div class="line">&#125;).post(<span class="string">'sure'</span>, <span class="function"><span class="keyword">function</span>*(<span class="params">next</span>) </span>&#123; <span class="comment">//客户端相应推送</span></div><div class="line">    el.receiveEnsureMsg(<span class="keyword">this</span>.request.body.data)</div><div class="line">    <span class="keyword">this</span>.status = <span class="number">200</span>;</div><div class="line">&#125;);</div><div class="line"></div><div class="line"><span class="built_in">module</span>.exports = router;</div></pre></td></tr></table></figure>
+<p>3.3 的代码继承了events模块，封装了两个方法，一个用来触发服务器推送，一个用来响应客户端D返回的数据。</p>
+<p>3.2 中订阅事件使用了该事件监听类并使用了once方法，以防止超时重传时重复订阅此事件。</p>
+<p>在调试过程中D一直无法接收到C推送的数据，迟迟查不出原因，最后多方百度才发现，原来EventSource的数据必须以“data: something \n\n”的格式传输，我真是<em>了</em>了。</p>
+<p>4）responce server &gt; public &gt;index.html (客户端D代码）</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div></pre></td><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">body</span>&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">id</span>=<span class="string">"container"</span> <span class="attr">style</span>=<span class="string">"display: none"</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">button</span> <span class="attr">id</span>=<span class="string">"yes"</span>&gt;</span>确定<span class="tag">&lt;/<span class="name">button</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">button</span> <span class="attr">id</span>=<span class="string">"no"</span>&gt;</span>取消<span class="tag">&lt;/<span class="name">button</span>&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">div</span>&gt;</span></div><div class="line"></div><div class="line"><span class="tag">&lt;<span class="name">script</span>&gt;</span><span class="javascript"></span></div><div class="line">    <span class="keyword">var</span> yes = <span class="built_in">document</span>.querySelector(<span class="string">"#yes"</span>)</div><div class="line">    <span class="keyword">var</span> no = <span class="built_in">document</span>.querySelector(<span class="string">"#no"</span>)</div><div class="line">    <span class="keyword">var</span> container = <span class="built_in">document</span>.querySelector(<span class="string">"#container"</span>)</div><div class="line"></div><div class="line">    <span class="keyword">var</span> eventSource = <span class="keyword">new</span> EventSource(<span class="string">'/ensure'</span>)</div><div class="line">    eventSource.onmessage = <span class="function"><span class="keyword">function</span> (<span class="params">e</span>) </span>&#123;</div><div class="line">        <span class="keyword">if</span>(e.data === <span class="string">'ensure'</span>)&#123;</div><div class="line">            container.style.display = <span class="string">'block'</span></div><div class="line">            eventSource.close()</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">    eventSource.onerror = <span class="function"><span class="keyword">function</span> (<span class="params">err</span>) </span>&#123;</div><div class="line">        <span class="built_in">console</span>.log(<span class="string">`EventSource error:`</span>);</div><div class="line">        <span class="built_in">console</span>.log(err);</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    yes.onclick = <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</div><div class="line">        postMsg(<span class="string">'data=yes'</span>)</div><div class="line">    &#125;</div><div class="line">    no.onclick = <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</div><div class="line">        postMsg(<span class="string">'data=no'</span>)</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">function</span> <span class="title">postMsg</span>(<span class="params">msg</span>) </span>&#123;</div><div class="line">        <span class="keyword">var</span> xhr = <span class="keyword">new</span> XMLHttpRequest()</div><div class="line">        xhr.open(<span class="string">'post'</span>,<span class="string">'/sure'</span>)</div><div class="line">        xhr.onreadystatechange = <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</div><div class="line">            <span class="keyword">if</span>(xhr.readyState === <span class="number">4</span> &amp;&amp; xhr.status === <span class="number">200</span>)&#123;</div><div class="line">                container.style.display = <span class="string">'none'</span></div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line">        xhr.setRequestHeader(<span class="string">"Content-Type"</span>, <span class="string">"application/x-www-form-urlencoded"</span>);</div><div class="line">        xhr.send(msg)</div><div class="line">    &#125;</div><div class="line"></div><div class="line"><span class="tag">&lt;/<span class="name">script</span>&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">body</span>&gt;</span></div></pre></td></tr></table></figure>
+<p>客户端D的代码没有独立开来而放在了response server文件夹下是因为EventSource要求与请求的服务器同源，就直接给它放在了静态资源下。</p>
+<h3 id="总结："><a href="#总结：" class="headerlink" title="总结："></a>总结：</h3><p>好了，代码贴完了，其实并没有什么含金量，就是坑特多。</p>
+<p>就这样吧，代码放github了。</p>
+<p>传送门：<a href="https://github.com/WillBean/long-polling.git" target="_blank" rel="external">https://github.com/WillBean/long-polling.git</a></p>
+
+        </div>
+
+        <blockquote class="post-copyright">
+    <div class="content">
+        
+<span class="post-time">
+    最后更新时间：<time datetime="2017-07-01T06:51:12.625Z" itemprop="dateUpdated">2017-07-01 14:51:12</time>
+</span><br>
+
+
+        
+        这里可以写作者留言，标签和 hexo 中所有变量及辅助函数等均可调用，示例：<a href="/2017/03/09/long-polling-and-server-push/" target="_blank" rel="external">https://willbean.github.io/2017/03/09/long-polling-and-server-push/</a>
+        
+    </div>
+    <footer>
+        <a href="https://willbean.github.io">
+            <img src="/img/avatar.jpg" alt="WillBean">
+            WillBean
+        </a>
+    </footer>
+</blockquote>
+
+        
+<div class="page-reward">
+    <a id="rewardBtn" href="javascript:;" class="page-reward-btn waves-effect waves-circle waves-light">赏</a>
+</div>
+
+
+
+        <div class="post-footer">
+            
+	<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/长轮询-服务器推送/">长轮询, 服务器推送</a></li></ul>
+
+
+            
+<div class="page-share-wrap">
+    
+
+<div class="page-share" id="pageShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=https://willbean.github.io/2017/03/09/long-polling-and-server-push/&title=《长轮询与服务器推送实现不同页面之间的通信》 — WillBean's Blog&pic=https://willbean.github.io/img/avatar.jpg" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://willbean.github.io/2017/03/09/long-polling-and-server-push/&title=《长轮询与服务器推送实现不同页面之间的通信》 — WillBean's Blog&source=这是一个准大四学生的前端博客。" data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https://willbean.github.io/2017/03/09/long-polling-and-server-push/" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《长轮询与服务器推送实现不同页面之间的通信》 — WillBean's Blog&url=https://willbean.github.io/2017/03/09/long-polling-and-server-push/&via=https://willbean.github.io" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=https://willbean.github.io/2017/03/09/long-polling-and-server-push/" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+
+    <a href="javascript:;" id="shareFab" class="page-share-fab waves-effect waves-circle">
+        <i class="icon icon-share-alt icon-lg"></i>
+    </a>
+</div>
+
+
+
+        </div>
+    </div>
+
+    
+<nav class="post-nav flex-row flex-justify-between">
+  
+    <div class="waves-block waves-effect prev">
+      <a href="/2017/03/23/three.js-object-to-module/" id="post-prev" class="post-nav-link">
+        <div class="tips"><i class="icon icon-angle-left icon-lg icon-pr"></i> Prev</div>
+        <h4 class="title">Three.js obj模型转js并渲染</h4>
+      </a>
+    </div>
+  
+
+  
+    <div class="waves-block waves-effect next">
+      <a href="/2016/12/11/node-crawler/" id="post-next" class="post-nav-link">
+        <div class="tips">Next <i class="icon icon-angle-right icon-lg icon-pl"></i></div>
+        <h4 class="title">Node爬虫爬取网页静态资源</h4>
+      </a>
+    </div>
+  
+</nav>
+
+
+
+    
+
+
+
+
+
+
+
+
+
+
+
+<section class="comments" id="comments">
+    <div id="gitment_thread"></div>
+    <link rel="stylesheet" href="//unpkg.com/gitment/style/default.css">
+    <script src="//unpkg.com/gitment/dist/gitment.browser.js"></script>
+    <script>
+        var gitment = new Gitment({
+            owner: 'WillBean',
+            repo: 'willbean.github.io',
+            oauth: {
+                client_id: '5d9b308c6ae328be7417',
+                client_secret: '8381cbf6bd0eebd34af19c4aa5dd728dbce84877',
+            },
+        })
+        gitment.render('comments')
+    </script>
+</section>
+
+
+
+
+</article>
+
+<div id="reward" class="page-modal reward-lay">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <h3 class="reward-title">
+        <i class="icon icon-quote-left"></i>
+        谢谢大爷~
+        <i class="icon icon-quote-right"></i>
+    </h3>
+    <div class="reward-content">
+        
+        <div class="reward-code">
+            <img id="rewardCode" src="/img/wechat.jpg" alt="打赏二维码">
+        </div>
+        
+        <label class="reward-toggle">
+            <input id="rewardToggle" type="checkbox" class="reward-toggle-check"
+                data-wechat="/img/wechat.jpg" data-alipay="/img/alipay.jpg">
+            <div class="reward-toggle-ctrol">
+                <span class="reward-toggle-item wechat">微信</span>
+                <span class="reward-toggle-label"></span>
+                <span class="reward-toggle-item alipay">支付宝</span>
+            </div>
+        </label>
+        
+    </div>
+</div>
+
+
+
+</div>
+
+        <footer class="footer">
+    <div class="top">
+        
+
+        <p>
+            
+                <span><a href="/atom.xml" target="_blank" class="rss" title="rss"><i class="icon icon-lg icon-rss"></i></a></span>
+            
+            <span>博客内容遵循 <a rel="license" href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh">知识共享 署名 - 非商业性 - 相同方式共享 4.0 国际协议</a></span>
+        </p>
+    </div>
+    <div class="bottom">
+        <p><span>WillBean &copy; 2016 - 2017</span>
+            <span>
+                
+                Power by <a href="http://hexo.io/" target="_blank">Hexo</a> Theme <a href="https://github.com/yscoder/hexo-theme-indigo" target="_blank">indigo</a>
+            </span>
+        </p>
+    </div>
+</footer>
+
+    </main>
+    <div class="mask" id="mask"></div>
+<a href="javascript:;" id="gotop" class="waves-effect waves-circle waves-light"><span class="icon icon-lg icon-chevron-up"></span></a>
+
+
+
+<div class="global-share" id="globalShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=https://willbean.github.io/2017/03/09/long-polling-and-server-push/&title=《长轮询与服务器推送实现不同页面之间的通信》 — WillBean's Blog&pic=https://willbean.github.io/img/avatar.jpg" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://willbean.github.io/2017/03/09/long-polling-and-server-push/&title=《长轮询与服务器推送实现不同页面之间的通信》 — WillBean's Blog&source=这是一个准大四学生的前端博客。" data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https://willbean.github.io/2017/03/09/long-polling-and-server-push/" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《长轮询与服务器推送实现不同页面之间的通信》 — WillBean's Blog&url=https://willbean.github.io/2017/03/09/long-polling-and-server-push/&via=https://willbean.github.io" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=https://willbean.github.io/2017/03/09/long-polling-and-server-push/" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+<div class="page-modal wx-share" id="wxShare">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAN4AAADeCAAAAAB3DOFrAAACvUlEQVR42u3aQW4jMQwEwPz/07vXBYKxu0kp8QI1JyPxjFkyINIUv77i6098/fv+5PX3e79/7vfXhy88PDy8o6HnoWyCTt7/+q7HJ+Dh4eFd47Wb8uu/PIWyTz95zHh4eHifxjtVpif/xcPDw/vfeU8p4SkB5O+fNTjw8PDwfos3K2Hb4nv2/OQ5B3oteHh4eDGvLX8/4fWV8z08PDy8owMBs7bsrDnbHnc9PhMPDw/vAq8tZ9vieFY6z9q+j0uPh4eHd5SXjzq1Ld02PbQL+jpF4eHh4f0ML2ckB115cJuE8aa4x8PDw7vAy7fyzUcmySBvdrSDC3h4eHhneZuCeLaWs3bwgYEAPDw8vEO8NjFsjsfadkbbjKgPwPDw8PAWvLyYTkJv00B+SPY66CJ54OHh4S14eVizcvneiMCwGYGHh4d3lLcPvS2F85bEsEDHw8PDu8ZbDTaVZXTehki+gHqmDA8PD2/N248ItOB2EfNRhmiyDA8PD+9HeLNC+dTCtbE9NnPx8PDwDvFODaS2Ddn2sH82HIaHh4d3m5e0DPIgNg2OJBVFMePh4eFd4yVbfz0SWh5W7Ze4HrrCw8PDW0x7zh7dHufnaSC5ihIfDw8P7yhvVjq3QwDtwNamfH8sqfHw8PAO8fbldbscbRLa/wUPDw/vBq8FvG5StJi8dE4K9K/994OHh4dX8tpRqnaz3jSIh+U4Hh4e3o/w2h//s+07b9G2A2FRLY+Hh4c34s2OnZIGa96EzTH5MdjjTBkeHh7emtduuPm4wGyAYDa40CYtPDw8vD2vTQbRedqhZUpaw2+QeHh4eNd4swbEvumwz1pv7sLDw8P7AF579DVrN7y+q2hn4OHh4X0Mr93W86L87JAWHh4e3j3efpSqbR8kT84X6/EuPDw8vAu8zQ/+2RbfhtWOL+Dh4eFd4/0FwkSwJUKQQBMAAAAASUVORK5CYII=" alt="微信分享二维码">
+</div>
+
+
+
+
+    <script src="//cdn.bootcss.com/node-waves/0.7.4/waves.min.js"></script>
+<script>
+var BLOG = { ROOT: '/', SHARE: true, REWARD: true };
+
+
+</script>
+
+<script src="//unpkg.com/hexo-theme-material-indigo@latest/js/main.min.js"></script>
+
+
+<div class="search-panel" id="search-panel">
+    <ul class="search-result" id="search-result"></ul>
+</div>
+<template id="search-tpl">
+<li class="item">
+    <a href="{path}" class="waves-block waves-effect">
+        <div class="title ellipsis" title="{title}">{title}</div>
+        <div class="flex-row flex-middle">
+            <div class="tags ellipsis">
+                {tags}
+            </div>
+            <time class="flex-col time">{date}</time>
+        </div>
+    </a>
+</li>
+</template>
+
+<script src="//unpkg.com/hexo-theme-material-indigo@latest/js/search.min.js" async></script>
+
+
+
+
+
+
+
+
+<script>
+(function() {
+    var OriginTitile = document.title, titleTime;
+    document.addEventListener('visibilitychange', function() {
+        if (document.hidden) {
+            document.title = '死鬼去哪里了！';
+            clearTimeout(titleTime);
+        } else {
+            document.title = '(つェ⊂)咦!又好了!';
+            titleTime = setTimeout(function() {
+                document.title = OriginTitile;
+            },2000);
+        }
+    });
+})();
+</script>
+
+
+
+</body>
+</html>

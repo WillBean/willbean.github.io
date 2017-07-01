@@ -13,25 +13,25 @@
     
     
     
-    <title>node-crawler | WillBean&#39;s Blog | 我可能是个假程序猿吧</title>
+    <title>Node爬虫爬取网页静态资源 | WillBean&#39;s Blog | 我可能是个假程序猿吧</title>
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
     
     <meta name="theme-color" content="#cccccc">
     
     
     <meta name="keywords" content="Node, Crawler">
-    <meta name="description" content="Node爬虫爬取网页静态资源一、准备工作 首先当然是安装node，这一步忽略。 然后是各种模块，本实例用到了http、fs、url、cheerio、request、async、phantom，前三个是node自带的，无需install。 因为要服务器渲染，所以要用到phantomjs，这个需要自行安装一下，最后再配置一下全局环境。  二、模块解释 cheerio模块用于解析DOM树，进行DOM操作">
+    <meta name="description" content="一、准备工作 首先当然是安装node，这一步忽略。 然后是各种模块，本实例用到了http、fs、url、cheerio、request、async、phantom，前三个是node自带的，无需install。 因为要服务器渲染，所以要用到phantomjs，这个需要自行安装一下，最后再配置一下全局环境。  二、模块解释 cheerio模块用于解析DOM树，进行DOM操作， 具体用法跟JQuery类">
 <meta name="keywords" content="Node, Crawler">
 <meta property="og:type" content="article">
-<meta property="og:title" content="node-crawler">
+<meta property="og:title" content="Node爬虫爬取网页静态资源">
 <meta property="og:url" content="https://willbean.github.io/2016/12/11/node-crawler/index.html">
 <meta property="og:site_name" content="WillBean&#39;s Blog">
-<meta property="og:description" content="Node爬虫爬取网页静态资源一、准备工作 首先当然是安装node，这一步忽略。 然后是各种模块，本实例用到了http、fs、url、cheerio、request、async、phantom，前三个是node自带的，无需install。 因为要服务器渲染，所以要用到phantomjs，这个需要自行安装一下，最后再配置一下全局环境。  二、模块解释 cheerio模块用于解析DOM树，进行DOM操作">
+<meta property="og:description" content="一、准备工作 首先当然是安装node，这一步忽略。 然后是各种模块，本实例用到了http、fs、url、cheerio、request、async、phantom，前三个是node自带的，无需install。 因为要服务器渲染，所以要用到phantomjs，这个需要自行安装一下，最后再配置一下全局环境。  二、模块解释 cheerio模块用于解析DOM树，进行DOM操作， 具体用法跟JQuery类">
 <meta property="og:image" content="https://raw.githubusercontent.com/WillBean/react-native-summary.github.io/master/images/node-crawler/dir.png">
-<meta property="og:updated_time" content="2017-06-28T08:18:02.148Z">
+<meta property="og:updated_time" content="2017-07-01T06:25:05.062Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="node-crawler">
-<meta name="twitter:description" content="Node爬虫爬取网页静态资源一、准备工作 首先当然是安装node，这一步忽略。 然后是各种模块，本实例用到了http、fs、url、cheerio、request、async、phantom，前三个是node自带的，无需install。 因为要服务器渲染，所以要用到phantomjs，这个需要自行安装一下，最后再配置一下全局环境。  二、模块解释 cheerio模块用于解析DOM树，进行DOM操作">
+<meta name="twitter:title" content="Node爬虫爬取网页静态资源">
+<meta name="twitter:description" content="一、准备工作 首先当然是安装node，这一步忽略。 然后是各种模块，本实例用到了http、fs、url、cheerio、request、async、phantom，前三个是node自带的，无需install。 因为要服务器渲染，所以要用到phantomjs，这个需要自行安装一下，最后再配置一下全局环境。  二、模块解释 cheerio模块用于解析DOM树，进行DOM操作， 具体用法跟JQuery类">
 <meta name="twitter:image" content="https://raw.githubusercontent.com/WillBean/react-native-summary.github.io/master/images/node-crawler/dir.png">
     
         <link rel="alternate" type="application/atom+xml" title="WillBean&#39;s Blog" href="/atom.xml">
@@ -116,7 +116,7 @@
         <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light on" id="menu-toggle">
           <i class="icon icon-lg icon-navicon"></i>
         </a>
-        <div class="flex-col header-title ellipsis">node-crawler</div>
+        <div class="flex-col header-title ellipsis">Node爬虫爬取网页静态资源</div>
         
         <div class="search-wrap" id="search-wrap">
             <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="back">
@@ -138,7 +138,7 @@
 <header class="content-header post-header">
 
     <div class="container fade-scale">
-        <h1 class="title">node-crawler</h1>
+        <h1 class="title">Node爬虫爬取网页静态资源</h1>
         <h5 class="subtitle">
             
                 <time datetime="2016-12-11T06:30:50.000Z" itemprop="datePublished" class="page-time">
@@ -161,7 +161,7 @@
     <aside class="post-widget">
         <nav class="post-toc-wrap" id="post-toc">
             <h4>TOC</h4>
-            <ol class="post-toc"><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#Node爬虫爬取网页静态资源"><span class="post-toc-number">1.</span> <span class="post-toc-text">Node爬虫爬取网页静态资源</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#一、准备工作"><span class="post-toc-number">1.0.1.</span> <span class="post-toc-text">一、准备工作</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#二、模块解释"><span class="post-toc-number">1.0.2.</span> <span class="post-toc-text">二、模块解释</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#三、具体实现"><span class="post-toc-number">1.0.3.</span> <span class="post-toc-text">三、具体实现</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#1-公用接口"><span class="post-toc-number">1.0.3.1.</span> <span class="post-toc-text">1. 公用接口</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#2-配置"><span class="post-toc-number">1.0.3.2.</span> <span class="post-toc-text">2. 配置</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#3-全局变量"><span class="post-toc-number">1.0.3.3.</span> <span class="post-toc-text">3. 全局变量</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#4-获取服务器渲染之后的页面"><span class="post-toc-number">1.0.3.4.</span> <span class="post-toc-text">4. 获取服务器渲染之后的页面</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#5-解析DOM树"><span class="post-toc-number">1.0.3.5.</span> <span class="post-toc-text">5. 解析DOM树</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#6-getJs-等函数"><span class="post-toc-number">1.0.3.6.</span> <span class="post-toc-text">6. getJs()等函数</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#7-保存网页文本"><span class="post-toc-number">1.0.3.7.</span> <span class="post-toc-text">7. 保存网页文本</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#8-保存js等资源"><span class="post-toc-number">1.0.3.8.</span> <span class="post-toc-text">8. 保存js等资源</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#9-并行执行写入操作"><span class="post-toc-number">1.0.3.9.</span> <span class="post-toc-text">9. 并行执行写入操作</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#10-测试-爬取http-localhost-8081-结果如图："><span class="post-toc-number">1.0.3.10.</span> <span class="post-toc-text">10. 测试 爬取http://localhost:8081/ 结果如图：</span></a></li></ol></li></ol></li></ol></li></ol>
+            <ol class="post-toc"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#一、准备工作"><span class="post-toc-number">1.</span> <span class="post-toc-text">一、准备工作</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#二、模块解释"><span class="post-toc-number">2.</span> <span class="post-toc-text">二、模块解释</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#三、具体实现"><span class="post-toc-number">3.</span> <span class="post-toc-text">三、具体实现</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#1-公用接口"><span class="post-toc-number">3.1.</span> <span class="post-toc-text">1. 公用接口</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#2-配置"><span class="post-toc-number">3.2.</span> <span class="post-toc-text">2. 配置</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#3-全局变量"><span class="post-toc-number">3.3.</span> <span class="post-toc-text">3. 全局变量</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#4-获取服务器渲染之后的页面"><span class="post-toc-number">3.4.</span> <span class="post-toc-text">4. 获取服务器渲染之后的页面</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#5-解析DOM树"><span class="post-toc-number">3.5.</span> <span class="post-toc-text">5. 解析DOM树</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#6-getJs-等函数"><span class="post-toc-number">3.6.</span> <span class="post-toc-text">6. getJs()等函数</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#7-保存网页文本"><span class="post-toc-number">3.7.</span> <span class="post-toc-text">7. 保存网页文本</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#8-保存js等资源"><span class="post-toc-number">3.8.</span> <span class="post-toc-text">8. 保存js等资源</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#9-并行执行写入操作"><span class="post-toc-number">3.9.</span> <span class="post-toc-text">9. 并行执行写入操作</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#10-测试-爬取http-localhost-8081-结果如图："><span class="post-toc-number">3.10.</span> <span class="post-toc-text">10. 测试 爬取http://localhost:8081/ 结果如图：</span></a></li></ol></li></ol>
         </nav>
     </aside>
     
@@ -169,7 +169,7 @@
   class="post-article article-type-post fade" itemprop="blogPost">
 
     <div class="post-card">
-        <h1 class="post-card-title">node-crawler</h1>
+        <h1 class="post-card-title">Node爬虫爬取网页静态资源</h1>
         <div class="post-meta">
             <time class="post-time" title="2016-12-11 14:30:50" datetime="2016-12-11T06:30:50.000Z"  itemprop="datePublished">2016-12-11</time>
 
@@ -180,7 +180,7 @@
 
         </div>
         <div class="post-content" id="post-content" itemprop="postContent">
-            <h1 id="Node爬虫爬取网页静态资源"><a href="#Node爬虫爬取网页静态资源" class="headerlink" title="Node爬虫爬取网页静态资源"></a>Node爬虫爬取网页静态资源</h1><h3 id="一、准备工作"><a href="#一、准备工作" class="headerlink" title="一、准备工作"></a>一、准备工作</h3><ol>
+            <h3 id="一、准备工作"><a href="#一、准备工作" class="headerlink" title="一、准备工作"></a>一、准备工作</h3><ol>
 <li>首先当然是安装node，这一步忽略。</li>
 <li>然后是各种模块，本实例用到了http、fs、url、cheerio、request、async、phantom，前三个是node自带的，无需install。</li>
 <li>因为要服务器渲染，所以要用到phantomjs，这个需要自行安装一下，最后再配置一下全局环境。</li>
@@ -217,7 +217,7 @@
     <div class="content">
         
 <span class="post-time">
-    最后更新时间：<time datetime="2017-06-28T08:18:02.148Z" itemprop="dateUpdated">2017-06-28 16:18:02</time>
+    最后更新时间：<time datetime="2017-07-01T06:25:05.062Z" itemprop="dateUpdated">2017-07-01 14:25:05</time>
 </span><br>
 
 
@@ -252,7 +252,7 @@
 <div class="page-share" id="pageShare">
     <ul class="reset share-icons">
       <li>
-        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=https://willbean.github.io/2016/12/11/node-crawler/&title=《node-crawler》 — WillBean's Blog&pic=https://willbean.github.io/img/avatar.jpg" data-title="微博">
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=https://willbean.github.io/2016/12/11/node-crawler/&title=《Node爬虫爬取网页静态资源》 — WillBean's Blog&pic=https://willbean.github.io/img/avatar.jpg" data-title="微博">
           <i class="icon icon-weibo"></i>
         </a>
       </li>
@@ -262,7 +262,7 @@
         </a>
       </li>
       <li>
-        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://willbean.github.io/2016/12/11/node-crawler/&title=《node-crawler》 — WillBean's Blog&source=这是一个准大四学生的前端博客。" data-title=" QQ">
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://willbean.github.io/2016/12/11/node-crawler/&title=《Node爬虫爬取网页静态资源》 — WillBean's Blog&source=这是一个准大四学生的前端博客。" data-title=" QQ">
           <i class="icon icon-qq"></i>
         </a>
       </li>
@@ -272,7 +272,7 @@
         </a>
       </li>
       <li>
-        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《node-crawler》 — WillBean's Blog&url=https://willbean.github.io/2016/12/11/node-crawler/&via=https://willbean.github.io" data-title=" Twitter">
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《Node爬虫爬取网页静态资源》 — WillBean's Blog&url=https://willbean.github.io/2016/12/11/node-crawler/&via=https://willbean.github.io" data-title=" Twitter">
           <i class="icon icon-twitter"></i>
         </a>
       </li>
@@ -300,9 +300,9 @@
 <nav class="post-nav flex-row flex-justify-between">
   
     <div class="waves-block waves-effect prev">
-      <a href="/2017/06/24/react-native-summary/" id="post-prev" class="post-nav-link">
+      <a href="/2017/03/09/long-polling-and-server-push/" id="post-prev" class="post-nav-link">
         <div class="tips"><i class="icon icon-angle-left icon-lg icon-pr"></i> Prev</div>
-        <h4 class="title">react-native-summary</h4>
+        <h4 class="title">长轮询与服务器推送实现不同页面之间的通信</h4>
       </a>
     </div>
   
@@ -311,7 +311,7 @@
     <div class="waves-block waves-effect next">
       <a href="/2016/11/07/cloud-server-configure/" id="post-next" class="post-nav-link">
         <div class="tips">Next <i class="icon icon-angle-right icon-lg icon-pl"></i></div>
-        <h4 class="title">cloud-server-configure</h4>
+        <h4 class="title">腾讯云ubuntu服务器配置</h4>
       </a>
     </div>
   
@@ -337,11 +337,11 @@
     <script src="//unpkg.com/gitment/dist/gitment.browser.js"></script>
     <script>
         var gitment = new Gitment({
-            owner: '',
-            repo: '',
+            owner: 'WillBean',
+            repo: 'willbean.github.io',
             oauth: {
-                client_id: '',
-                client_secret: '',
+                client_id: '5d9b308c6ae328be7417',
+                client_secret: '8381cbf6bd0eebd34af19c4aa5dd728dbce84877',
             },
         })
         gitment.render('comments')
@@ -413,7 +413,7 @@
 <div class="global-share" id="globalShare">
     <ul class="reset share-icons">
       <li>
-        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=https://willbean.github.io/2016/12/11/node-crawler/&title=《node-crawler》 — WillBean's Blog&pic=https://willbean.github.io/img/avatar.jpg" data-title="微博">
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=https://willbean.github.io/2016/12/11/node-crawler/&title=《Node爬虫爬取网页静态资源》 — WillBean's Blog&pic=https://willbean.github.io/img/avatar.jpg" data-title="微博">
           <i class="icon icon-weibo"></i>
         </a>
       </li>
@@ -423,7 +423,7 @@
         </a>
       </li>
       <li>
-        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://willbean.github.io/2016/12/11/node-crawler/&title=《node-crawler》 — WillBean's Blog&source=这是一个准大四学生的前端博客。" data-title=" QQ">
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://willbean.github.io/2016/12/11/node-crawler/&title=《Node爬虫爬取网页静态资源》 — WillBean's Blog&source=这是一个准大四学生的前端博客。" data-title=" QQ">
           <i class="icon icon-qq"></i>
         </a>
       </li>
@@ -433,7 +433,7 @@
         </a>
       </li>
       <li>
-        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《node-crawler》 — WillBean's Blog&url=https://willbean.github.io/2016/12/11/node-crawler/&via=https://willbean.github.io" data-title=" Twitter">
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《Node爬虫爬取网页静态资源》 — WillBean's Blog&url=https://willbean.github.io/2016/12/11/node-crawler/&via=https://willbean.github.io" data-title=" Twitter">
           <i class="icon icon-twitter"></i>
         </a>
       </li>

@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="https://willbean.github.io/"/>
-  <updated>2017-06-28T07:11:30.910Z</updated>
+  <updated>2017-07-01T06:24:11.552Z</updated>
   <id>https://willbean.github.io/</id>
   
   <author>
@@ -16,13 +16,13 @@
   <generator uri="http://hexo.io/">Hexo</generator>
   
   <entry>
-    <title>react-native-summary</title>
+    <title>React Native实战总结</title>
     <link href="https://willbean.github.io/2017/06/24/react-native-summary/"/>
     <id>https://willbean.github.io/2017/06/24/react-native-summary/</id>
     <published>2017-06-24T08:18:31.000Z</published>
-    <updated>2017-06-28T07:11:30.910Z</updated>
+    <updated>2017-07-01T06:24:11.552Z</updated>
     
-    <content type="html"><![CDATA[<h2 id="React-Native实战总结"><a href="#React-Native实战总结" class="headerlink" title="React Native实战总结"></a>React Native实战总结</h2><p>入职有道数月，主要参与了精品课垂直页的改版，期间遇到了不少坑，虽然还未正式上线，但是也值得总结一波，故写下此文。</p>
+    <content type="html"><![CDATA[<p>入职有道数月，主要参与了精品课垂直页的改版，期间遇到了不少坑，虽然还未正式上线，但是也值得总结一波，故写下此文。</p>
 <h3 id="需求介绍"><a href="#需求介绍" class="headerlink" title="需求介绍"></a>需求介绍</h3><ul>
 <li>首页部分：加入日志控制工具以收集、统计用户操作；改写搜索框写法，将搜索框提取成独立的共用组件。</li>
 <li>垂直页部分：此次改版集中在垂直页，新版垂直页将导航部分改版加入搜索框；重新设计了Banner部分；课程分类重新设计；课程入口信息增多样式改变；将原本的两列布局改成新版的一列布局，还加入了原本没有的（图片）小标题。</li>
@@ -118,7 +118,8 @@
     
     <summary type="html">
     
-      &lt;h2 id=&quot;React-Native实战总结&quot;&gt;&lt;a href=&quot;#React-Native实战总结&quot; class=&quot;headerlink&quot; title=&quot;React Native实战总结&quot;&gt;&lt;/a&gt;React Native实战总结&lt;/h2&gt;&lt;p&gt;入职有道数月，主要参与了精品
+      &lt;p&gt;入职有道数月，主要参与了精品课垂直页的改版，期间遇到了不少坑，虽然还未正式上线，但是也值得总结一波，故写下此文。&lt;/p&gt;
+&lt;h3 id=&quot;需求介绍&quot;&gt;&lt;a href=&quot;#需求介绍&quot; class=&quot;headerlink&quot; title=&quot;需求介绍&quot;&gt;&lt;/a&gt;需求介绍&lt;/h3&gt;&lt;
     
     </summary>
     
@@ -128,13 +129,115 @@
   </entry>
   
   <entry>
-    <title>node-crawler</title>
+    <title>Ubuntu云服务器开启telnet实现远程登录</title>
+    <link href="https://willbean.github.io/2017/04/02/ubuntu-open-telnet/"/>
+    <id>https://willbean.github.io/2017/04/02/ubuntu-open-telnet/</id>
+    <published>2017-04-02T06:35:14.000Z</published>
+    <updated>2017-07-01T06:40:57.823Z</updated>
+    
+    <content type="html"><![CDATA[<h3 id="一、安装telnet服务"><a href="#一、安装telnet服务" class="headerlink" title="一、安装telnet服务"></a>一、安装telnet服务</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">sudo apt-get install xinetd telnetd</div></pre></td></tr></table></figure>
+<h3 id="二、修改-etc-xinetd-conf，在-log-type-SYSLOG-daemon-info下面添加内容"><a href="#二、修改-etc-xinetd-conf，在-log-type-SYSLOG-daemon-info下面添加内容" class="headerlink" title="二、修改/etc/xinetd.conf，在# log_type = SYSLOG daemon info下面添加内容"></a>二、修改/etc/xinetd.conf，在# log_type = SYSLOG daemon info下面添加内容</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">instances = 60   </div><div class="line">log_type = SYSLOG authpriv   </div><div class="line">log_on_success = HOST PID   </div><div class="line">log_on_failure = HOST   </div><div class="line">cps = 25 30</div></pre></td></tr></table></figure>
+<h3 id="三、编辑-etc-xinetd-d-telnet文件（没有可自行创建此文件），添加以下内容"><a href="#三、编辑-etc-xinetd-d-telnet文件（没有可自行创建此文件），添加以下内容" class="headerlink" title="三、编辑/etc/xinetd.d/telnet文件（没有可自行创建此文件），添加以下内容"></a>三、编辑/etc/xinetd.d/telnet文件（没有可自行创建此文件），添加以下内容</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line"><span class="comment"># default: on   </span></div><div class="line"><span class="comment"># description: The telnet server serves telnet sessions; it uses \   </span></div><div class="line"><span class="comment"># unencrypted username/password pairs for authentication.   </span></div><div class="line">service telnet   </div><div class="line">&#123;   </div><div class="line"><span class="built_in">disable</span> = no   </div><div class="line">flags = REUSE   </div><div class="line">socket_type = stream   </div><div class="line"><span class="built_in">wait</span> = no   </div><div class="line">user = root   </div><div class="line">server = /usr/sbin/in.telnetd   </div><div class="line">log_on_failure += USERID   </div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h3 id="四、重启机器或网络"><a href="#四、重启机器或网络" class="headerlink" title="四、重启机器或网络"></a>四、重启机器或网络</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">sudo /etc/init.d/xinetd restart</div></pre></td></tr></table></figure>
+<h3 id="五、通过telnet命令测试是否配置成功"><a href="#五、通过telnet命令测试是否配置成功" class="headerlink" title="五、通过telnet命令测试是否配置成功"></a>五、通过telnet命令测试是否配置成功</h3><h3 id="六、Windows下开启telnet服务"><a href="#六、Windows下开启telnet服务" class="headerlink" title="六、Windows下开启telnet服务"></a>六、Windows下开启telnet服务</h3><h3 id="七、使用CMD连接Linux服务器"><a href="#七、使用CMD连接Linux服务器" class="headerlink" title="七、使用CMD连接Linux服务器"></a>七、使用CMD连接Linux服务器</h3>]]></content>
+    
+    <summary type="html">
+    
+      &lt;h3 id=&quot;一、安装telnet服务&quot;&gt;&lt;a href=&quot;#一、安装telnet服务&quot; class=&quot;headerlink&quot; title=&quot;一、安装telnet服务&quot;&gt;&lt;/a&gt;一、安装telnet服务&lt;/h3&gt;&lt;figure class=&quot;highlight bash&quot;&gt;&lt;t
+    
+    </summary>
+    
+    
+      <category term="Ubuntu, Telnet" scheme="https://willbean.github.io/tags/Ubuntu-Telnet/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Three.js obj模型转js并渲染</title>
+    <link href="https://willbean.github.io/2017/03/23/three.js-object-to-module/"/>
+    <id>https://willbean.github.io/2017/03/23/three.js-object-to-module/</id>
+    <published>2017-03-23T06:13:46.000Z</published>
+    <updated>2017-07-01T06:23:43.111Z</updated>
+    
+    <content type="html"><![CDATA[<h3 id="一、格式转化"><a href="#一、格式转化" class="headerlink" title="一、格式转化"></a>一、格式转化</h3><ol>
+<li>下载python.到python官网<a href="https://www.python.org/" target="_blank" rel="external">https://www.python.org/</a>进行下载，由于我是使用windows，所以直接下载了python3 windows的安装包，一路next完成安装，安装完成再配置一下环境变量即可。</li>
+<li>下载three.js提供的格式转换文件——<strong>convert_obj_three.py</strong> （three.js官网可下载，或者到其github直接复制粘贴），注意版本，有python2和python3两个版本，按需下载。</li>
+<li>将<strong>convert_obj_three.py</strong> 和你的obj文件放置同一目录，命令行下执行</li>
+</ol>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">python convert_obj_three.py -i infile.obj -o outfile.js</div></pre></td></tr></table></figure>
+<p>该命令还有其他一些参数，详情可查阅convert_obj_three.py 注释部分。</p>
+<h3 id="二、模型渲染"><a href="#二、模型渲染" class="headerlink" title="二、模型渲染"></a>二、模型渲染</h3><p>我使用的是three.js [r84]版本，较之前面版本有些不同。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">let</span> loader = <span class="keyword">new</span> THREE.JSONLoader();</div><div class="line">loader.load(<span class="string">'./img/port2.js'</span>, (geometry, materials)=&gt; &#123;</div><div class="line">        <span class="keyword">var</span> material = <span class="keyword">new</span> THREE.MultiMaterial(materials);</div><div class="line">        <span class="keyword">var</span> object = <span class="keyword">new</span> THREE.Mesh(geometry, material);</div><div class="line">        scene.add(object);</div><div class="line">    &#125;, <span class="function"><span class="keyword">function</span> (<span class="params">xhr</span>) </span>&#123;</div><div class="line">        <span class="built_in">console</span>.log((xhr.loaded / xhr.total * <span class="number">100</span>) + <span class="string">'% loaded'</span>);</div><div class="line">    &#125;,</div><div class="line">    <span class="comment">// Function called when download errors</span></div><div class="line">    <span class="function"><span class="keyword">function</span> (<span class="params">xhr</span>) </span>&#123;</div><div class="line">        <span class="built_in">console</span>.error(xhr);</div><div class="line">    &#125;</div><div class="line">);</div></pre></td></tr></table></figure>]]></content>
+    
+    <summary type="html">
+    
+      &lt;h3 id=&quot;一、格式转化&quot;&gt;&lt;a href=&quot;#一、格式转化&quot; class=&quot;headerlink&quot; title=&quot;一、格式转化&quot;&gt;&lt;/a&gt;一、格式转化&lt;/h3&gt;&lt;ol&gt;
+&lt;li&gt;下载python.到python官网&lt;a href=&quot;https://www.python.or
+    
+    </summary>
+    
+    
+      <category term="Three.js" scheme="https://willbean.github.io/tags/Three-js/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>长轮询与服务器推送实现不同页面之间的通信</title>
+    <link href="https://willbean.github.io/2017/03/09/long-polling-and-server-push/"/>
+    <id>https://willbean.github.io/2017/03/09/long-polling-and-server-push/</id>
+    <published>2017-03-09T06:42:06.000Z</published>
+    <updated>2017-07-01T06:51:12.625Z</updated>
+    
+    <content type="html"><![CDATA[<h3 id="前言："><a href="#前言：" class="headerlink" title="前言："></a>前言：</h3><p>由于经常使用微信登录其他一些博客论坛什么的，就会经常遇到扫一扫登录的情况，大家都知道，我们平时访问的网页一般都是无连接的，也就是说需要数据的时候即便发出请求，服务器接受到请求之后便处理并返回相应的数据，这时连接就已经断开了，而使用扫一扫登陆的情况确是相反的，页面中的二维码一直等待着我们使用手机去扫描它，扫描过后页面完成登陆操作并进行一些跳转，那么问题来了，这是怎么实现的呢？怀着好奇心，先激活出二维码界面，再在浏览器上按下F12，切换到控制台，发现每隔几秒便有一个请求发出，稍微想想也就知道大致是怎么回事了，不就是长轮询嘛，实现的方法也挺多的，可以使用最原始的XMLHttpRequest，也可以使用WebSocket。最近也闲来没事做，就打算自己写个demo好了。</p>
+<h3 id="一、架构介绍"><a href="#一、架构介绍" class="headerlink" title="一、架构介绍"></a>一、架构介绍</h3><p>既然是demo，我们也没必要搞太复杂，就用客户端A、服务器B、服务器C、客户端D表示吧。</p>
+<p>客户端A模拟触发登录操作，服务器B接收到A的请求，B再告知服务器C要进行操作了，C接收到指令后通过服务器推送告诉客户端D显示确认或取消登录的按钮，当用户点击按钮后，D再向C发送一条请求，告知其用户的操作结果，再从C到B，B到A的顺序一步步返回。在C、D进行通信时，A、B发起的请求处于挂起（等待）状态，如果超时的话，就重新进行链接。</p>
+<h3 id="二、技术栈介绍"><a href="#二、技术栈介绍" class="headerlink" title="二、技术栈介绍"></a>二、技术栈介绍</h3><p>服务器用到了node+koa，客户端仅仅使用了Html和js，客户端向服务器发送请求使用了XMLHttpRequest，服务器间通信使用request-promise模块，服务器向客户端推送数据使用EventSource，此demo没有使用WebSocket纯粹是因为从来没有用过EventSource想练练手，谁想踩了大坑，后文分解。</p>
+<h3 id="三、代码讲解"><a href="#三、代码讲解" class="headerlink" title="三、代码讲解"></a>三、代码讲解</h3><p>又到了最愉快的贴代码时间~</p>
+<p>先展示一下目录结构：</p>
+<div align="center"><br><img src="https://raw.githubusercontent.com/WillBean/react-native-summary.github.io/master/images/long-polling-and-server-push/dir.png" width="50%"><br></div>
+
+<p>1）request client &gt; index.html （客户端A代码）</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div></pre></td><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">body</span>&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">button</span> <span class="attr">id</span>=<span class="string">"send"</span>&gt;</span>发送请求<span class="tag">&lt;/<span class="name">button</span>&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">script</span>&gt;</span><span class="undefined"></span></div><div class="line">    var send = document.querySelector('#send')</div><div class="line">    send.onclick = function () &#123;</div><div class="line">        polling('http://localhost:8888/longPolling',5000)</div><div class="line">    &#125;</div><div class="line">    function polling(url,timeout) &#123;</div><div class="line">        var xhr = new XMLHttpRequest()</div><div class="line">        xhr.open("get",url)</div><div class="line">        xhr.timeout = timeout;</div><div class="line">        xhr.onreadystatechange = function () &#123;</div><div class="line">            if( xhr.readyState === 4 &amp;&amp; xhr.status === 200)&#123;</div><div class="line">                alert('对方选择了·确定·')</div><div class="line">            &#125;else if( xhr.readyState === 4 &amp;&amp; xhr.status === 204)&#123;</div><div class="line">                alert('对方选择了·取消·')</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line">        xhr.ontimeout = function () &#123;</div><div class="line">            console.log('Timeout resend '+ new Date());</div><div class="line">            polling(url,5000)</div><div class="line">        &#125;</div><div class="line">        xhr.send()</div><div class="line">    &#125;</div><div class="line"><span class="tag">&lt;/<span class="name">script</span>&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">body</span>&gt;</span></div></pre></td></tr></table></figure>
+<p>一个按钮，绑定了polling函数，传入请求地址与超时时间，超时则重新请求。</p>
+<p>2.1）request server &gt; app.js （服务器B代码）</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line"><span class="meta">'use strict'</span>;</div><div class="line"><span class="keyword">const</span> Koa = <span class="built_in">require</span>(<span class="string">'koa'</span>);</div><div class="line"><span class="keyword">const</span> app = <span class="keyword">new</span> Koa();</div><div class="line"><span class="keyword">const</span> router = <span class="built_in">require</span>(<span class="string">'koa-router'</span>)();</div><div class="line"><span class="keyword">const</span> cors = <span class="built_in">require</span>(<span class="string">'koa-cors'</span>);</div><div class="line"><span class="keyword">const</span> routers = <span class="built_in">require</span>(<span class="string">'./routes'</span>);</div><div class="line"></div><div class="line"><span class="keyword">let</span> repPort = <span class="number">8888</span>;</div><div class="line"></div><div class="line">router.use(<span class="string">'/'</span>, routers.routes(), routers.allowedMethods());</div><div class="line"></div><div class="line">app.use(cors());</div><div class="line">app.use(router.routes(), router.allowedMethods());</div><div class="line"></div><div class="line">app.listen(repPort)</div></pre></td></tr></table></figure>
+<p>2.2）request server &gt; routes &gt; index.js （服务器B路由）</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">const</span> router = <span class="built_in">require</span>(<span class="string">'koa-router'</span>)()</div><div class="line"><span class="keyword">const</span> rp = <span class="built_in">require</span>(<span class="string">'request-promise'</span>);</div><div class="line"></div><div class="line"><span class="keyword">let</span> resHostname = <span class="string">'localhost'</span>;</div><div class="line"><span class="keyword">let</span> resPort = <span class="number">8889</span>;</div><div class="line"></div><div class="line">router.get(<span class="string">'longPolling'</span>, <span class="function"><span class="keyword">function</span>* (<span class="params">next</span>)</span>&#123;</div><div class="line">    <span class="keyword">let</span> options = &#123;</div><div class="line">        <span class="attr">uri</span> : <span class="string">`http://<span class="subst">$&#123;resHostname&#125;</span>:<span class="subst">$&#123;resPort&#125;</span>/btServer`</span>,</div><div class="line">        <span class="attr">method</span> : <span class="string">'post'</span></div><div class="line">    &#125;;</div><div class="line">    </div><div class="line">    <span class="keyword">yield</span> rp(options).then(<span class="function"><span class="params">data</span>=&gt;</span>&#123;</div><div class="line">        <span class="keyword">this</span>.status = <span class="built_in">parseInt</span>(data);</div><div class="line">        <span class="built_in">console</span>.log(<span class="string">'Finished'</span>)</div><div class="line">    &#125;).catch(<span class="function"><span class="params">err</span>=&gt;</span>&#123;</div><div class="line">        <span class="built_in">console</span>.log(<span class="string">`error message:<span class="subst">$&#123;err&#125;</span>`</span>)</div><div class="line">    &#125;);</div><div class="line">&#125;);</div><div class="line"></div><div class="line"><span class="built_in">module</span>.exports = router;</div></pre></td></tr></table></figure>
+<p>接收A发来的请求，使用request-promise向C发送请求，同时挂起处理以等待响应。</p>
+<p>3.1）responce server &gt; app.js （服务器C代码）</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">const</span> Koa = <span class="built_in">require</span>(<span class="string">'koa'</span>);</div><div class="line"><span class="keyword">const</span> app = <span class="keyword">new</span> Koa();</div><div class="line"><span class="keyword">const</span> render = <span class="built_in">require</span>(<span class="string">'koa-render'</span>);</div><div class="line"><span class="keyword">const</span> router = <span class="built_in">require</span>(<span class="string">'koa-router'</span>)();</div><div class="line"><span class="keyword">const</span> routes = <span class="built_in">require</span>(<span class="string">'./routes'</span>);</div><div class="line"><span class="keyword">const</span> convert = <span class="built_in">require</span>(<span class="string">'koa-convert'</span>);</div><div class="line"><span class="keyword">const</span> bodyparser = <span class="built_in">require</span>(<span class="string">'koa-bodyparser'</span>)();</div><div class="line"></div><div class="line"><span class="keyword">let</span> port = <span class="number">8889</span>;</div><div class="line"></div><div class="line">router.use(<span class="string">'/'</span>, routes.routes());</div><div class="line"></div><div class="line">app.use(convert(bodyparser));</div><div class="line">app.use(<span class="built_in">require</span>(<span class="string">'koa-static'</span>)(__dirname + <span class="string">'/public'</span>));</div><div class="line">app.use(render());</div><div class="line">app.use(router.routes());</div><div class="line"></div><div class="line">app.listen(port);</div></pre></td></tr></table></figure>
+<p>3.2）responce server &gt; routes &gt; index.js （服务器C路由）</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">const</span> router = <span class="built_in">require</span>(<span class="string">'koa-router'</span>)()</div><div class="line"><span class="keyword">const</span> EL = <span class="built_in">require</span>(<span class="string">'../EventListener'</span>);</div><div class="line"><span class="keyword">const</span> el = <span class="keyword">new</span> EL();</div><div class="line"></div><div class="line">router.post(<span class="string">'btServer'</span>,  <span class="function"><span class="keyword">function</span> *(<span class="params">next</span>) </span>&#123;<span class="comment">// 客户端服务器请求</span></div><div class="line">    <span class="keyword">let</span> resBody = <span class="number">0</span>;</div><div class="line">    el.sendEnsureMsg();</div><div class="line">    <span class="keyword">yield</span> <span class="keyword">new</span> <span class="built_in">Promise</span>(<span class="function">(<span class="params">resolve, reject</span>)=&gt;</span> &#123;</div><div class="line">        el.once(<span class="string">'receive'</span>, ()=&gt; &#123;</div><div class="line">            <span class="keyword">if</span> (el.status === <span class="string">'yes'</span>) &#123;</div><div class="line">                resBody = <span class="number">200</span>;</div><div class="line">            &#125; <span class="keyword">else</span> <span class="keyword">if</span> (el.status === <span class="string">'no'</span>) &#123;</div><div class="line">                resBody = <span class="number">204</span>;</div><div class="line">            &#125;</div><div class="line">            resolve();</div><div class="line">        &#125;);</div><div class="line">    &#125;);</div><div class="line">    <span class="keyword">this</span>.body = resBody;</div><div class="line">    <span class="keyword">this</span>.status = <span class="number">200</span>;</div><div class="line">&#125;).get(<span class="string">'ensure'</span>,<span class="function"><span class="keyword">function</span>* (<span class="params">next</span>) </span>&#123; <span class="comment">//向客户端推送信息</span></div><div class="line">    <span class="keyword">let</span> self = <span class="keyword">this</span>;</div><div class="line">    <span class="keyword">this</span>.set(<span class="string">"content-type"</span>,<span class="string">"text/event-stream"</span>);</div><div class="line">    <span class="keyword">yield</span> <span class="keyword">new</span> <span class="built_in">Promise</span>(<span class="function">(<span class="params">resolve, reject</span>)=&gt;</span> &#123;</div><div class="line">        el.once(<span class="string">'ensure'</span>, ()=&gt; &#123;</div><div class="line">            <span class="built_in">console</span>.log(<span class="string">'Has send'</span>);</div><div class="line">            resolve();</div><div class="line">        &#125;);</div><div class="line">    &#125;);</div><div class="line">    self.body = <span class="string">'data: ensure\n\n'</span>;</div><div class="line">    <span class="keyword">this</span>.status = <span class="number">200</span>;</div><div class="line">&#125;).post(<span class="string">'sure'</span>, <span class="function"><span class="keyword">function</span>*(<span class="params">next</span>) </span>&#123; <span class="comment">//客户端相应推送</span></div><div class="line">    el.receiveEnsureMsg(<span class="keyword">this</span>.request.body.data)</div><div class="line">    <span class="keyword">this</span>.status = <span class="number">200</span>;</div><div class="line">&#125;);</div><div class="line"></div><div class="line"><span class="built_in">module</span>.exports = router;</div></pre></td></tr></table></figure>
+<p>3.3 的代码继承了events模块，封装了两个方法，一个用来触发服务器推送，一个用来响应客户端D返回的数据。</p>
+<p>3.2 中订阅事件使用了该事件监听类并使用了once方法，以防止超时重传时重复订阅此事件。</p>
+<p>在调试过程中D一直无法接收到C推送的数据，迟迟查不出原因，最后多方百度才发现，原来EventSource的数据必须以“data: something \n\n”的格式传输，我真是<em>了</em>了。</p>
+<p>4）responce server &gt; public &gt;index.html (客户端D代码）</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div></pre></td><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">body</span>&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">id</span>=<span class="string">"container"</span> <span class="attr">style</span>=<span class="string">"display: none"</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">button</span> <span class="attr">id</span>=<span class="string">"yes"</span>&gt;</span>确定<span class="tag">&lt;/<span class="name">button</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">button</span> <span class="attr">id</span>=<span class="string">"no"</span>&gt;</span>取消<span class="tag">&lt;/<span class="name">button</span>&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">div</span>&gt;</span></div><div class="line"></div><div class="line"><span class="tag">&lt;<span class="name">script</span>&gt;</span><span class="javascript"></span></div><div class="line">    <span class="keyword">var</span> yes = <span class="built_in">document</span>.querySelector(<span class="string">"#yes"</span>)</div><div class="line">    <span class="keyword">var</span> no = <span class="built_in">document</span>.querySelector(<span class="string">"#no"</span>)</div><div class="line">    <span class="keyword">var</span> container = <span class="built_in">document</span>.querySelector(<span class="string">"#container"</span>)</div><div class="line"></div><div class="line">    <span class="keyword">var</span> eventSource = <span class="keyword">new</span> EventSource(<span class="string">'/ensure'</span>)</div><div class="line">    eventSource.onmessage = <span class="function"><span class="keyword">function</span> (<span class="params">e</span>) </span>&#123;</div><div class="line">        <span class="keyword">if</span>(e.data === <span class="string">'ensure'</span>)&#123;</div><div class="line">            container.style.display = <span class="string">'block'</span></div><div class="line">            eventSource.close()</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">    eventSource.onerror = <span class="function"><span class="keyword">function</span> (<span class="params">err</span>) </span>&#123;</div><div class="line">        <span class="built_in">console</span>.log(<span class="string">`EventSource error:`</span>);</div><div class="line">        <span class="built_in">console</span>.log(err);</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    yes.onclick = <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</div><div class="line">        postMsg(<span class="string">'data=yes'</span>)</div><div class="line">    &#125;</div><div class="line">    no.onclick = <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</div><div class="line">        postMsg(<span class="string">'data=no'</span>)</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">function</span> <span class="title">postMsg</span>(<span class="params">msg</span>) </span>&#123;</div><div class="line">        <span class="keyword">var</span> xhr = <span class="keyword">new</span> XMLHttpRequest()</div><div class="line">        xhr.open(<span class="string">'post'</span>,<span class="string">'/sure'</span>)</div><div class="line">        xhr.onreadystatechange = <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</div><div class="line">            <span class="keyword">if</span>(xhr.readyState === <span class="number">4</span> &amp;&amp; xhr.status === <span class="number">200</span>)&#123;</div><div class="line">                container.style.display = <span class="string">'none'</span></div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line">        xhr.setRequestHeader(<span class="string">"Content-Type"</span>, <span class="string">"application/x-www-form-urlencoded"</span>);</div><div class="line">        xhr.send(msg)</div><div class="line">    &#125;</div><div class="line"></div><div class="line"><span class="tag">&lt;/<span class="name">script</span>&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">body</span>&gt;</span></div></pre></td></tr></table></figure>
+<p>客户端D的代码没有独立开来而放在了response server文件夹下是因为EventSource要求与请求的服务器同源，就直接给它放在了静态资源下。</p>
+<h3 id="总结："><a href="#总结：" class="headerlink" title="总结："></a>总结：</h3><p>好了，代码贴完了，其实并没有什么含金量，就是坑特多。</p>
+<p>就这样吧，代码放github了。</p>
+<p>传送门：<a href="https://github.com/WillBean/long-polling.git" target="_blank" rel="external">https://github.com/WillBean/long-polling.git</a></p>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;h3 id=&quot;前言：&quot;&gt;&lt;a href=&quot;#前言：&quot; class=&quot;headerlink&quot; title=&quot;前言：&quot;&gt;&lt;/a&gt;前言：&lt;/h3&gt;&lt;p&gt;由于经常使用微信登录其他一些博客论坛什么的，就会经常遇到扫一扫登录的情况，大家都知道，我们平时访问的网页一般都是无连接的，也就是说需
+    
+    </summary>
+    
+    
+      <category term="长轮询, 服务器推送" scheme="https://willbean.github.io/tags/%E9%95%BF%E8%BD%AE%E8%AF%A2-%E6%9C%8D%E5%8A%A1%E5%99%A8%E6%8E%A8%E9%80%81/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Node爬虫爬取网页静态资源</title>
     <link href="https://willbean.github.io/2016/12/11/node-crawler/"/>
     <id>https://willbean.github.io/2016/12/11/node-crawler/</id>
     <published>2016-12-11T06:30:50.000Z</published>
-    <updated>2017-06-28T08:18:02.148Z</updated>
+    <updated>2017-07-01T06:25:05.062Z</updated>
     
-    <content type="html"><![CDATA[<h1 id="Node爬虫爬取网页静态资源"><a href="#Node爬虫爬取网页静态资源" class="headerlink" title="Node爬虫爬取网页静态资源"></a>Node爬虫爬取网页静态资源</h1><h3 id="一、准备工作"><a href="#一、准备工作" class="headerlink" title="一、准备工作"></a>一、准备工作</h3><ol>
+    <content type="html"><![CDATA[<h3 id="一、准备工作"><a href="#一、准备工作" class="headerlink" title="一、准备工作"></a>一、准备工作</h3><ol>
 <li>首先当然是安装node，这一步忽略。</li>
 <li>然后是各种模块，本实例用到了http、fs、url、cheerio、request、async、phantom，前三个是node自带的，无需install。</li>
 <li>因为要服务器渲染，所以要用到phantomjs，这个需要自行安装一下，最后再配置一下全局环境。</li>
@@ -168,7 +271,9 @@
     
     <summary type="html">
     
-      &lt;h1 id=&quot;Node爬虫爬取网页静态资源&quot;&gt;&lt;a href=&quot;#Node爬虫爬取网页静态资源&quot; class=&quot;headerlink&quot; title=&quot;Node爬虫爬取网页静态资源&quot;&gt;&lt;/a&gt;Node爬虫爬取网页静态资源&lt;/h1&gt;&lt;h3 id=&quot;一、准备工作&quot;&gt;&lt;a href=&quot;
+      &lt;h3 id=&quot;一、准备工作&quot;&gt;&lt;a href=&quot;#一、准备工作&quot; class=&quot;headerlink&quot; title=&quot;一、准备工作&quot;&gt;&lt;/a&gt;一、准备工作&lt;/h3&gt;&lt;ol&gt;
+&lt;li&gt;首先当然是安装node，这一步忽略。&lt;/li&gt;
+&lt;li&gt;然后是各种模块，本实例用到了http、f
     
     </summary>
     
@@ -178,13 +283,13 @@
   </entry>
   
   <entry>
-    <title>cloud-server-configure</title>
+    <title>腾讯云ubuntu服务器配置</title>
     <link href="https://willbean.github.io/2016/11/07/cloud-server-configure/"/>
     <id>https://willbean.github.io/2016/11/07/cloud-server-configure/</id>
     <published>2016-11-07T10:59:23.000Z</published>
-    <updated>2017-06-24T11:53:07.078Z</updated>
+    <updated>2017-07-01T06:27:05.203Z</updated>
     
-    <content type="html"><![CDATA[<h1 id="腾讯云ubuntu服务器配置"><a href="#腾讯云ubuntu服务器配置" class="headerlink" title="腾讯云ubuntu服务器配置"></a>腾讯云ubuntu服务器配置</h1><h3 id="零、域名绑定"><a href="#零、域名绑定" class="headerlink" title="零、域名绑定"></a>零、域名绑定</h3><p>从腾讯云服务的云解析里解析域名并绑定服务器公网即可。</p>
+    <content type="html"><![CDATA[<h3 id="零、域名绑定"><a href="#零、域名绑定" class="headerlink" title="零、域名绑定"></a>零、域名绑定</h3><p>从腾讯云服务的云解析里解析域名并绑定服务器公网即可。</p>
 <h3 id="一、安装mysql"><a href="#一、安装mysql" class="headerlink" title="一、安装mysql"></a>一、安装mysql</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">sudo apt-get install mysql-server</div><div class="line">sudo apt-get isntall mysql-client</div><div class="line">sudo apt-get install libmysqlclient-dev</div></pre></td></tr></table></figure>
 <p>第一部会提示输入密码。经过以上三部，如无意外，mysql就配置好了。</p>
 <h3 id="二、安装node"><a href="#二、安装node" class="headerlink" title="二、安装node"></a>二、安装node</h3><p>偷个懒先<sudo su="">进入root模式，大家不要学我，这样不好不好。(补：一下方法是使用ubuntu自带的node包进行安装，node版本可能比较低，可跳过，使用源码安装)</sudo></p>
@@ -221,12 +326,13 @@
     
     <summary type="html">
     
-      &lt;h1 id=&quot;腾讯云ubuntu服务器配置&quot;&gt;&lt;a href=&quot;#腾讯云ubuntu服务器配置&quot; class=&quot;headerlink&quot; title=&quot;腾讯云ubuntu服务器配置&quot;&gt;&lt;/a&gt;腾讯云ubuntu服务器配置&lt;/h1&gt;&lt;h3 id=&quot;零、域名绑定&quot;&gt;&lt;a href=&quot;
+      &lt;h3 id=&quot;零、域名绑定&quot;&gt;&lt;a href=&quot;#零、域名绑定&quot; class=&quot;headerlink&quot; title=&quot;零、域名绑定&quot;&gt;&lt;/a&gt;零、域名绑定&lt;/h3&gt;&lt;p&gt;从腾讯云服务的云解析里解析域名并绑定服务器公网即可。&lt;/p&gt;
+&lt;h3 id=&quot;一、安装mysql&quot;&gt;&lt;a h
     
     </summary>
     
     
-      <category term="ubuntu" scheme="https://willbean.github.io/tags/ubuntu/"/>
+      <category term="Ubuntu" scheme="https://willbean.github.io/tags/Ubuntu/"/>
     
   </entry>
   

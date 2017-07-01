@@ -1,0 +1,486 @@
+<!DOCTYPE html>
+<html>
+<head>
+    
+
+    
+
+    
+
+
+
+    <meta charset="utf-8">
+    
+    
+    
+    <title>Ubuntu云服务器开启telnet实现远程登录 | WillBean&#39;s Blog | 我可能是个假程序猿吧</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+    <meta name="theme-color" content="#cccccc">
+    
+    
+    <meta name="keywords" content="Ubuntu, Telnet">
+    <meta name="description" content="一、安装telnet服务1sudo apt-get install xinetd telnetd 二、修改/etc/xinetd.conf，在# log_type = SYSLOG daemon info下面添加内容12345instances = 60   log_type = SYSLOG authpriv   log_on_success = HOST PID   log_on_failur">
+<meta name="keywords" content="Ubuntu, Telnet">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Ubuntu云服务器开启telnet实现远程登录">
+<meta property="og:url" content="https://willbean.github.io/2017/04/02/ubuntu-open-telnet/index.html">
+<meta property="og:site_name" content="WillBean&#39;s Blog">
+<meta property="og:description" content="一、安装telnet服务1sudo apt-get install xinetd telnetd 二、修改/etc/xinetd.conf，在# log_type = SYSLOG daemon info下面添加内容12345instances = 60   log_type = SYSLOG authpriv   log_on_success = HOST PID   log_on_failur">
+<meta property="og:updated_time" content="2017-07-01T06:40:57.823Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Ubuntu云服务器开启telnet实现远程登录">
+<meta name="twitter:description" content="一、安装telnet服务1sudo apt-get install xinetd telnetd 二、修改/etc/xinetd.conf，在# log_type = SYSLOG daemon info下面添加内容12345instances = 60   log_type = SYSLOG authpriv   log_on_success = HOST PID   log_on_failur">
+    
+        <link rel="alternate" type="application/atom+xml" title="WillBean&#39;s Blog" href="/atom.xml">
+    
+    <link rel="shortcut icon" href="/favicon.ico">
+    <link rel="stylesheet" href="//unpkg.com/hexo-theme-material-indigo@latest/css/style.css">
+    <script>window.lazyScripts=[]</script>
+</head>
+
+<body>
+    <div id="loading" class="active"></div>
+
+    <aside id="menu" class="hide" >
+  <div class="inner flex-row-vertical">
+    <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menu-off">
+        <i class="icon icon-lg icon-close"></i>
+    </a>
+    <div class="brand-wrap" style="background-image:url(/img/brand.jpg)">
+      <div class="brand">
+        <a href="/" class="avatar waves-effect waves-circle waves-light">
+          <img src="/img/avatar.jpg">
+        </a>
+        <hgroup class="introduce">
+          <h5 class="nickname">WillBean</h5>
+          <a href="mailto:182769979@qq.com" title="182769979@qq.com" class="mail">182769979@qq.com</a>
+        </hgroup>
+      </div>
+    </div>
+    <div class="scroll-wrap flex-col">
+      <ul class="nav">
+        
+            <li class="waves-block waves-effect">
+              <a href="/"  >
+                <i class="icon icon-lg icon-home"></i>
+                主页
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/archives"  >
+                <i class="icon icon-lg icon-archives"></i>
+                Archives
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/tags"  >
+                <i class="icon icon-lg icon-tags"></i>
+                Tags
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/categories"  >
+                <i class="icon icon-lg icon-th-list"></i>
+                Categories
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="https://github.com/WillBean" target="_blank" >
+                <i class="icon icon-lg icon-github"></i>
+                Github
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/custom"  >
+                <i class="icon icon-lg icon-link"></i>
+                Repository
+              </a>
+            </li>
+        
+      </ul>
+    </div>
+  </div>
+</aside>
+
+    <main id="main">
+        <header class="top-header" id="header">
+    <div class="flex-row">
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light on" id="menu-toggle">
+          <i class="icon icon-lg icon-navicon"></i>
+        </a>
+        <div class="flex-col header-title ellipsis">Ubuntu云服务器开启telnet实现远程登录</div>
+        
+        <div class="search-wrap" id="search-wrap">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="back">
+                <i class="icon icon-lg icon-chevron-left"></i>
+            </a>
+            <input type="text" id="key" class="search-input" autocomplete="off" placeholder="输入感兴趣的关键字">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="search">
+                <i class="icon icon-lg icon-search"></i>
+            </a>
+        </div>
+        
+        
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menuShare">
+            <i class="icon icon-lg icon-share-alt"></i>
+        </a>
+        
+    </div>
+</header>
+<header class="content-header post-header">
+
+    <div class="container fade-scale">
+        <h1 class="title">Ubuntu云服务器开启telnet实现远程登录</h1>
+        <h5 class="subtitle">
+            
+                <time datetime="2017-04-02T06:35:14.000Z" itemprop="datePublished" class="page-time">
+  2017-04-02
+</time>
+
+
+            
+        </h5>
+    </div>
+
+    
+
+
+</header>
+
+
+<div class="container body-wrap">
+    
+    <aside class="post-widget">
+        <nav class="post-toc-wrap" id="post-toc">
+            <h4>TOC</h4>
+            <ol class="post-toc"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#一、安装telnet服务"><span class="post-toc-number">1.</span> <span class="post-toc-text">一、安装telnet服务</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#二、修改-etc-xinetd-conf，在-log-type-SYSLOG-daemon-info下面添加内容"><span class="post-toc-number">2.</span> <span class="post-toc-text">二、修改/etc/xinetd.conf，在# log_type = SYSLOG daemon info下面添加内容</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#三、编辑-etc-xinetd-d-telnet文件（没有可自行创建此文件），添加以下内容"><span class="post-toc-number">3.</span> <span class="post-toc-text">三、编辑/etc/xinetd.d/telnet文件（没有可自行创建此文件），添加以下内容</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#四、重启机器或网络"><span class="post-toc-number">4.</span> <span class="post-toc-text">四、重启机器或网络</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#五、通过telnet命令测试是否配置成功"><span class="post-toc-number">5.</span> <span class="post-toc-text">五、通过telnet命令测试是否配置成功</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#六、Windows下开启telnet服务"><span class="post-toc-number">6.</span> <span class="post-toc-text">六、Windows下开启telnet服务</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#七、使用CMD连接Linux服务器"><span class="post-toc-number">7.</span> <span class="post-toc-text">七、使用CMD连接Linux服务器</span></a></li></ol>
+        </nav>
+    </aside>
+    
+<article id="post-ubuntu-open-telnet"
+  class="post-article article-type-post fade" itemprop="blogPost">
+
+    <div class="post-card">
+        <h1 class="post-card-title">Ubuntu云服务器开启telnet实现远程登录</h1>
+        <div class="post-meta">
+            <time class="post-time" title="2017-04-02 14:35:14" datetime="2017-04-02T06:35:14.000Z"  itemprop="datePublished">2017-04-02</time>
+
+            
+
+
+            
+
+        </div>
+        <div class="post-content" id="post-content" itemprop="postContent">
+            <h3 id="一、安装telnet服务"><a href="#一、安装telnet服务" class="headerlink" title="一、安装telnet服务"></a>一、安装telnet服务</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">sudo apt-get install xinetd telnetd</div></pre></td></tr></table></figure>
+<h3 id="二、修改-etc-xinetd-conf，在-log-type-SYSLOG-daemon-info下面添加内容"><a href="#二、修改-etc-xinetd-conf，在-log-type-SYSLOG-daemon-info下面添加内容" class="headerlink" title="二、修改/etc/xinetd.conf，在# log_type = SYSLOG daemon info下面添加内容"></a>二、修改/etc/xinetd.conf，在# log_type = SYSLOG daemon info下面添加内容</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">instances = 60   </div><div class="line">log_type = SYSLOG authpriv   </div><div class="line">log_on_success = HOST PID   </div><div class="line">log_on_failure = HOST   </div><div class="line">cps = 25 30</div></pre></td></tr></table></figure>
+<h3 id="三、编辑-etc-xinetd-d-telnet文件（没有可自行创建此文件），添加以下内容"><a href="#三、编辑-etc-xinetd-d-telnet文件（没有可自行创建此文件），添加以下内容" class="headerlink" title="三、编辑/etc/xinetd.d/telnet文件（没有可自行创建此文件），添加以下内容"></a>三、编辑/etc/xinetd.d/telnet文件（没有可自行创建此文件），添加以下内容</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line"><span class="comment"># default: on   </span></div><div class="line"><span class="comment"># description: The telnet server serves telnet sessions; it uses \   </span></div><div class="line"><span class="comment"># unencrypted username/password pairs for authentication.   </span></div><div class="line">service telnet   </div><div class="line">&#123;   </div><div class="line"><span class="built_in">disable</span> = no   </div><div class="line">flags = REUSE   </div><div class="line">socket_type = stream   </div><div class="line"><span class="built_in">wait</span> = no   </div><div class="line">user = root   </div><div class="line">server = /usr/sbin/in.telnetd   </div><div class="line">log_on_failure += USERID   </div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h3 id="四、重启机器或网络"><a href="#四、重启机器或网络" class="headerlink" title="四、重启机器或网络"></a>四、重启机器或网络</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">sudo /etc/init.d/xinetd restart</div></pre></td></tr></table></figure>
+<h3 id="五、通过telnet命令测试是否配置成功"><a href="#五、通过telnet命令测试是否配置成功" class="headerlink" title="五、通过telnet命令测试是否配置成功"></a>五、通过telnet命令测试是否配置成功</h3><h3 id="六、Windows下开启telnet服务"><a href="#六、Windows下开启telnet服务" class="headerlink" title="六、Windows下开启telnet服务"></a>六、Windows下开启telnet服务</h3><h3 id="七、使用CMD连接Linux服务器"><a href="#七、使用CMD连接Linux服务器" class="headerlink" title="七、使用CMD连接Linux服务器"></a>七、使用CMD连接Linux服务器</h3>
+        </div>
+
+        <blockquote class="post-copyright">
+    <div class="content">
+        
+<span class="post-time">
+    最后更新时间：<time datetime="2017-07-01T06:40:57.823Z" itemprop="dateUpdated">2017-07-01 14:40:57</time>
+</span><br>
+
+
+        
+        这里可以写作者留言，标签和 hexo 中所有变量及辅助函数等均可调用，示例：<a href="/2017/04/02/ubuntu-open-telnet/" target="_blank" rel="external">https://willbean.github.io/2017/04/02/ubuntu-open-telnet/</a>
+        
+    </div>
+    <footer>
+        <a href="https://willbean.github.io">
+            <img src="/img/avatar.jpg" alt="WillBean">
+            WillBean
+        </a>
+    </footer>
+</blockquote>
+
+        
+<div class="page-reward">
+    <a id="rewardBtn" href="javascript:;" class="page-reward-btn waves-effect waves-circle waves-light">赏</a>
+</div>
+
+
+
+        <div class="post-footer">
+            
+	<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Ubuntu-Telnet/">Ubuntu, Telnet</a></li></ul>
+
+
+            
+<div class="page-share-wrap">
+    
+
+<div class="page-share" id="pageShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=https://willbean.github.io/2017/04/02/ubuntu-open-telnet/&title=《Ubuntu云服务器开启telnet实现远程登录》 — WillBean's Blog&pic=https://willbean.github.io/img/avatar.jpg" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://willbean.github.io/2017/04/02/ubuntu-open-telnet/&title=《Ubuntu云服务器开启telnet实现远程登录》 — WillBean's Blog&source=这是一个准大四学生的前端博客。" data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https://willbean.github.io/2017/04/02/ubuntu-open-telnet/" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《Ubuntu云服务器开启telnet实现远程登录》 — WillBean's Blog&url=https://willbean.github.io/2017/04/02/ubuntu-open-telnet/&via=https://willbean.github.io" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=https://willbean.github.io/2017/04/02/ubuntu-open-telnet/" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+
+    <a href="javascript:;" id="shareFab" class="page-share-fab waves-effect waves-circle">
+        <i class="icon icon-share-alt icon-lg"></i>
+    </a>
+</div>
+
+
+
+        </div>
+    </div>
+
+    
+<nav class="post-nav flex-row flex-justify-between">
+  
+    <div class="waves-block waves-effect prev">
+      <a href="/2017/06/24/react-native-summary/" id="post-prev" class="post-nav-link">
+        <div class="tips"><i class="icon icon-angle-left icon-lg icon-pr"></i> Prev</div>
+        <h4 class="title">React Native实战总结</h4>
+      </a>
+    </div>
+  
+
+  
+    <div class="waves-block waves-effect next">
+      <a href="/2017/03/23/three.js-object-to-module/" id="post-next" class="post-nav-link">
+        <div class="tips">Next <i class="icon icon-angle-right icon-lg icon-pl"></i></div>
+        <h4 class="title">Three.js obj模型转js并渲染</h4>
+      </a>
+    </div>
+  
+</nav>
+
+
+
+    
+
+
+
+
+
+
+
+
+
+
+
+<section class="comments" id="comments">
+    <div id="gitment_thread"></div>
+    <link rel="stylesheet" href="//unpkg.com/gitment/style/default.css">
+    <script src="//unpkg.com/gitment/dist/gitment.browser.js"></script>
+    <script>
+        var gitment = new Gitment({
+            owner: 'WillBean',
+            repo: 'willbean.github.io',
+            oauth: {
+                client_id: '5d9b308c6ae328be7417',
+                client_secret: '8381cbf6bd0eebd34af19c4aa5dd728dbce84877',
+            },
+        })
+        gitment.render('comments')
+    </script>
+</section>
+
+
+
+
+</article>
+
+<div id="reward" class="page-modal reward-lay">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <h3 class="reward-title">
+        <i class="icon icon-quote-left"></i>
+        谢谢大爷~
+        <i class="icon icon-quote-right"></i>
+    </h3>
+    <div class="reward-content">
+        
+        <div class="reward-code">
+            <img id="rewardCode" src="/img/wechat.jpg" alt="打赏二维码">
+        </div>
+        
+        <label class="reward-toggle">
+            <input id="rewardToggle" type="checkbox" class="reward-toggle-check"
+                data-wechat="/img/wechat.jpg" data-alipay="/img/alipay.jpg">
+            <div class="reward-toggle-ctrol">
+                <span class="reward-toggle-item wechat">微信</span>
+                <span class="reward-toggle-label"></span>
+                <span class="reward-toggle-item alipay">支付宝</span>
+            </div>
+        </label>
+        
+    </div>
+</div>
+
+
+
+</div>
+
+        <footer class="footer">
+    <div class="top">
+        
+
+        <p>
+            
+                <span><a href="/atom.xml" target="_blank" class="rss" title="rss"><i class="icon icon-lg icon-rss"></i></a></span>
+            
+            <span>博客内容遵循 <a rel="license" href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh">知识共享 署名 - 非商业性 - 相同方式共享 4.0 国际协议</a></span>
+        </p>
+    </div>
+    <div class="bottom">
+        <p><span>WillBean &copy; 2016 - 2017</span>
+            <span>
+                
+                Power by <a href="http://hexo.io/" target="_blank">Hexo</a> Theme <a href="https://github.com/yscoder/hexo-theme-indigo" target="_blank">indigo</a>
+            </span>
+        </p>
+    </div>
+</footer>
+
+    </main>
+    <div class="mask" id="mask"></div>
+<a href="javascript:;" id="gotop" class="waves-effect waves-circle waves-light"><span class="icon icon-lg icon-chevron-up"></span></a>
+
+
+
+<div class="global-share" id="globalShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=https://willbean.github.io/2017/04/02/ubuntu-open-telnet/&title=《Ubuntu云服务器开启telnet实现远程登录》 — WillBean's Blog&pic=https://willbean.github.io/img/avatar.jpg" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://willbean.github.io/2017/04/02/ubuntu-open-telnet/&title=《Ubuntu云服务器开启telnet实现远程登录》 — WillBean's Blog&source=这是一个准大四学生的前端博客。" data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https://willbean.github.io/2017/04/02/ubuntu-open-telnet/" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《Ubuntu云服务器开启telnet实现远程登录》 — WillBean's Blog&url=https://willbean.github.io/2017/04/02/ubuntu-open-telnet/&via=https://willbean.github.io" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=https://willbean.github.io/2017/04/02/ubuntu-open-telnet/" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+<div class="page-modal wx-share" id="wxShare">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAMYAAADGCAAAAACs8KCBAAACNElEQVR42u3aS27DMAwFwN7/0um2RWvlkXQLWBqvgthRPFoQ4ufjI75eX66f3199vrq7fubnk7ddGBgYj2W8llf+l+tvrlbOt2O9AgYGxgmMqwiWhMv1y1VD6vp/L7/HwMDAiIPg+lfJwREDAwPjLsboL5d3MTAwMCZJbB5wC8nnxZp/mItjYGA8kJFX3f//85/0NzAwMB7F6AXKeYCev8m31TAwMLZm5AEuaT0mT1YLc4X3wcDA2JqRNx3nmF6Dc3RYxMDAeDijOrZVLXvl25EPavxyFwMD4zBGPhDWC9BJEpuEbAwMjHMY+RLVgJif3/INelO8w8DA2JQxaQAkpf/qYERzBQwMjAMYzaNYPJA6PwK+OaRiYGBszegNhM1T3F6LdBLKMTAwnsvojTg09yN4rbwtejktgoGBcSQjKXslDcsqrDxsgYGBsSkjTzWTRZONyLej1zbAwMDYj5E/Wg2m1fGLPEBHFT4MDIyNGHcV63N8dRMLx0QMDIwjGdVCf56s9toGb7YYAwPjAMYkseyNiPUGKS5/hYGBcSRjnWRWRy7mx8E3VAwMjGMYd41Q3NXgLDQtMDAwNmW8ite6MTkZtuhtBAYGxgmMXpjrpaN5eO0V/jAwMPZmzNPUXrk/37LRTmNgYGzEKJTg41ZBfjd/3UJjAAMD42BGNUHthdQyFQMDA2OQE1dHMZrDHxgYGAcwJoX+ZPyrGnzzJigGBsYJjMk4RbUxOQnTNzQyMTAwnsf4BMIW+gjUzy0sAAAAAElFTkSuQmCC" alt="微信分享二维码">
+</div>
+
+
+
+
+    <script src="//cdn.bootcss.com/node-waves/0.7.4/waves.min.js"></script>
+<script>
+var BLOG = { ROOT: '/', SHARE: true, REWARD: true };
+
+
+</script>
+
+<script src="//unpkg.com/hexo-theme-material-indigo@latest/js/main.min.js"></script>
+
+
+<div class="search-panel" id="search-panel">
+    <ul class="search-result" id="search-result"></ul>
+</div>
+<template id="search-tpl">
+<li class="item">
+    <a href="{path}" class="waves-block waves-effect">
+        <div class="title ellipsis" title="{title}">{title}</div>
+        <div class="flex-row flex-middle">
+            <div class="tags ellipsis">
+                {tags}
+            </div>
+            <time class="flex-col time">{date}</time>
+        </div>
+    </a>
+</li>
+</template>
+
+<script src="//unpkg.com/hexo-theme-material-indigo@latest/js/search.min.js" async></script>
+
+
+
+
+
+
+
+
+<script>
+(function() {
+    var OriginTitile = document.title, titleTime;
+    document.addEventListener('visibilitychange', function() {
+        if (document.hidden) {
+            document.title = '死鬼去哪里了！';
+            clearTimeout(titleTime);
+        } else {
+            document.title = '(つェ⊂)咦!又好了!';
+            titleTime = setTimeout(function() {
+                document.title = OriginTitile;
+            },2000);
+        }
+    });
+})();
+</script>
+
+
+
+</body>
+</html>
