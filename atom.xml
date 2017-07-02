@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="https://willbean.github.io/"/>
-  <updated>2017-07-01T07:51:35.934Z</updated>
+  <updated>2017-07-02T08:22:02.897Z</updated>
   <id>https://willbean.github.io/</id>
   
   <author>
@@ -14,6 +14,161 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>ES5规范回顾系列(二)——内置对象</title>
+    <link href="https://willbean.github.io/2017/07/02/es5-review-2/"/>
+    <id>https://willbean.github.io/2017/07/02/es5-review-2/</id>
+    <published>2017-07-02T06:36:03.000Z</published>
+    <updated>2017-07-02T08:22:02.897Z</updated>
+    
+    <content type="html"><![CDATA[<p>下文摘自<a href="https://www.w3.org/html/ig/zh/wiki/ES5/builtins" target="_blank" rel="external">ES5/标准 ECMAScript 内置对象</a></p>
+<h2 id="全局对象"><a href="#全局对象" class="headerlink" title="全局对象"></a>全局对象</h2><p>唯一的全局对象在控制进入任何执行环境前被创建。</p>
+<p>除非另外指明，全局对象的标准内置属性拥有特性 {[[Writable]]: true, [[Enumerable]]: false, [[Configurable]]: true}。</p>
+<p>全局对象没有 [[Construct]] 内部属性 ; 全局对象不可能当做构造器用 new 运算符调用。</p>
+<p>全局对象没有 [[Call]] 内部属性，全局对象不可能当做函数来调用。</p>
+<p>全局对象的 [[Prototype]] 和 [[Class]] 内部属性值是依赖于实现的。</p>
+<p>除了本规范定义的属性之外，全局对象还可以拥有额外的宿主定义的属性。全局对象可包含一个值是全局对象自身的属性；例如，在 HTML 文档对象模型中全局对象的 window 属性是全局对象自身。 </p>
+<h3 id="全局对象的值属性"><a href="#全局对象的值属性" class="headerlink" title="全局对象的值属性"></a>全局对象的值属性</h3><h4 id="NaN"><a href="#NaN" class="headerlink" title="NaN"></a>NaN</h4><p>NaN 的值是 NaN。这个属性拥有特性 { [[Writable]]: false, [[Enumerable]]: false, [[Configurable]]: false }。</p>
+<h4 id="Infinity"><a href="#Infinity" class="headerlink" title="Infinity"></a>Infinity</h4><p>Infinity 的值是 +∞。这个属性拥有特性 { [[Writable]]: false, [[Enumerable]]: false, [[Configurable]]: false }。</p>
+<h4 id="undefined"><a href="#undefined" class="headerlink" title="undefined"></a>undefined</h4><p>undefined 的值是 undefined。这个属性拥有特性 &lt;{ [[Writable]]: false, [[Enumerable]]: false, [[Configurable]]: false }。</p>
+<h3 id="全局对象的函数属性"><a href="#全局对象的函数属性" class="headerlink" title="全局对象的函数属性"></a>全局对象的函数属性</h3><h4 id="eval-x"><a href="#eval-x" class="headerlink" title="eval (x)"></a>eval (x)</h4><h4 id="parseInt-string-radix"><a href="#parseInt-string-radix" class="headerlink" title="parseInt (string, radix)"></a>parseInt (string, radix)</h4><h4 id="parseFloat-string"><a href="#parseFloat-string" class="headerlink" title="parseFloat (string)"></a>parseFloat (string)</h4><h4 id="isNaN-number"><a href="#isNaN-number" class="headerlink" title="isNaN (number)"></a>isNaN (number)</h4><h4 id="isFinite-number"><a href="#isFinite-number" class="headerlink" title="isFinite (number)"></a>isFinite (number)</h4><h3 id="处理-URI-的函数属性"><a href="#处理-URI-的函数属性" class="headerlink" title="处理 URI 的函数属性"></a>处理 URI 的函数属性</h3><h4 id="decodeURI-encodedURI"><a href="#decodeURI-encodedURI" class="headerlink" title="decodeURI (encodedURI)"></a>decodeURI (encodedURI)</h4><p>decodeURI 函数计算出一个新版 URI，将 URI 中可能是 encodeURI 函数引入的每个转义序列和 UTF-8 编码组替换为代表它们的字符。不是 encodeURI 导入的转义序列不会被替换。 </p>
+<h4 id="decodeURIComponent-encodedURIComponent"><a href="#decodeURIComponent-encodedURIComponent" class="headerlink" title="decodeURIComponent (encodedURIComponent)"></a>decodeURIComponent (encodedURIComponent)</h4><p>decodeURIComponent 函数计算出一个新版 URI，将 URI 中可能是 encodeURIComponent 函数引入的每个转义序列和 UTF-8 编码组替换为代表它们的字符。 </p>
+<h4 id="encodeURI-uri"><a href="#encodeURI-uri" class="headerlink" title="encodeURI (uri)"></a>encodeURI (uri)</h4><p>encodeURI 函数计算出一个新版 URI，将 URI 中某些字符的每个实例替换为代表这些字符 UTF-8 编码的一个，两个或三个转义序列。</p>
+<h4 id="encodeURIComponent-uriComponent"><a href="#encodeURIComponent-uriComponent" class="headerlink" title="encodeURIComponent (uriComponent)"></a>encodeURIComponent (uriComponent)</h4><p>encodeURIComponent 函数计算出一个新版 URI，将 URI 中某些字符的每个实例替换为代表这些字符 UTF-8 编码的一个，两个或三个转义序列。 </p>
+<p>*encodeURI 和 decodeURI 函数操作的是完整的 URI；这俩函数假定 URI 中的任何保留字符都有特殊意义，所有不会编码它们。encodeURIComponent 和 decodeURIComponent 函数操作的是组成 URI 的个别组件；这俩函数假定任何保留字符都代表普通文本，所以必须编码它们，所以它们出现在组成一个完整 URI 的组件里面时不会解释成保留字符了。</p>
+<h3 id="全局对象的构造器属性"><a href="#全局对象的构造器属性" class="headerlink" title="全局对象的构造器属性"></a>全局对象的构造器属性</h3><h4 id="Object"><a href="#Object" class="headerlink" title="Object ( . . . )"></a>Object ( . . . )</h4><h5 id="作为函数调用-Object-构造器"><a href="#作为函数调用-Object-构造器" class="headerlink" title="作为函数调用 Object 构造器"></a>作为函数调用 Object 构造器</h5><p>当把 Object 当做一个函数来调用，而不是一个构造器，它会执行一个类型转换。 </p>
+<h6 id="Object-value"><a href="#Object-value" class="headerlink" title="Object ( [ value ] )"></a>Object ( [ value ] )</h6><p>当以一个参数 value 或者无参数调用 Object 函数，采用如下步骤：</p>
+<ol>
+<li>如果 value 是 null、undefined 或未指定，则创建并返回一个新 Object 对象，这个对象与仿佛用相同参数调用标准内置的 Object 构造器 的结果一样。</li>
+<li>返回 ToObject(value)。</li>
+</ol>
+<h5 id="Object-构造器"><a href="#Object-构造器" class="headerlink" title="Object 构造器"></a>Object 构造器</h5><p>当 Object 是 new 表达式调用的一部分时，它是一个构造器，可创建一个对象。</p>
+<h6 id="new-Object-value"><a href="#new-Object-value" class="headerlink" title="new Object ( [ value ] )"></a>new Object ( [ value ] )</h6><p>当以一个参数 value 或者无参数调用 Object 构造器，采用如下步骤：</p>
+<pre><code>1. 如果提供了 value，则
+    1. 如果 Type(value) 是 Object，则
+        1. 如果 value 是个原生 ECMAScript 对象，不创建新对象，简单的返回 value。
+        2. 如果 value 是宿主对象，则采取动作和返回依赖实现的结果的方式可以使依赖于宿主对象的。
+    2. 如果 Type(value) 是 String，返回 ToObject(value)。
+    3. 如果 Type(value) 是 Boolean，返回 ToObject(value)。
+    4. 如果 Type(value) 是 Number，返回 ToObject(value)。
+2. 断言：未提供参数 value 或其类型是 Null 或 Undefined。
+3. 令 obj 为一个新创建的原生 ECMAScript 对象。
+4. 设定 obj 的 [[Prototype]] 内部属性为标准内置的 Object 的 prototype 对象 (15.2.4)。
+5. 设定 obj 的 [[Class]] 内部属性为 &quot;Object&quot;。
+6. 设定 obj 的 [[Extensible]] 内部属性为 true。
+7. 设定 obj 的 8.12 指定的所有内部方法
+8. 返回 obj。
+</code></pre><h5 id="Object-构造器的属性"><a href="#Object-构造器的属性" class="headerlink" title="Object 构造器的属性"></a>Object 构造器的属性</h5><p>Object 构造器的 [[Prototype]] 内部属性值是标准内置 Function 的 prototype 对象。</p>
+<p>除了内部属性和 length 属性（其值是 1）之外，Object 构造器拥有以下属性： </p>
+<h6 id="Object-prototype"><a href="#Object-prototype" class="headerlink" title="Object.prototype"></a>Object.prototype</h6><p>Object.prototype 的初始值是标准内置 Object 的 prototype 对象<br>这个属性包含特性 {[[Writable]]: false, [[Enumerable]]: false, [[Configurable]]: false } </p>
+<h6 id="Object-getPrototypeOf-O"><a href="#Object-getPrototypeOf-O" class="headerlink" title="Object.getPrototypeOf ( O )"></a>Object.getPrototypeOf ( O )</h6><p>当以参数 O 调用 getPrototypeOf 函数，采用如下步骤： </p>
+<pre><code>1. 如果 Type(O) 不是 Object，则抛出一个 TypeError 异常。
+2. 返回 O 的 [[Prototype]] 内部属性的值。
+</code></pre><h6 id="Object-getOwnPropertyDescriptor-O-P"><a href="#Object-getOwnPropertyDescriptor-O-P" class="headerlink" title="Object.getOwnPropertyDescriptor ( O, P )"></a>Object.getOwnPropertyDescriptor ( O, P )</h6><p>当调用 getOwnPropertyDescriptor 函数，采用如下步骤：</p>
+<pre><code>1. 如果 Type(O) 不是 Object，则抛出一个 TypeError 异常。
+2. 令 name 为 ToString(P)。
+3. 令 desc 为以参数 name 调用 O 的 [[GetOwnProperty]] 内部方法的结果。
+4. 返回调用 FromPropertyDescriptor(desc) 的结果。
+</code></pre><h6 id="Object-getOwnPropertyNames-O"><a href="#Object-getOwnPropertyNames-O" class="headerlink" title="Object.getOwnPropertyNames ( O )"></a>Object.getOwnPropertyNames ( O )</h6><h6 id="Object-create-O-Properties"><a href="#Object-create-O-Properties" class="headerlink" title="Object.create ( O [, Properties] )"></a>Object.create ( O [, Properties] )</h6><p>create 函数按照指定的原型创建一个新对象。当调用 create 函数，采用如下步骤： </p>
+<pre><code>1. 如果 Type(O) 不是 Object 或 Null，则抛出一个 TypeError 异常。
+2. 令 obj 为仿佛是用表达式 new Object() 创建新对象的结果，这里的 Object 是标准内置构造器名。 
+3. 设定 obj 的 [[Prototype]] 内部属性为 O。
+4. 如果传入了 Properties 参数并且不是 undefined，则仿佛是用 obj 和 Properties 当作参数调用标准内置函数 Object.defineProperties 一样给 obj 添加自身属性。
+5. 返回 obj。
+</code></pre><h6 id="Object-defineProperty-O-P-Attributes"><a href="#Object-defineProperty-O-P-Attributes" class="headerlink" title="Object.defineProperty ( O, P, Attributes )"></a>Object.defineProperty ( O, P, Attributes )</h6><p>defineProperty 函数用于给一个对象添加一个自身属性以及更新现有自身属性的特性。</p>
+<h6 id="Object-defineProperties-O-Properties"><a href="#Object-defineProperties-O-Properties" class="headerlink" title="Object.defineProperties ( O, Properties )"></a>Object.defineProperties ( O, Properties )</h6><p>defineProperties 函数用于给一个对象添加一些自身属性以及更新现有的一些自身属性的特性。</p>
+<h6 id="Object-seal-O"><a href="#Object-seal-O" class="headerlink" title="Object.seal ( O )"></a>Object.seal ( O )</h6><p>当调用 seal 函数，采用如下步骤： </p>
+<pre><code>1. 如果 Type(O) 不是 Object，则抛出一个 TypeError 异常。
+2. 对 O 的每个命名自身属性名 P,
+    1. 令 desc 为以参数 P 调用 O 的 [[GetOwnProperty]] 内部方法的结果。
+    2. 如果 desc.[[Configurable]] 是 true，设定 desc.[[Configurable]] 为 false。
+    3. 以 P、desc、true 为参数调用 O 的 [[DefineOwnProperty]] 内部方法。
+3. 设定 O 的 [[Extensible]] 内部属性为 false。
+4. 返回 O。
+</code></pre><h6 id="Object-freeze-O"><a href="#Object-freeze-O" class="headerlink" title="Object.freeze ( O )"></a>Object.freeze ( O )</h6><p>当调用 freeze 函数，采用如下步骤：</p>
+<pre><code>1. 如果 Type(O) 不是 Object，则抛出一个 TypeError 异常。
+2. 对 O 的每个命名自身属性名 P,
+    1. 令 desc 为以参数 P 调用 O 的 [[GetOwnProperty]] 内部方法的结果。
+    2. 如果 IsDataDescriptor(desc) 是 true，则
+        1. 如果 desc.[[Writable]] 是 true，设定 desc。[[Writable]] 为 false.
+    3. 如果 desc.[[Configurable]] 是 true，设定 desc。[[Configurable]] 为 false。
+    4. 以 P、desc、true 作为参数调用 O 的 [[DefineOwnProperty]] 内部方法。
+3. 设定 O 的 [[Extensible]] 内部属性为 false。
+4. 返回 O。
+</code></pre><h6 id="Object-preventExtensions-O"><a href="#Object-preventExtensions-O" class="headerlink" title="Object.preventExtensions ( O )"></a>Object.preventExtensions ( O )</h6><p>当调用 preventExtensions 函数，采用如下步骤：</p>
+<pre><code>1. 如果 Type(O) 不是 Object，则抛出一个 TypeError 异常 .
+2. 设定 O 的 [[Extensible]] 内部属性为 false。
+3. 返回 O。
+</code></pre><h6 id="Object-isSealed-O"><a href="#Object-isSealed-O" class="headerlink" title="Object.isSealed ( O )"></a>Object.isSealed ( O )</h6><h6 id="Object-isFrozen-O"><a href="#Object-isFrozen-O" class="headerlink" title="Object.isFrozen ( O )"></a>Object.isFrozen ( O )</h6><h6 id="Object-isExtensible-O"><a href="#Object-isExtensible-O" class="headerlink" title="Object.isExtensible ( O )"></a>Object.isExtensible ( O )</h6><h6 id="Object-keys-O"><a href="#Object-keys-O" class="headerlink" title="Object.keys ( O )"></a>Object.keys ( O )</h6><h5 id="Object-的-prototype-对象的属性"><a href="#Object-的-prototype-对象的属性" class="headerlink" title="Object 的 prototype 对象的属性"></a>Object 的 prototype 对象的属性</h5><p>Object 的 prototype 对象的 [[Prototype]] 内部属性的值是 null ，[[Class]] 内部属性的值是 “Object”，[[Extensible]] 内部属性的初始值是 true。 </p>
+<h6 id="Object-prototype-constructor"><a href="#Object-prototype-constructor" class="headerlink" title="Object.prototype.constructor"></a>Object.prototype.constructor</h6><p>Object.prototype.constructor 的初始值是标准内置的 Object 构造器。 </p>
+<h6 id="Object-prototype-toString"><a href="#Object-prototype-toString" class="headerlink" title="Object.prototype.toString ( )"></a>Object.prototype.toString ( )</h6><p>当调用 toString 方法，采用如下步骤：</p>
+<pre><code>1. 如果 this 的值是 undefined，返回 &quot;[object Undefined]&quot;。
+2. 如果 this 的值是 null，返回 &quot;[object Null]&quot;。
+3. 令 O 为以 this 作为参数调用 ToObject 的结果。
+4. 令 class 为 O 的 [[Class]] 内部属性的值。
+5. 返回三个字符串 &quot;[object &quot;、class 和 &quot;]&quot; 连起来的字符串。
+</code></pre><h6 id="Object-prototype-toLocaleString"><a href="#Object-prototype-toLocaleString" class="headerlink" title="Object.prototype.toLocaleString ( )"></a>Object.prototype.toLocaleString ( )</h6><p>*toLocaleString 方法返回一个 String 对象，这个对象中包含了用当前区域设置的默认格式表示的日期。</p>
+<h6 id="Object-prototype-valueOf"><a href="#Object-prototype-valueOf" class="headerlink" title="Object.prototype.valueOf ( )"></a>Object.prototype.valueOf ( )</h6><h6 id="Object-prototype-hasOwnProperty-V"><a href="#Object-prototype-hasOwnProperty-V" class="headerlink" title="Object.prototype.hasOwnProperty (V)"></a>Object.prototype.hasOwnProperty (V)</h6><h6 id="Object-prototype-isPrototypeOf-V"><a href="#Object-prototype-isPrototypeOf-V" class="headerlink" title="Object.prototype.isPrototypeOf (V)"></a>Object.prototype.isPrototypeOf (V)</h6><p>*Object.prototype == V.constructor.prototype</p>
+<h6 id="Object-prototype-propertyIsEnumerable-V"><a href="#Object-prototype-propertyIsEnumerable-V" class="headerlink" title="Object.prototype.propertyIsEnumerable (V)"></a>Object.prototype.propertyIsEnumerable (V)</h6><p>*属性V是否可枚举</p>
+<h4 id="Function"><a href="#Function" class="headerlink" title="Function ( . . . )"></a>Function ( . . . )</h4><h4 id="Array"><a href="#Array" class="headerlink" title="Array ( . . . )"></a>Array ( . . . )</h4><h4 id="String"><a href="#String" class="headerlink" title="String ( . . . )"></a>String ( . . . )</h4><h4 id="Boolean"><a href="#Boolean" class="headerlink" title="Boolean ( . . . )"></a>Boolean ( . . . )</h4><h4 id="Number"><a href="#Number" class="headerlink" title="Number ( . . . )"></a>Number ( . . . )</h4><h4 id="Date"><a href="#Date" class="headerlink" title="Date ( . . . )"></a>Date ( . . . )</h4><h4 id="RegExp"><a href="#RegExp" class="headerlink" title="RegExp ( . . . )"></a>RegExp ( . . . )</h4><h4 id="Error"><a href="#Error" class="headerlink" title="Error ( . . . )"></a>Error ( . . . )</h4><h4 id="EvalError"><a href="#EvalError" class="headerlink" title="EvalError ( . . . )"></a>EvalError ( . . . )</h4><h4 id="RangeError"><a href="#RangeError" class="headerlink" title="RangeError ( . . . )"></a>RangeError ( . . . )</h4><h4 id="ReferenceError"><a href="#ReferenceError" class="headerlink" title="ReferenceError ( . . . )"></a>ReferenceError ( . . . )</h4><h4 id="SyntaxError"><a href="#SyntaxError" class="headerlink" title="SyntaxError ( . . . )"></a>SyntaxError ( . . . )</h4><h4 id="TypeError"><a href="#TypeError" class="headerlink" title="TypeError ( . . . )"></a>TypeError ( . . . )</h4><h4 id="URIError"><a href="#URIError" class="headerlink" title="URIError ( . . . )"></a>URIError ( . . . )</h4><h3 id="全局对象的其他属性"><a href="#全局对象的其他属性" class="headerlink" title="全局对象的其他属性"></a>全局对象的其他属性</h3><h4 id="Math"><a href="#Math" class="headerlink" title="Math"></a>Math</h4><h4 id="JSON"><a href="#JSON" class="headerlink" title="JSON"></a>JSON</h4>]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;下文摘自&lt;a href=&quot;https://www.w3.org/html/ig/zh/wiki/ES5/builtins&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;ES5/标准 ECMAScript 内置对象&lt;/a&gt;&lt;/p&gt;
+&lt;h2 id=&quot;全局对象&quot;
+    
+    </summary>
+    
+    
+      <category term="ES5" scheme="https://willbean.github.io/tags/ES5/"/>
+    
+      <category term="Specification" scheme="https://willbean.github.io/tags/Specification/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>ES5规范回顾系列(一)——术语定义</title>
+    <link href="https://willbean.github.io/2017/07/02/es5-review-1/"/>
+    <id>https://willbean.github.io/2017/07/02/es5-review-1/</id>
+    <published>2017-07-02T06:01:58.000Z</published>
+    <updated>2017-07-02T06:35:02.171Z</updated>
+    
+    <content type="html"><![CDATA[<p>接触前端也有几个年头了，却发现自己从来没有好好的看看ECMAScript规范，闲来无事，就从ECMAScript2015看起吧~摘录部分内容到自己的博客，以备忘~</p>
+<p>英文原版在<a href="http://www.ecma-international.org/ecma-262/6.0/" target="_blank" rel="external">这</a></p>
+<p>中文版在<a href="https://www.w3.org/html/ig/zh/wiki/ES5" target="_blank" rel="external">这</a></p>
+<p>下文摘自<a href="https://www.w3.org/html/ig/zh/wiki/ES5/overview" target="_blank" rel="external">ES5/概述</a></p>
+<h3 id="原始值"><a href="#原始值" class="headerlink" title="原始值"></a>原始值</h3><p>在本规范的 <a href="https://www.w3.org/html/ig/zh/wiki/ES5/types" target="_blank" rel="external">第8章</a> 定义的 Undefined、Null、Boolean、Number、String 类型之一的成员。<br>*注： 原始值可以直接表示语言实现的最底层数据。</p>
+<h3 id="对象"><a href="#对象" class="headerlink" title="对象"></a>对象</h3><p>对象类型的成员。<br>*注： 对象是属性的集合，并有一个原型对象。原型可以是空值。</p>
+<h3 id="构造器"><a href="#构造器" class="headerlink" title="构造器"></a>构造器</h3><p>创建和初始化对象的函数对象。<br>*注： 构造器的“prototype”属性值是一个原型对象，它用来实现继承和共享属性。</p>
+<h3 id="原型"><a href="#原型" class="headerlink" title="原型"></a>原型</h3><p>为其他对象提供共享属性的对象。<br>*注： 当构造器创建一个对象时，为了解决对象的属性引用，该对象会隐式引用构造器的“prototype”属性。通过程序表达式 constructor.prototype 可以引用到构造器的“prototype”属性。并且，添加到对象原型里的属性会通过继承的方式与所有共享此原型的对象共享。另外，可使用 Object.create 内置函数，通过明确指定原型来创建一个新对象。</p>
+<h3 id="原生对象"><a href="#原生对象" class="headerlink" title="原生对象"></a>原生对象</h3><p>ECMAScript 实现中完全由本规范定义其语义而不掺入任何宿主环境定义的对象。<br>*注： 标准的原生对象由本规范定义。一些原生对象是内置的，其他的可在 ECMAScript 程序执行过程中构建。</p>
+<h3 id="内置对象"><a href="#内置对象" class="headerlink" title="内置对象"></a>内置对象</h3><p>由 ECMAScript 实现提供，独立于宿主环境的对象，ECMAScript 程序开始执行时就存在。<br>*注： 标准的内置对象由本规范定义，ECMAScript 实现可以指定和定义其他的。所有内置对象都是原生对象。内置构造器是个内置对象，同时也是个构造器。</p>
+<h3 id="宿主对象"><a href="#宿主对象" class="headerlink" title="宿主对象"></a>宿主对象</h3><p> 由宿主环境提供的对象，用于完善 ECMAScript 执行环境。<br> *注： 任何不是原生对象的对象就是宿主对象。</p>
+<hr>
+<h3 id="String-值"><a href="#String-值" class="headerlink" title="String 值"></a>String 值</h3><p>原始值，它是零个或多个16位无符号整数组成的有限有序序列。<br>*注： String 值是 String 类型的成员。通常序列中的每个整数值代表 UTF-16 文本的单个16位单元。然而，对于其值，ECMAScript 只要求必须是16位无符号整数，除此之外没有任何限制或要求。</p>
+<h3 id="String-类型"><a href="#String-类型" class="headerlink" title="String 类型"></a>String 类型</h3><p>所有可能的 String 值的集合。</p>
+<h3 id="String-对象"><a href="#String-对象" class="headerlink" title="String 对象"></a>String 对象</h3><p>Object 类型的成员，它是标准内置构造器 String 的实例。<br>*注： 通过使用 new 表达式，以一个 String 值为参数调用 String 构造器来创建 String 对象。由此产生的对象包含一个值为此 String 值的内部属性。将 String 构造器作为一个函数来调用，可将一个 String 对象强制转换为一个 String 值（15.5.1）。</p>
+<h3 id="Number-值"><a href="#Number-值" class="headerlink" title="Number 值"></a>Number 值</h3><p>原始值，对应一个64位双精度二进制 IEEE754 值。<br>*注： Number 值是 Number 类型的成员，是一个数字的明确表示法</p>
+<h3 id="Number-类型"><a href="#Number-类型" class="headerlink" title="Number 类型"></a>Number 类型</h3><p>所有可能的数字值的集合，包括特殊的“Not-a-Number”(NaN) 值、正无穷、负无穷。</p>
+<h3 id="Number-对象"><a href="#Number-对象" class="headerlink" title="Number 对象"></a>Number 对象</h3><p>对象类型的成员，它是标准内置构造器 Number 的一个实例。<br>*注： 通过使用 new 表达式，以一个数字值为参数调用 Number 构造器来创建数字对象。由此产生的对象包含一个值为此数字值的内部属性。将 Number 构造器作为一个函数来调用，可将一个 Number 对象强制转换为一个数字值（15.7.1）。</p>
+<h3 id="Infinity"><a href="#Infinity" class="headerlink" title="Infinity"></a>Infinity</h3><p>正无穷 Number 值。Note.png</p>
+<h3 id="NaN"><a href="#NaN" class="headerlink" title="NaN"></a>NaN</h3><p>值为 IEEE 754“Not-a-Number”的 Number 值。</p>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;接触前端也有几个年头了，却发现自己从来没有好好的看看ECMAScript规范，闲来无事，就从ECMAScript2015看起吧~摘录部分内容到自己的博客，以备忘~&lt;/p&gt;
+&lt;p&gt;英文原版在&lt;a href=&quot;http://www.ecma-international.org/
+    
+    </summary>
+    
+    
+      <category term="ES5" scheme="https://willbean.github.io/tags/ES5/"/>
+    
+      <category term="Specification" scheme="https://willbean.github.io/tags/Specification/"/>
+    
+  </entry>
   
   <entry>
     <title>React Native实战总结</title>
@@ -124,11 +279,11 @@
     </summary>
     
     
-      <category term="ReactNative" scheme="https://willbean.github.io/tags/ReactNative/"/>
-    
       <category term="Javascript" scheme="https://willbean.github.io/tags/Javascript/"/>
     
       <category term="HTML" scheme="https://willbean.github.io/tags/HTML/"/>
+    
+      <category term="ReactNative" scheme="https://willbean.github.io/tags/ReactNative/"/>
     
   </entry>
   
@@ -152,11 +307,11 @@
     </summary>
     
     
-      <category term="Ubuntu" scheme="https://willbean.github.io/tags/Ubuntu/"/>
-    
       <category term="Configure" scheme="https://willbean.github.io/tags/Configure/"/>
     
       <category term="Cloud Server" scheme="https://willbean.github.io/tags/Cloud-Server/"/>
+    
+      <category term="Ubuntu" scheme="https://willbean.github.io/tags/Ubuntu/"/>
     
       <category term="Telnet" scheme="https://willbean.github.io/tags/Telnet/"/>
     
@@ -352,11 +507,11 @@
     </summary>
     
     
-      <category term="Ubuntu" scheme="https://willbean.github.io/tags/Ubuntu/"/>
-    
       <category term="Configure" scheme="https://willbean.github.io/tags/Configure/"/>
     
       <category term="Cloud Server" scheme="https://willbean.github.io/tags/Cloud-Server/"/>
+    
+      <category term="Ubuntu" scheme="https://willbean.github.io/tags/Ubuntu/"/>
     
   </entry>
   

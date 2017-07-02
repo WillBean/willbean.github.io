@@ -1,0 +1,502 @@
+<!DOCTYPE html>
+<html>
+<head>
+    
+
+    
+
+    
+
+
+
+    <meta charset="utf-8">
+    
+    
+    
+    <title>ES5规范回顾系列(一)——术语定义 | WillBean&#39;s Blog | 我可能是个假程序猿吧</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+    <meta name="theme-color" content="#cccccc">
+    
+    
+    <meta name="keywords" content="ES5,Specification">
+    <meta name="description" content="接触前端也有几个年头了，却发现自己从来没有好好的看看ECMAScript规范，闲来无事，就从ECMAScript2015看起吧~摘录部分内容到自己的博客，以备忘~ 英文原版在这 中文版在这 下文摘自ES5/概述 原始值在本规范的 第8章 定义的 Undefined、Null、Boolean、Number、String 类型之一的成员。*注： 原始值可以直接表示语言实现的最底层数据。 对象对象类型的">
+<meta name="keywords" content="ES5,Specification">
+<meta property="og:type" content="article">
+<meta property="og:title" content="ES5规范回顾系列(一)——术语定义">
+<meta property="og:url" content="https://willbean.github.io/2017/07/02/es5-review-1/index.html">
+<meta property="og:site_name" content="WillBean&#39;s Blog">
+<meta property="og:description" content="接触前端也有几个年头了，却发现自己从来没有好好的看看ECMAScript规范，闲来无事，就从ECMAScript2015看起吧~摘录部分内容到自己的博客，以备忘~ 英文原版在这 中文版在这 下文摘自ES5/概述 原始值在本规范的 第8章 定义的 Undefined、Null、Boolean、Number、String 类型之一的成员。*注： 原始值可以直接表示语言实现的最底层数据。 对象对象类型的">
+<meta property="og:updated_time" content="2017-07-02T06:35:02.171Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="ES5规范回顾系列(一)——术语定义">
+<meta name="twitter:description" content="接触前端也有几个年头了，却发现自己从来没有好好的看看ECMAScript规范，闲来无事，就从ECMAScript2015看起吧~摘录部分内容到自己的博客，以备忘~ 英文原版在这 中文版在这 下文摘自ES5/概述 原始值在本规范的 第8章 定义的 Undefined、Null、Boolean、Number、String 类型之一的成员。*注： 原始值可以直接表示语言实现的最底层数据。 对象对象类型的">
+    
+        <link rel="alternate" type="application/atom+xml" title="WillBean&#39;s Blog" href="/atom.xml">
+    
+    <link rel="shortcut icon" href="/favicon.ico">
+    <link rel="stylesheet" href="//unpkg.com/hexo-theme-material-indigo@latest/css/style.css">
+    <script>window.lazyScripts=[]</script>
+</head>
+
+<body>
+    <div id="loading" class="active"></div>
+
+    <aside id="menu" class="hide" >
+  <div class="inner flex-row-vertical">
+    <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menu-off">
+        <i class="icon icon-lg icon-close"></i>
+    </a>
+    <div class="brand-wrap" style="background-image:url(/img/brand.jpg)">
+      <div class="brand">
+        <a href="/" class="avatar waves-effect waves-circle waves-light">
+          <img src="/img/avatar.jpg">
+        </a>
+        <hgroup class="introduce">
+          <h5 class="nickname">WillBean</h5>
+          <a href="mailto:182769979@qq.com" title="182769979@qq.com" class="mail">182769979@qq.com</a>
+        </hgroup>
+      </div>
+    </div>
+    <div class="scroll-wrap flex-col">
+      <ul class="nav">
+        
+            <li class="waves-block waves-effect">
+              <a href="/"  >
+                <i class="icon icon-lg icon-home"></i>
+                主页
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/archives"  >
+                <i class="icon icon-lg icon-archives"></i>
+                Archives
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/tags"  >
+                <i class="icon icon-lg icon-tags"></i>
+                Tags
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/categories"  >
+                <i class="icon icon-lg icon-th-list"></i>
+                Categories
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="https://github.com/WillBean" target="_blank" >
+                <i class="icon icon-lg icon-github"></i>
+                Github
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="https://github.com/WillBean/hexo-blog-scourse" target="_blank" >
+                <i class="icon icon-lg icon-link"></i>
+                Repository
+              </a>
+            </li>
+        
+      </ul>
+    </div>
+  </div>
+</aside>
+
+    <main id="main">
+        <header class="top-header" id="header">
+    <div class="flex-row">
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light on" id="menu-toggle">
+          <i class="icon icon-lg icon-navicon"></i>
+        </a>
+        <div class="flex-col header-title ellipsis">ES5规范回顾系列(一)——术语定义</div>
+        
+        <div class="search-wrap" id="search-wrap">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="back">
+                <i class="icon icon-lg icon-chevron-left"></i>
+            </a>
+            <input type="text" id="key" class="search-input" autocomplete="off" placeholder="输入感兴趣的关键字">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="search">
+                <i class="icon icon-lg icon-search"></i>
+            </a>
+        </div>
+        
+        
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menuShare">
+            <i class="icon icon-lg icon-share-alt"></i>
+        </a>
+        
+    </div>
+</header>
+<header class="content-header post-header">
+
+    <div class="container fade-scale">
+        <h1 class="title">ES5规范回顾系列(一)——术语定义</h1>
+        <h5 class="subtitle">
+            
+                <time datetime="2017-07-02T06:01:58.000Z" itemprop="datePublished" class="page-time">
+  2017-07-02
+</time>
+
+
+            
+        </h5>
+    </div>
+
+    
+
+
+</header>
+
+
+<div class="container body-wrap">
+    
+    <aside class="post-widget">
+        <nav class="post-toc-wrap" id="post-toc">
+            <h4>TOC</h4>
+            <ol class="post-toc"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#原始值"><span class="post-toc-number">1.</span> <span class="post-toc-text">原始值</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#对象"><span class="post-toc-number">2.</span> <span class="post-toc-text">对象</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#构造器"><span class="post-toc-number">3.</span> <span class="post-toc-text">构造器</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#原型"><span class="post-toc-number">4.</span> <span class="post-toc-text">原型</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#原生对象"><span class="post-toc-number">5.</span> <span class="post-toc-text">原生对象</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#内置对象"><span class="post-toc-number">6.</span> <span class="post-toc-text">内置对象</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#宿主对象"><span class="post-toc-number">7.</span> <span class="post-toc-text">宿主对象</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#String-值"><span class="post-toc-number">8.</span> <span class="post-toc-text">String 值</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#String-类型"><span class="post-toc-number">9.</span> <span class="post-toc-text">String 类型</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#String-对象"><span class="post-toc-number">10.</span> <span class="post-toc-text">String 对象</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#Number-值"><span class="post-toc-number">11.</span> <span class="post-toc-text">Number 值</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#Number-类型"><span class="post-toc-number">12.</span> <span class="post-toc-text">Number 类型</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#Number-对象"><span class="post-toc-number">13.</span> <span class="post-toc-text">Number 对象</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#Infinity"><span class="post-toc-number">14.</span> <span class="post-toc-text">Infinity</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#NaN"><span class="post-toc-number">15.</span> <span class="post-toc-text">NaN</span></a></li></ol>
+        </nav>
+    </aside>
+    
+<article id="post-es5-review-1"
+  class="post-article article-type-post fade" itemprop="blogPost">
+
+    <div class="post-card">
+        <h1 class="post-card-title">ES5规范回顾系列(一)——术语定义</h1>
+        <div class="post-meta">
+            <time class="post-time" title="2017-07-02 14:01:58" datetime="2017-07-02T06:01:58.000Z"  itemprop="datePublished">2017-07-02</time>
+
+            
+
+
+            
+
+        </div>
+        <div class="post-content" id="post-content" itemprop="postContent">
+            <p>接触前端也有几个年头了，却发现自己从来没有好好的看看ECMAScript规范，闲来无事，就从ECMAScript2015看起吧~摘录部分内容到自己的博客，以备忘~</p>
+<p>英文原版在<a href="http://www.ecma-international.org/ecma-262/6.0/" target="_blank" rel="external">这</a></p>
+<p>中文版在<a href="https://www.w3.org/html/ig/zh/wiki/ES5" target="_blank" rel="external">这</a></p>
+<p>下文摘自<a href="https://www.w3.org/html/ig/zh/wiki/ES5/overview" target="_blank" rel="external">ES5/概述</a></p>
+<h3 id="原始值"><a href="#原始值" class="headerlink" title="原始值"></a>原始值</h3><p>在本规范的 <a href="https://www.w3.org/html/ig/zh/wiki/ES5/types" target="_blank" rel="external">第8章</a> 定义的 Undefined、Null、Boolean、Number、String 类型之一的成员。<br>*注： 原始值可以直接表示语言实现的最底层数据。</p>
+<h3 id="对象"><a href="#对象" class="headerlink" title="对象"></a>对象</h3><p>对象类型的成员。<br>*注： 对象是属性的集合，并有一个原型对象。原型可以是空值。</p>
+<h3 id="构造器"><a href="#构造器" class="headerlink" title="构造器"></a>构造器</h3><p>创建和初始化对象的函数对象。<br>*注： 构造器的“prototype”属性值是一个原型对象，它用来实现继承和共享属性。</p>
+<h3 id="原型"><a href="#原型" class="headerlink" title="原型"></a>原型</h3><p>为其他对象提供共享属性的对象。<br>*注： 当构造器创建一个对象时，为了解决对象的属性引用，该对象会隐式引用构造器的“prototype”属性。通过程序表达式 constructor.prototype 可以引用到构造器的“prototype”属性。并且，添加到对象原型里的属性会通过继承的方式与所有共享此原型的对象共享。另外，可使用 Object.create 内置函数，通过明确指定原型来创建一个新对象。</p>
+<h3 id="原生对象"><a href="#原生对象" class="headerlink" title="原生对象"></a>原生对象</h3><p>ECMAScript 实现中完全由本规范定义其语义而不掺入任何宿主环境定义的对象。<br>*注： 标准的原生对象由本规范定义。一些原生对象是内置的，其他的可在 ECMAScript 程序执行过程中构建。</p>
+<h3 id="内置对象"><a href="#内置对象" class="headerlink" title="内置对象"></a>内置对象</h3><p>由 ECMAScript 实现提供，独立于宿主环境的对象，ECMAScript 程序开始执行时就存在。<br>*注： 标准的内置对象由本规范定义，ECMAScript 实现可以指定和定义其他的。所有内置对象都是原生对象。内置构造器是个内置对象，同时也是个构造器。</p>
+<h3 id="宿主对象"><a href="#宿主对象" class="headerlink" title="宿主对象"></a>宿主对象</h3><p> 由宿主环境提供的对象，用于完善 ECMAScript 执行环境。<br> *注： 任何不是原生对象的对象就是宿主对象。</p>
+<hr>
+<h3 id="String-值"><a href="#String-值" class="headerlink" title="String 值"></a>String 值</h3><p>原始值，它是零个或多个16位无符号整数组成的有限有序序列。<br>*注： String 值是 String 类型的成员。通常序列中的每个整数值代表 UTF-16 文本的单个16位单元。然而，对于其值，ECMAScript 只要求必须是16位无符号整数，除此之外没有任何限制或要求。</p>
+<h3 id="String-类型"><a href="#String-类型" class="headerlink" title="String 类型"></a>String 类型</h3><p>所有可能的 String 值的集合。</p>
+<h3 id="String-对象"><a href="#String-对象" class="headerlink" title="String 对象"></a>String 对象</h3><p>Object 类型的成员，它是标准内置构造器 String 的实例。<br>*注： 通过使用 new 表达式，以一个 String 值为参数调用 String 构造器来创建 String 对象。由此产生的对象包含一个值为此 String 值的内部属性。将 String 构造器作为一个函数来调用，可将一个 String 对象强制转换为一个 String 值（15.5.1）。</p>
+<h3 id="Number-值"><a href="#Number-值" class="headerlink" title="Number 值"></a>Number 值</h3><p>原始值，对应一个64位双精度二进制 IEEE754 值。<br>*注： Number 值是 Number 类型的成员，是一个数字的明确表示法</p>
+<h3 id="Number-类型"><a href="#Number-类型" class="headerlink" title="Number 类型"></a>Number 类型</h3><p>所有可能的数字值的集合，包括特殊的“Not-a-Number”(NaN) 值、正无穷、负无穷。</p>
+<h3 id="Number-对象"><a href="#Number-对象" class="headerlink" title="Number 对象"></a>Number 对象</h3><p>对象类型的成员，它是标准内置构造器 Number 的一个实例。<br>*注： 通过使用 new 表达式，以一个数字值为参数调用 Number 构造器来创建数字对象。由此产生的对象包含一个值为此数字值的内部属性。将 Number 构造器作为一个函数来调用，可将一个 Number 对象强制转换为一个数字值（15.7.1）。</p>
+<h3 id="Infinity"><a href="#Infinity" class="headerlink" title="Infinity"></a>Infinity</h3><p>正无穷 Number 值。Note.png</p>
+<h3 id="NaN"><a href="#NaN" class="headerlink" title="NaN"></a>NaN</h3><p>值为 IEEE 754“Not-a-Number”的 Number 值。</p>
+
+        </div>
+
+        <blockquote class="post-copyright">
+    <div class="content">
+        
+<span class="post-time">
+    最后更新时间：<time datetime="2017-07-02T06:35:02.171Z" itemprop="dateUpdated">2017-07-02 14:35:02</time>
+</span><br>
+
+
+        
+        欢迎分享转发，转载请指明出处~<br>如有错误，欢迎指出~<br><a href="/2017/07/02/es5-review-1/" target="_blank" rel="external">https://willbean.github.io/2017/07/02/es5-review-1/</a>
+        
+    </div>
+    <footer>
+        <a href="https://willbean.github.io">
+            <img src="/img/avatar.jpg" alt="WillBean">
+            WillBean
+        </a>
+    </footer>
+</blockquote>
+
+        
+<div class="page-reward">
+    <a id="rewardBtn" href="javascript:;" class="page-reward-btn waves-effect waves-circle waves-light">赏</a>
+</div>
+
+
+
+        <div class="post-footer">
+            
+	<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/ES5/">ES5</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Specification/">Specification</a></li></ul>
+
+
+            
+<div class="page-share-wrap">
+    
+
+<div class="page-share" id="pageShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=https://willbean.github.io/2017/07/02/es5-review-1/&title=《ES5规范回顾系列(一)——术语定义》 — WillBean's Blog&pic=https://willbean.github.io/img/avatar.jpg" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://willbean.github.io/2017/07/02/es5-review-1/&title=《ES5规范回顾系列(一)——术语定义》 — WillBean's Blog&source=这是一个准大四学生的前端博客。" data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https://willbean.github.io/2017/07/02/es5-review-1/" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《ES5规范回顾系列(一)——术语定义》 — WillBean's Blog&url=https://willbean.github.io/2017/07/02/es5-review-1/&via=https://willbean.github.io" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=https://willbean.github.io/2017/07/02/es5-review-1/" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+
+    <a href="javascript:;" id="shareFab" class="page-share-fab waves-effect waves-circle">
+        <i class="icon icon-share-alt icon-lg"></i>
+    </a>
+</div>
+
+
+
+        </div>
+    </div>
+
+    
+<nav class="post-nav flex-row flex-justify-between">
+  
+    <div class="waves-block waves-effect prev">
+      <a href="/2017/07/02/es5-review-2/" id="post-prev" class="post-nav-link">
+        <div class="tips"><i class="icon icon-angle-left icon-lg icon-pr"></i> Prev</div>
+        <h4 class="title">ES5规范回顾系列(二)——内置对象</h4>
+      </a>
+    </div>
+  
+
+  
+    <div class="waves-block waves-effect next">
+      <a href="/2017/06/24/react-native-summary/" id="post-next" class="post-nav-link">
+        <div class="tips">Next <i class="icon icon-angle-right icon-lg icon-pl"></i></div>
+        <h4 class="title">React Native实战总结</h4>
+      </a>
+    </div>
+  
+</nav>
+
+
+
+    
+
+
+
+
+
+
+
+
+
+
+
+<section class="comments" id="comments">
+    <div id="gitment_thread"></div>
+    <link rel="stylesheet" href="//unpkg.com/gitment/style/default.css">
+    <script src="//unpkg.com/gitment/dist/gitment.browser.js"></script>
+    <script>
+        var gitment = new Gitment({
+            owner: 'WillBean',
+            repo: 'willbean.github.io',
+            oauth: {
+                client_id: '5d9b308c6ae328be7417',
+                client_secret: '8381cbf6bd0eebd34af19c4aa5dd728dbce84877',
+            },
+        })
+        gitment.render('comments')
+    </script>
+</section>
+
+
+
+
+</article>
+
+<div id="reward" class="page-modal reward-lay">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <h3 class="reward-title">
+        <i class="icon icon-quote-left"></i>
+        谢谢大爷~
+        <i class="icon icon-quote-right"></i>
+    </h3>
+    <div class="reward-content">
+        
+        <div class="reward-code">
+            <img id="rewardCode" src="/img/wechat.jpg" alt="打赏二维码">
+        </div>
+        
+        <label class="reward-toggle">
+            <input id="rewardToggle" type="checkbox" class="reward-toggle-check"
+                data-wechat="/img/wechat.jpg" data-alipay="/img/alipay.jpg">
+            <div class="reward-toggle-ctrol">
+                <span class="reward-toggle-item wechat">微信</span>
+                <span class="reward-toggle-label"></span>
+                <span class="reward-toggle-item alipay">支付宝</span>
+            </div>
+        </label>
+        
+    </div>
+</div>
+
+
+
+</div>
+
+        <footer class="footer">
+    <div class="top">
+        
+
+        <p>
+            
+                <span><a href="/atom.xml" target="_blank" class="rss" title="rss"><i class="icon icon-lg icon-rss"></i></a></span>
+            
+            <span>博客内容遵循 <a rel="license" href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh">知识共享 署名 - 非商业性 - 相同方式共享 4.0 国际协议</a></span>
+        </p>
+    </div>
+    <div class="bottom">
+        <p><span>WillBean &copy; 2016 - 2017</span>
+            <span>
+                
+                Power by <a href="http://hexo.io/" target="_blank">Hexo</a> Theme <a href="https://github.com/yscoder/hexo-theme-indigo" target="_blank">indigo</a>
+            </span>
+        </p>
+    </div>
+</footer>
+
+    </main>
+    <div class="mask" id="mask"></div>
+<a href="javascript:;" id="gotop" class="waves-effect waves-circle waves-light"><span class="icon icon-lg icon-chevron-up"></span></a>
+
+
+
+<div class="global-share" id="globalShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=https://willbean.github.io/2017/07/02/es5-review-1/&title=《ES5规范回顾系列(一)——术语定义》 — WillBean's Blog&pic=https://willbean.github.io/img/avatar.jpg" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://willbean.github.io/2017/07/02/es5-review-1/&title=《ES5规范回顾系列(一)——术语定义》 — WillBean's Blog&source=这是一个准大四学生的前端博客。" data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https://willbean.github.io/2017/07/02/es5-review-1/" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《ES5规范回顾系列(一)——术语定义》 — WillBean's Blog&url=https://willbean.github.io/2017/07/02/es5-review-1/&via=https://willbean.github.io" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=https://willbean.github.io/2017/07/02/es5-review-1/" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+<div class="page-modal wx-share" id="wxShare">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAMYAAADGCAAAAACs8KCBAAACMklEQVR42u3azW7EIAxF4Xn/l6bbVmrouTapBBxWo/lJ/GXB2NifD17j2yKfjof19FtylwVLhgwZ2zLGdM0DfboC5z1djccmQ4aMexhkK0wvzR8Que8fMcuQIUPGNET+TmcjliFDhoyUgS49DZEUsTJkyJDRT+B4ysiv9notLkOGjA0Z/NT9/1+/0t+QIUPGVowRrk5Y8+BGY8mQIeNsRlqgpgHVitU0HhkyZNzA4IXlPDg+RlZrJMQ5rAwZMo5gkNuQsHhrod/m/OVTGTJkXMZIi89Ow7K2+cqQIeM2Bg+dHMDxYQueOAaPSYYMGRcw0sOvWksgvVew6cuQIeNQRpqopQVqeqjHv//jtQwZMo5m1NJBMmDaKYP5ti5DhowbGGmKlo5N1ELkLdUgS5UhQ8a2DL5pLjsUCzHBo5EhQ8bRjHTr7Bzxp2MZcXtVhgwZRzP6DUuSPvIhsAVLhgwZRzDStmXKToMmm/jjf4UMGTIOZfAUrdY26CR/C5JCGTJkHMSotSrTEQoyENYZR5MhQ8YNDF58pokdH2nlY2rFuQwZMmRszkizSJ4s1lJJXjDLkCHjbMYIF0/jeIh8Cy7mtjJkyNicUdvm0rJzVZkanx3KkCHjIAbfZGtjXv1RjwV9VBkyZBzBqB3DzVNDkuql4aLGgAwZMmTg25ODft4MCPobMmTIuJ6RJotpUVob3ZAhQ8YNjE4DMv0VH9F45bhNhgwZGzI6pWPnkG7VNi1DhoyjGV9iVbJQlJx0gwAAAABJRU5ErkJggg==" alt="微信分享二维码">
+</div>
+
+
+
+
+    <script src="//cdn.bootcss.com/node-waves/0.7.4/waves.min.js"></script>
+<script>
+var BLOG = { ROOT: '/', SHARE: true, REWARD: true };
+
+
+</script>
+
+<script src="//unpkg.com/hexo-theme-material-indigo@latest/js/main.min.js"></script>
+
+
+<div class="search-panel" id="search-panel">
+    <ul class="search-result" id="search-result"></ul>
+</div>
+<template id="search-tpl">
+<li class="item">
+    <a href="{path}" class="waves-block waves-effect">
+        <div class="title ellipsis" title="{title}">{title}</div>
+        <div class="flex-row flex-middle">
+            <div class="tags ellipsis">
+                {tags}
+            </div>
+            <time class="flex-col time">{date}</time>
+        </div>
+    </a>
+</li>
+</template>
+
+<script src="//unpkg.com/hexo-theme-material-indigo@latest/js/search.min.js" async></script>
+
+
+
+
+
+
+
+
+<script>
+(function() {
+    var OriginTitile = document.title, titleTime;
+    document.addEventListener('visibilitychange', function() {
+        if (document.hidden) {
+            document.title = '死鬼去哪里了！';
+            clearTimeout(titleTime);
+        } else {
+            document.title = '(つェ⊂)咦!又好了!';
+            titleTime = setTimeout(function() {
+                document.title = OriginTitile;
+            },2000);
+        }
+    });
+})();
+</script>
+
+
+
+</body>
+</html>

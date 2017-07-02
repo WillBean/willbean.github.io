@@ -1,0 +1,564 @@
+<!DOCTYPE html>
+<html>
+<head>
+    
+
+    
+
+    
+
+
+
+    <meta charset="utf-8">
+    
+    
+    
+    <title>ES5规范回顾系列(二)——内置对象 | WillBean&#39;s Blog | 我可能是个假程序猿吧</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+    <meta name="theme-color" content="#cccccc">
+    
+    
+    <meta name="keywords" content="ES5,Specification">
+    <meta name="description" content="下文摘自ES5/标准 ECMAScript 内置对象 全局对象唯一的全局对象在控制进入任何执行环境前被创建。 除非另外指明，全局对象的标准内置属性拥有特性 {[[Writable]]: true, [[Enumerable]]: false, [[Configurable]]: true}。 全局对象没有 [[Construct]] 内部属性 ; 全局对象不可能当做构造器用 new 运算符调用。">
+<meta name="keywords" content="ES5,Specification">
+<meta property="og:type" content="article">
+<meta property="og:title" content="ES5规范回顾系列(二)——内置对象">
+<meta property="og:url" content="https://willbean.github.io/2017/07/02/es5-review-2/index.html">
+<meta property="og:site_name" content="WillBean&#39;s Blog">
+<meta property="og:description" content="下文摘自ES5/标准 ECMAScript 内置对象 全局对象唯一的全局对象在控制进入任何执行环境前被创建。 除非另外指明，全局对象的标准内置属性拥有特性 {[[Writable]]: true, [[Enumerable]]: false, [[Configurable]]: true}。 全局对象没有 [[Construct]] 内部属性 ; 全局对象不可能当做构造器用 new 运算符调用。">
+<meta property="og:updated_time" content="2017-07-02T08:22:02.897Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="ES5规范回顾系列(二)——内置对象">
+<meta name="twitter:description" content="下文摘自ES5/标准 ECMAScript 内置对象 全局对象唯一的全局对象在控制进入任何执行环境前被创建。 除非另外指明，全局对象的标准内置属性拥有特性 {[[Writable]]: true, [[Enumerable]]: false, [[Configurable]]: true}。 全局对象没有 [[Construct]] 内部属性 ; 全局对象不可能当做构造器用 new 运算符调用。">
+    
+        <link rel="alternate" type="application/atom+xml" title="WillBean&#39;s Blog" href="/atom.xml">
+    
+    <link rel="shortcut icon" href="/favicon.ico">
+    <link rel="stylesheet" href="//unpkg.com/hexo-theme-material-indigo@latest/css/style.css">
+    <script>window.lazyScripts=[]</script>
+</head>
+
+<body>
+    <div id="loading" class="active"></div>
+
+    <aside id="menu" class="hide" >
+  <div class="inner flex-row-vertical">
+    <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menu-off">
+        <i class="icon icon-lg icon-close"></i>
+    </a>
+    <div class="brand-wrap" style="background-image:url(/img/brand.jpg)">
+      <div class="brand">
+        <a href="/" class="avatar waves-effect waves-circle waves-light">
+          <img src="/img/avatar.jpg">
+        </a>
+        <hgroup class="introduce">
+          <h5 class="nickname">WillBean</h5>
+          <a href="mailto:182769979@qq.com" title="182769979@qq.com" class="mail">182769979@qq.com</a>
+        </hgroup>
+      </div>
+    </div>
+    <div class="scroll-wrap flex-col">
+      <ul class="nav">
+        
+            <li class="waves-block waves-effect">
+              <a href="/"  >
+                <i class="icon icon-lg icon-home"></i>
+                主页
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/archives"  >
+                <i class="icon icon-lg icon-archives"></i>
+                Archives
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/tags"  >
+                <i class="icon icon-lg icon-tags"></i>
+                Tags
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/categories"  >
+                <i class="icon icon-lg icon-th-list"></i>
+                Categories
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="https://github.com/WillBean" target="_blank" >
+                <i class="icon icon-lg icon-github"></i>
+                Github
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="https://github.com/WillBean/hexo-blog-scourse" target="_blank" >
+                <i class="icon icon-lg icon-link"></i>
+                Repository
+              </a>
+            </li>
+        
+      </ul>
+    </div>
+  </div>
+</aside>
+
+    <main id="main">
+        <header class="top-header" id="header">
+    <div class="flex-row">
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light on" id="menu-toggle">
+          <i class="icon icon-lg icon-navicon"></i>
+        </a>
+        <div class="flex-col header-title ellipsis">ES5规范回顾系列(二)——内置对象</div>
+        
+        <div class="search-wrap" id="search-wrap">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="back">
+                <i class="icon icon-lg icon-chevron-left"></i>
+            </a>
+            <input type="text" id="key" class="search-input" autocomplete="off" placeholder="输入感兴趣的关键字">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="search">
+                <i class="icon icon-lg icon-search"></i>
+            </a>
+        </div>
+        
+        
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menuShare">
+            <i class="icon icon-lg icon-share-alt"></i>
+        </a>
+        
+    </div>
+</header>
+<header class="content-header post-header">
+
+    <div class="container fade-scale">
+        <h1 class="title">ES5规范回顾系列(二)——内置对象</h1>
+        <h5 class="subtitle">
+            
+                <time datetime="2017-07-02T06:36:03.000Z" itemprop="datePublished" class="page-time">
+  2017-07-02
+</time>
+
+
+            
+        </h5>
+    </div>
+
+    
+
+
+</header>
+
+
+<div class="container body-wrap">
+    
+    <aside class="post-widget">
+        <nav class="post-toc-wrap" id="post-toc">
+            <h4>TOC</h4>
+            <ol class="post-toc"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#全局对象"><span class="post-toc-number">1.</span> <span class="post-toc-text">全局对象</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#全局对象的值属性"><span class="post-toc-number">1.1.</span> <span class="post-toc-text">全局对象的值属性</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#NaN"><span class="post-toc-number">1.1.1.</span> <span class="post-toc-text">NaN</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#Infinity"><span class="post-toc-number">1.1.2.</span> <span class="post-toc-text">Infinity</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#undefined"><span class="post-toc-number">1.1.3.</span> <span class="post-toc-text">undefined</span></a></li></ol></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#全局对象的函数属性"><span class="post-toc-number">1.2.</span> <span class="post-toc-text">全局对象的函数属性</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#eval-x"><span class="post-toc-number">1.2.1.</span> <span class="post-toc-text">eval (x)</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#parseInt-string-radix"><span class="post-toc-number">1.2.2.</span> <span class="post-toc-text">parseInt (string, radix)</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#parseFloat-string"><span class="post-toc-number">1.2.3.</span> <span class="post-toc-text">parseFloat (string)</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#isNaN-number"><span class="post-toc-number">1.2.4.</span> <span class="post-toc-text">isNaN (number)</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#isFinite-number"><span class="post-toc-number">1.2.5.</span> <span class="post-toc-text">isFinite (number)</span></a></li></ol></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#处理-URI-的函数属性"><span class="post-toc-number">1.3.</span> <span class="post-toc-text">处理 URI 的函数属性</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#decodeURI-encodedURI"><span class="post-toc-number">1.3.1.</span> <span class="post-toc-text">decodeURI (encodedURI)</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#decodeURIComponent-encodedURIComponent"><span class="post-toc-number">1.3.2.</span> <span class="post-toc-text">decodeURIComponent (encodedURIComponent)</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#encodeURI-uri"><span class="post-toc-number">1.3.3.</span> <span class="post-toc-text">encodeURI (uri)</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#encodeURIComponent-uriComponent"><span class="post-toc-number">1.3.4.</span> <span class="post-toc-text">encodeURIComponent (uriComponent)</span></a></li></ol></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#全局对象的构造器属性"><span class="post-toc-number">1.4.</span> <span class="post-toc-text">全局对象的构造器属性</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#Object"><span class="post-toc-number">1.4.1.</span> <span class="post-toc-text">Object ( . . . )</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-5"><a class="post-toc-link" href="#作为函数调用-Object-构造器"><span class="post-toc-number">1.4.1.1.</span> <span class="post-toc-text">作为函数调用 Object 构造器</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-6"><a class="post-toc-link" href="#Object-value"><span class="post-toc-number">1.4.1.1.1.</span> <span class="post-toc-text">Object ( [ value ] )</span></a></li></ol></li><li class="post-toc-item post-toc-level-5"><a class="post-toc-link" href="#Object-构造器"><span class="post-toc-number">1.4.1.2.</span> <span class="post-toc-text">Object 构造器</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-6"><a class="post-toc-link" href="#new-Object-value"><span class="post-toc-number">1.4.1.2.1.</span> <span class="post-toc-text">new Object ( [ value ] )</span></a></li></ol></li><li class="post-toc-item post-toc-level-5"><a class="post-toc-link" href="#Object-构造器的属性"><span class="post-toc-number">1.4.1.3.</span> <span class="post-toc-text">Object 构造器的属性</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-6"><a class="post-toc-link" href="#Object-prototype"><span class="post-toc-number">1.4.1.3.1.</span> <span class="post-toc-text">Object.prototype</span></a></li><li class="post-toc-item post-toc-level-6"><a class="post-toc-link" href="#Object-getPrototypeOf-O"><span class="post-toc-number">1.4.1.3.2.</span> <span class="post-toc-text">Object.getPrototypeOf ( O )</span></a></li><li class="post-toc-item post-toc-level-6"><a class="post-toc-link" href="#Object-getOwnPropertyDescriptor-O-P"><span class="post-toc-number">1.4.1.3.3.</span> <span class="post-toc-text">Object.getOwnPropertyDescriptor ( O, P )</span></a></li><li class="post-toc-item post-toc-level-6"><a class="post-toc-link" href="#Object-getOwnPropertyNames-O"><span class="post-toc-number">1.4.1.3.4.</span> <span class="post-toc-text">Object.getOwnPropertyNames ( O )</span></a></li><li class="post-toc-item post-toc-level-6"><a class="post-toc-link" href="#Object-create-O-Properties"><span class="post-toc-number">1.4.1.3.5.</span> <span class="post-toc-text">Object.create ( O [, Properties] )</span></a></li><li class="post-toc-item post-toc-level-6"><a class="post-toc-link" href="#Object-defineProperty-O-P-Attributes"><span class="post-toc-number">1.4.1.3.6.</span> <span class="post-toc-text">Object.defineProperty ( O, P, Attributes )</span></a></li><li class="post-toc-item post-toc-level-6"><a class="post-toc-link" href="#Object-defineProperties-O-Properties"><span class="post-toc-number">1.4.1.3.7.</span> <span class="post-toc-text">Object.defineProperties ( O, Properties )</span></a></li><li class="post-toc-item post-toc-level-6"><a class="post-toc-link" href="#Object-seal-O"><span class="post-toc-number">1.4.1.3.8.</span> <span class="post-toc-text">Object.seal ( O )</span></a></li><li class="post-toc-item post-toc-level-6"><a class="post-toc-link" href="#Object-freeze-O"><span class="post-toc-number">1.4.1.3.9.</span> <span class="post-toc-text">Object.freeze ( O )</span></a></li><li class="post-toc-item post-toc-level-6"><a class="post-toc-link" href="#Object-preventExtensions-O"><span class="post-toc-number">1.4.1.3.10.</span> <span class="post-toc-text">Object.preventExtensions ( O )</span></a></li><li class="post-toc-item post-toc-level-6"><a class="post-toc-link" href="#Object-isSealed-O"><span class="post-toc-number">1.4.1.3.11.</span> <span class="post-toc-text">Object.isSealed ( O )</span></a></li><li class="post-toc-item post-toc-level-6"><a class="post-toc-link" href="#Object-isFrozen-O"><span class="post-toc-number">1.4.1.3.12.</span> <span class="post-toc-text">Object.isFrozen ( O )</span></a></li><li class="post-toc-item post-toc-level-6"><a class="post-toc-link" href="#Object-isExtensible-O"><span class="post-toc-number">1.4.1.3.13.</span> <span class="post-toc-text">Object.isExtensible ( O )</span></a></li><li class="post-toc-item post-toc-level-6"><a class="post-toc-link" href="#Object-keys-O"><span class="post-toc-number">1.4.1.3.14.</span> <span class="post-toc-text">Object.keys ( O )</span></a></li></ol></li><li class="post-toc-item post-toc-level-5"><a class="post-toc-link" href="#Object-的-prototype-对象的属性"><span class="post-toc-number">1.4.1.4.</span> <span class="post-toc-text">Object 的 prototype 对象的属性</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-6"><a class="post-toc-link" href="#Object-prototype-constructor"><span class="post-toc-number">1.4.1.4.1.</span> <span class="post-toc-text">Object.prototype.constructor</span></a></li><li class="post-toc-item post-toc-level-6"><a class="post-toc-link" href="#Object-prototype-toString"><span class="post-toc-number">1.4.1.4.2.</span> <span class="post-toc-text">Object.prototype.toString ( )</span></a></li><li class="post-toc-item post-toc-level-6"><a class="post-toc-link" href="#Object-prototype-toLocaleString"><span class="post-toc-number">1.4.1.4.3.</span> <span class="post-toc-text">Object.prototype.toLocaleString ( )</span></a></li><li class="post-toc-item post-toc-level-6"><a class="post-toc-link" href="#Object-prototype-valueOf"><span class="post-toc-number">1.4.1.4.4.</span> <span class="post-toc-text">Object.prototype.valueOf ( )</span></a></li><li class="post-toc-item post-toc-level-6"><a class="post-toc-link" href="#Object-prototype-hasOwnProperty-V"><span class="post-toc-number">1.4.1.4.5.</span> <span class="post-toc-text">Object.prototype.hasOwnProperty (V)</span></a></li><li class="post-toc-item post-toc-level-6"><a class="post-toc-link" href="#Object-prototype-isPrototypeOf-V"><span class="post-toc-number">1.4.1.4.6.</span> <span class="post-toc-text">Object.prototype.isPrototypeOf (V)</span></a></li><li class="post-toc-item post-toc-level-6"><a class="post-toc-link" href="#Object-prototype-propertyIsEnumerable-V"><span class="post-toc-number">1.4.1.4.7.</span> <span class="post-toc-text">Object.prototype.propertyIsEnumerable (V)</span></a></li></ol></li></ol></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#Function"><span class="post-toc-number">1.4.2.</span> <span class="post-toc-text">Function ( . . . )</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#Array"><span class="post-toc-number">1.4.3.</span> <span class="post-toc-text">Array ( . . . )</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#String"><span class="post-toc-number">1.4.4.</span> <span class="post-toc-text">String ( . . . )</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#Boolean"><span class="post-toc-number">1.4.5.</span> <span class="post-toc-text">Boolean ( . . . )</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#Number"><span class="post-toc-number">1.4.6.</span> <span class="post-toc-text">Number ( . . . )</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#Date"><span class="post-toc-number">1.4.7.</span> <span class="post-toc-text">Date ( . . . )</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#RegExp"><span class="post-toc-number">1.4.8.</span> <span class="post-toc-text">RegExp ( . . . )</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#Error"><span class="post-toc-number">1.4.9.</span> <span class="post-toc-text">Error ( . . . )</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#EvalError"><span class="post-toc-number">1.4.10.</span> <span class="post-toc-text">EvalError ( . . . )</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#RangeError"><span class="post-toc-number">1.4.11.</span> <span class="post-toc-text">RangeError ( . . . )</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#ReferenceError"><span class="post-toc-number">1.4.12.</span> <span class="post-toc-text">ReferenceError ( . . . )</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#SyntaxError"><span class="post-toc-number">1.4.13.</span> <span class="post-toc-text">SyntaxError ( . . . )</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#TypeError"><span class="post-toc-number">1.4.14.</span> <span class="post-toc-text">TypeError ( . . . )</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#URIError"><span class="post-toc-number">1.4.15.</span> <span class="post-toc-text">URIError ( . . . )</span></a></li></ol></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#全局对象的其他属性"><span class="post-toc-number">1.5.</span> <span class="post-toc-text">全局对象的其他属性</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#Math"><span class="post-toc-number">1.5.1.</span> <span class="post-toc-text">Math</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#JSON"><span class="post-toc-number">1.5.2.</span> <span class="post-toc-text">JSON</span></a></li></ol></li></ol></li></ol>
+        </nav>
+    </aside>
+    
+<article id="post-es5-review-2"
+  class="post-article article-type-post fade" itemprop="blogPost">
+
+    <div class="post-card">
+        <h1 class="post-card-title">ES5规范回顾系列(二)——内置对象</h1>
+        <div class="post-meta">
+            <time class="post-time" title="2017-07-02 14:36:03" datetime="2017-07-02T06:36:03.000Z"  itemprop="datePublished">2017-07-02</time>
+
+            
+
+
+            
+
+        </div>
+        <div class="post-content" id="post-content" itemprop="postContent">
+            <p>下文摘自<a href="https://www.w3.org/html/ig/zh/wiki/ES5/builtins" target="_blank" rel="external">ES5/标准 ECMAScript 内置对象</a></p>
+<h2 id="全局对象"><a href="#全局对象" class="headerlink" title="全局对象"></a>全局对象</h2><p>唯一的全局对象在控制进入任何执行环境前被创建。</p>
+<p>除非另外指明，全局对象的标准内置属性拥有特性 {[[Writable]]: true, [[Enumerable]]: false, [[Configurable]]: true}。</p>
+<p>全局对象没有 [[Construct]] 内部属性 ; 全局对象不可能当做构造器用 new 运算符调用。</p>
+<p>全局对象没有 [[Call]] 内部属性，全局对象不可能当做函数来调用。</p>
+<p>全局对象的 [[Prototype]] 和 [[Class]] 内部属性值是依赖于实现的。</p>
+<p>除了本规范定义的属性之外，全局对象还可以拥有额外的宿主定义的属性。全局对象可包含一个值是全局对象自身的属性；例如，在 HTML 文档对象模型中全局对象的 window 属性是全局对象自身。 </p>
+<h3 id="全局对象的值属性"><a href="#全局对象的值属性" class="headerlink" title="全局对象的值属性"></a>全局对象的值属性</h3><h4 id="NaN"><a href="#NaN" class="headerlink" title="NaN"></a>NaN</h4><p>NaN 的值是 NaN。这个属性拥有特性 { [[Writable]]: false, [[Enumerable]]: false, [[Configurable]]: false }。</p>
+<h4 id="Infinity"><a href="#Infinity" class="headerlink" title="Infinity"></a>Infinity</h4><p>Infinity 的值是 +∞。这个属性拥有特性 { [[Writable]]: false, [[Enumerable]]: false, [[Configurable]]: false }。</p>
+<h4 id="undefined"><a href="#undefined" class="headerlink" title="undefined"></a>undefined</h4><p>undefined 的值是 undefined。这个属性拥有特性 &lt;{ [[Writable]]: false, [[Enumerable]]: false, [[Configurable]]: false }。</p>
+<h3 id="全局对象的函数属性"><a href="#全局对象的函数属性" class="headerlink" title="全局对象的函数属性"></a>全局对象的函数属性</h3><h4 id="eval-x"><a href="#eval-x" class="headerlink" title="eval (x)"></a>eval (x)</h4><h4 id="parseInt-string-radix"><a href="#parseInt-string-radix" class="headerlink" title="parseInt (string, radix)"></a>parseInt (string, radix)</h4><h4 id="parseFloat-string"><a href="#parseFloat-string" class="headerlink" title="parseFloat (string)"></a>parseFloat (string)</h4><h4 id="isNaN-number"><a href="#isNaN-number" class="headerlink" title="isNaN (number)"></a>isNaN (number)</h4><h4 id="isFinite-number"><a href="#isFinite-number" class="headerlink" title="isFinite (number)"></a>isFinite (number)</h4><h3 id="处理-URI-的函数属性"><a href="#处理-URI-的函数属性" class="headerlink" title="处理 URI 的函数属性"></a>处理 URI 的函数属性</h3><h4 id="decodeURI-encodedURI"><a href="#decodeURI-encodedURI" class="headerlink" title="decodeURI (encodedURI)"></a>decodeURI (encodedURI)</h4><p>decodeURI 函数计算出一个新版 URI，将 URI 中可能是 encodeURI 函数引入的每个转义序列和 UTF-8 编码组替换为代表它们的字符。不是 encodeURI 导入的转义序列不会被替换。 </p>
+<h4 id="decodeURIComponent-encodedURIComponent"><a href="#decodeURIComponent-encodedURIComponent" class="headerlink" title="decodeURIComponent (encodedURIComponent)"></a>decodeURIComponent (encodedURIComponent)</h4><p>decodeURIComponent 函数计算出一个新版 URI，将 URI 中可能是 encodeURIComponent 函数引入的每个转义序列和 UTF-8 编码组替换为代表它们的字符。 </p>
+<h4 id="encodeURI-uri"><a href="#encodeURI-uri" class="headerlink" title="encodeURI (uri)"></a>encodeURI (uri)</h4><p>encodeURI 函数计算出一个新版 URI，将 URI 中某些字符的每个实例替换为代表这些字符 UTF-8 编码的一个，两个或三个转义序列。</p>
+<h4 id="encodeURIComponent-uriComponent"><a href="#encodeURIComponent-uriComponent" class="headerlink" title="encodeURIComponent (uriComponent)"></a>encodeURIComponent (uriComponent)</h4><p>encodeURIComponent 函数计算出一个新版 URI，将 URI 中某些字符的每个实例替换为代表这些字符 UTF-8 编码的一个，两个或三个转义序列。 </p>
+<p>*encodeURI 和 decodeURI 函数操作的是完整的 URI；这俩函数假定 URI 中的任何保留字符都有特殊意义，所有不会编码它们。encodeURIComponent 和 decodeURIComponent 函数操作的是组成 URI 的个别组件；这俩函数假定任何保留字符都代表普通文本，所以必须编码它们，所以它们出现在组成一个完整 URI 的组件里面时不会解释成保留字符了。</p>
+<h3 id="全局对象的构造器属性"><a href="#全局对象的构造器属性" class="headerlink" title="全局对象的构造器属性"></a>全局对象的构造器属性</h3><h4 id="Object"><a href="#Object" class="headerlink" title="Object ( . . . )"></a>Object ( . . . )</h4><h5 id="作为函数调用-Object-构造器"><a href="#作为函数调用-Object-构造器" class="headerlink" title="作为函数调用 Object 构造器"></a>作为函数调用 Object 构造器</h5><p>当把 Object 当做一个函数来调用，而不是一个构造器，它会执行一个类型转换。 </p>
+<h6 id="Object-value"><a href="#Object-value" class="headerlink" title="Object ( [ value ] )"></a>Object ( [ value ] )</h6><p>当以一个参数 value 或者无参数调用 Object 函数，采用如下步骤：</p>
+<ol>
+<li>如果 value 是 null、undefined 或未指定，则创建并返回一个新 Object 对象，这个对象与仿佛用相同参数调用标准内置的 Object 构造器 的结果一样。</li>
+<li>返回 ToObject(value)。</li>
+</ol>
+<h5 id="Object-构造器"><a href="#Object-构造器" class="headerlink" title="Object 构造器"></a>Object 构造器</h5><p>当 Object 是 new 表达式调用的一部分时，它是一个构造器，可创建一个对象。</p>
+<h6 id="new-Object-value"><a href="#new-Object-value" class="headerlink" title="new Object ( [ value ] )"></a>new Object ( [ value ] )</h6><p>当以一个参数 value 或者无参数调用 Object 构造器，采用如下步骤：</p>
+<pre><code>1. 如果提供了 value，则
+    1. 如果 Type(value) 是 Object，则
+        1. 如果 value 是个原生 ECMAScript 对象，不创建新对象，简单的返回 value。
+        2. 如果 value 是宿主对象，则采取动作和返回依赖实现的结果的方式可以使依赖于宿主对象的。
+    2. 如果 Type(value) 是 String，返回 ToObject(value)。
+    3. 如果 Type(value) 是 Boolean，返回 ToObject(value)。
+    4. 如果 Type(value) 是 Number，返回 ToObject(value)。
+2. 断言：未提供参数 value 或其类型是 Null 或 Undefined。
+3. 令 obj 为一个新创建的原生 ECMAScript 对象。
+4. 设定 obj 的 [[Prototype]] 内部属性为标准内置的 Object 的 prototype 对象 (15.2.4)。
+5. 设定 obj 的 [[Class]] 内部属性为 &quot;Object&quot;。
+6. 设定 obj 的 [[Extensible]] 内部属性为 true。
+7. 设定 obj 的 8.12 指定的所有内部方法
+8. 返回 obj。
+</code></pre><h5 id="Object-构造器的属性"><a href="#Object-构造器的属性" class="headerlink" title="Object 构造器的属性"></a>Object 构造器的属性</h5><p>Object 构造器的 [[Prototype]] 内部属性值是标准内置 Function 的 prototype 对象。</p>
+<p>除了内部属性和 length 属性（其值是 1）之外，Object 构造器拥有以下属性： </p>
+<h6 id="Object-prototype"><a href="#Object-prototype" class="headerlink" title="Object.prototype"></a>Object.prototype</h6><p>Object.prototype 的初始值是标准内置 Object 的 prototype 对象<br>这个属性包含特性 {[[Writable]]: false, [[Enumerable]]: false, [[Configurable]]: false } </p>
+<h6 id="Object-getPrototypeOf-O"><a href="#Object-getPrototypeOf-O" class="headerlink" title="Object.getPrototypeOf ( O )"></a>Object.getPrototypeOf ( O )</h6><p>当以参数 O 调用 getPrototypeOf 函数，采用如下步骤： </p>
+<pre><code>1. 如果 Type(O) 不是 Object，则抛出一个 TypeError 异常。
+2. 返回 O 的 [[Prototype]] 内部属性的值。
+</code></pre><h6 id="Object-getOwnPropertyDescriptor-O-P"><a href="#Object-getOwnPropertyDescriptor-O-P" class="headerlink" title="Object.getOwnPropertyDescriptor ( O, P )"></a>Object.getOwnPropertyDescriptor ( O, P )</h6><p>当调用 getOwnPropertyDescriptor 函数，采用如下步骤：</p>
+<pre><code>1. 如果 Type(O) 不是 Object，则抛出一个 TypeError 异常。
+2. 令 name 为 ToString(P)。
+3. 令 desc 为以参数 name 调用 O 的 [[GetOwnProperty]] 内部方法的结果。
+4. 返回调用 FromPropertyDescriptor(desc) 的结果。
+</code></pre><h6 id="Object-getOwnPropertyNames-O"><a href="#Object-getOwnPropertyNames-O" class="headerlink" title="Object.getOwnPropertyNames ( O )"></a>Object.getOwnPropertyNames ( O )</h6><h6 id="Object-create-O-Properties"><a href="#Object-create-O-Properties" class="headerlink" title="Object.create ( O [, Properties] )"></a>Object.create ( O [, Properties] )</h6><p>create 函数按照指定的原型创建一个新对象。当调用 create 函数，采用如下步骤： </p>
+<pre><code>1. 如果 Type(O) 不是 Object 或 Null，则抛出一个 TypeError 异常。
+2. 令 obj 为仿佛是用表达式 new Object() 创建新对象的结果，这里的 Object 是标准内置构造器名。 
+3. 设定 obj 的 [[Prototype]] 内部属性为 O。
+4. 如果传入了 Properties 参数并且不是 undefined，则仿佛是用 obj 和 Properties 当作参数调用标准内置函数 Object.defineProperties 一样给 obj 添加自身属性。
+5. 返回 obj。
+</code></pre><h6 id="Object-defineProperty-O-P-Attributes"><a href="#Object-defineProperty-O-P-Attributes" class="headerlink" title="Object.defineProperty ( O, P, Attributes )"></a>Object.defineProperty ( O, P, Attributes )</h6><p>defineProperty 函数用于给一个对象添加一个自身属性以及更新现有自身属性的特性。</p>
+<h6 id="Object-defineProperties-O-Properties"><a href="#Object-defineProperties-O-Properties" class="headerlink" title="Object.defineProperties ( O, Properties )"></a>Object.defineProperties ( O, Properties )</h6><p>defineProperties 函数用于给一个对象添加一些自身属性以及更新现有的一些自身属性的特性。</p>
+<h6 id="Object-seal-O"><a href="#Object-seal-O" class="headerlink" title="Object.seal ( O )"></a>Object.seal ( O )</h6><p>当调用 seal 函数，采用如下步骤： </p>
+<pre><code>1. 如果 Type(O) 不是 Object，则抛出一个 TypeError 异常。
+2. 对 O 的每个命名自身属性名 P,
+    1. 令 desc 为以参数 P 调用 O 的 [[GetOwnProperty]] 内部方法的结果。
+    2. 如果 desc.[[Configurable]] 是 true，设定 desc.[[Configurable]] 为 false。
+    3. 以 P、desc、true 为参数调用 O 的 [[DefineOwnProperty]] 内部方法。
+3. 设定 O 的 [[Extensible]] 内部属性为 false。
+4. 返回 O。
+</code></pre><h6 id="Object-freeze-O"><a href="#Object-freeze-O" class="headerlink" title="Object.freeze ( O )"></a>Object.freeze ( O )</h6><p>当调用 freeze 函数，采用如下步骤：</p>
+<pre><code>1. 如果 Type(O) 不是 Object，则抛出一个 TypeError 异常。
+2. 对 O 的每个命名自身属性名 P,
+    1. 令 desc 为以参数 P 调用 O 的 [[GetOwnProperty]] 内部方法的结果。
+    2. 如果 IsDataDescriptor(desc) 是 true，则
+        1. 如果 desc.[[Writable]] 是 true，设定 desc。[[Writable]] 为 false.
+    3. 如果 desc.[[Configurable]] 是 true，设定 desc。[[Configurable]] 为 false。
+    4. 以 P、desc、true 作为参数调用 O 的 [[DefineOwnProperty]] 内部方法。
+3. 设定 O 的 [[Extensible]] 内部属性为 false。
+4. 返回 O。
+</code></pre><h6 id="Object-preventExtensions-O"><a href="#Object-preventExtensions-O" class="headerlink" title="Object.preventExtensions ( O )"></a>Object.preventExtensions ( O )</h6><p>当调用 preventExtensions 函数，采用如下步骤：</p>
+<pre><code>1. 如果 Type(O) 不是 Object，则抛出一个 TypeError 异常 .
+2. 设定 O 的 [[Extensible]] 内部属性为 false。
+3. 返回 O。
+</code></pre><h6 id="Object-isSealed-O"><a href="#Object-isSealed-O" class="headerlink" title="Object.isSealed ( O )"></a>Object.isSealed ( O )</h6><h6 id="Object-isFrozen-O"><a href="#Object-isFrozen-O" class="headerlink" title="Object.isFrozen ( O )"></a>Object.isFrozen ( O )</h6><h6 id="Object-isExtensible-O"><a href="#Object-isExtensible-O" class="headerlink" title="Object.isExtensible ( O )"></a>Object.isExtensible ( O )</h6><h6 id="Object-keys-O"><a href="#Object-keys-O" class="headerlink" title="Object.keys ( O )"></a>Object.keys ( O )</h6><h5 id="Object-的-prototype-对象的属性"><a href="#Object-的-prototype-对象的属性" class="headerlink" title="Object 的 prototype 对象的属性"></a>Object 的 prototype 对象的属性</h5><p>Object 的 prototype 对象的 [[Prototype]] 内部属性的值是 null ，[[Class]] 内部属性的值是 “Object”，[[Extensible]] 内部属性的初始值是 true。 </p>
+<h6 id="Object-prototype-constructor"><a href="#Object-prototype-constructor" class="headerlink" title="Object.prototype.constructor"></a>Object.prototype.constructor</h6><p>Object.prototype.constructor 的初始值是标准内置的 Object 构造器。 </p>
+<h6 id="Object-prototype-toString"><a href="#Object-prototype-toString" class="headerlink" title="Object.prototype.toString ( )"></a>Object.prototype.toString ( )</h6><p>当调用 toString 方法，采用如下步骤：</p>
+<pre><code>1. 如果 this 的值是 undefined，返回 &quot;[object Undefined]&quot;。
+2. 如果 this 的值是 null，返回 &quot;[object Null]&quot;。
+3. 令 O 为以 this 作为参数调用 ToObject 的结果。
+4. 令 class 为 O 的 [[Class]] 内部属性的值。
+5. 返回三个字符串 &quot;[object &quot;、class 和 &quot;]&quot; 连起来的字符串。
+</code></pre><h6 id="Object-prototype-toLocaleString"><a href="#Object-prototype-toLocaleString" class="headerlink" title="Object.prototype.toLocaleString ( )"></a>Object.prototype.toLocaleString ( )</h6><p>*toLocaleString 方法返回一个 String 对象，这个对象中包含了用当前区域设置的默认格式表示的日期。</p>
+<h6 id="Object-prototype-valueOf"><a href="#Object-prototype-valueOf" class="headerlink" title="Object.prototype.valueOf ( )"></a>Object.prototype.valueOf ( )</h6><h6 id="Object-prototype-hasOwnProperty-V"><a href="#Object-prototype-hasOwnProperty-V" class="headerlink" title="Object.prototype.hasOwnProperty (V)"></a>Object.prototype.hasOwnProperty (V)</h6><h6 id="Object-prototype-isPrototypeOf-V"><a href="#Object-prototype-isPrototypeOf-V" class="headerlink" title="Object.prototype.isPrototypeOf (V)"></a>Object.prototype.isPrototypeOf (V)</h6><p>*Object.prototype == V.constructor.prototype</p>
+<h6 id="Object-prototype-propertyIsEnumerable-V"><a href="#Object-prototype-propertyIsEnumerable-V" class="headerlink" title="Object.prototype.propertyIsEnumerable (V)"></a>Object.prototype.propertyIsEnumerable (V)</h6><p>*属性V是否可枚举</p>
+<h4 id="Function"><a href="#Function" class="headerlink" title="Function ( . . . )"></a>Function ( . . . )</h4><h4 id="Array"><a href="#Array" class="headerlink" title="Array ( . . . )"></a>Array ( . . . )</h4><h4 id="String"><a href="#String" class="headerlink" title="String ( . . . )"></a>String ( . . . )</h4><h4 id="Boolean"><a href="#Boolean" class="headerlink" title="Boolean ( . . . )"></a>Boolean ( . . . )</h4><h4 id="Number"><a href="#Number" class="headerlink" title="Number ( . . . )"></a>Number ( . . . )</h4><h4 id="Date"><a href="#Date" class="headerlink" title="Date ( . . . )"></a>Date ( . . . )</h4><h4 id="RegExp"><a href="#RegExp" class="headerlink" title="RegExp ( . . . )"></a>RegExp ( . . . )</h4><h4 id="Error"><a href="#Error" class="headerlink" title="Error ( . . . )"></a>Error ( . . . )</h4><h4 id="EvalError"><a href="#EvalError" class="headerlink" title="EvalError ( . . . )"></a>EvalError ( . . . )</h4><h4 id="RangeError"><a href="#RangeError" class="headerlink" title="RangeError ( . . . )"></a>RangeError ( . . . )</h4><h4 id="ReferenceError"><a href="#ReferenceError" class="headerlink" title="ReferenceError ( . . . )"></a>ReferenceError ( . . . )</h4><h4 id="SyntaxError"><a href="#SyntaxError" class="headerlink" title="SyntaxError ( . . . )"></a>SyntaxError ( . . . )</h4><h4 id="TypeError"><a href="#TypeError" class="headerlink" title="TypeError ( . . . )"></a>TypeError ( . . . )</h4><h4 id="URIError"><a href="#URIError" class="headerlink" title="URIError ( . . . )"></a>URIError ( . . . )</h4><h3 id="全局对象的其他属性"><a href="#全局对象的其他属性" class="headerlink" title="全局对象的其他属性"></a>全局对象的其他属性</h3><h4 id="Math"><a href="#Math" class="headerlink" title="Math"></a>Math</h4><h4 id="JSON"><a href="#JSON" class="headerlink" title="JSON"></a>JSON</h4>
+        </div>
+
+        <blockquote class="post-copyright">
+    <div class="content">
+        
+<span class="post-time">
+    最后更新时间：<time datetime="2017-07-02T08:22:02.897Z" itemprop="dateUpdated">2017-07-02 16:22:02</time>
+</span><br>
+
+
+        
+        欢迎分享转发，转载请指明出处~<br>如有错误，欢迎指出~<br><a href="/2017/07/02/es5-review-2/" target="_blank" rel="external">https://willbean.github.io/2017/07/02/es5-review-2/</a>
+        
+    </div>
+    <footer>
+        <a href="https://willbean.github.io">
+            <img src="/img/avatar.jpg" alt="WillBean">
+            WillBean
+        </a>
+    </footer>
+</blockquote>
+
+        
+<div class="page-reward">
+    <a id="rewardBtn" href="javascript:;" class="page-reward-btn waves-effect waves-circle waves-light">赏</a>
+</div>
+
+
+
+        <div class="post-footer">
+            
+	<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/ES5/">ES5</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Specification/">Specification</a></li></ul>
+
+
+            
+<div class="page-share-wrap">
+    
+
+<div class="page-share" id="pageShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=https://willbean.github.io/2017/07/02/es5-review-2/&title=《ES5规范回顾系列(二)——内置对象》 — WillBean's Blog&pic=https://willbean.github.io/img/avatar.jpg" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://willbean.github.io/2017/07/02/es5-review-2/&title=《ES5规范回顾系列(二)——内置对象》 — WillBean's Blog&source=这是一个准大四学生的前端博客。" data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https://willbean.github.io/2017/07/02/es5-review-2/" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《ES5规范回顾系列(二)——内置对象》 — WillBean's Blog&url=https://willbean.github.io/2017/07/02/es5-review-2/&via=https://willbean.github.io" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=https://willbean.github.io/2017/07/02/es5-review-2/" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+
+    <a href="javascript:;" id="shareFab" class="page-share-fab waves-effect waves-circle">
+        <i class="icon icon-share-alt icon-lg"></i>
+    </a>
+</div>
+
+
+
+        </div>
+    </div>
+
+    
+<nav class="post-nav flex-row flex-justify-between flex-row-reverse">
+  
+
+  
+    <div class="waves-block waves-effect next">
+      <a href="/2017/07/02/es5-review-1/" id="post-next" class="post-nav-link">
+        <div class="tips">Next <i class="icon icon-angle-right icon-lg icon-pl"></i></div>
+        <h4 class="title">ES5规范回顾系列(一)——术语定义</h4>
+      </a>
+    </div>
+  
+</nav>
+
+
+
+    
+
+
+
+
+
+
+
+
+
+
+
+<section class="comments" id="comments">
+    <div id="gitment_thread"></div>
+    <link rel="stylesheet" href="//unpkg.com/gitment/style/default.css">
+    <script src="//unpkg.com/gitment/dist/gitment.browser.js"></script>
+    <script>
+        var gitment = new Gitment({
+            owner: 'WillBean',
+            repo: 'willbean.github.io',
+            oauth: {
+                client_id: '5d9b308c6ae328be7417',
+                client_secret: '8381cbf6bd0eebd34af19c4aa5dd728dbce84877',
+            },
+        })
+        gitment.render('comments')
+    </script>
+</section>
+
+
+
+
+</article>
+
+<div id="reward" class="page-modal reward-lay">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <h3 class="reward-title">
+        <i class="icon icon-quote-left"></i>
+        谢谢大爷~
+        <i class="icon icon-quote-right"></i>
+    </h3>
+    <div class="reward-content">
+        
+        <div class="reward-code">
+            <img id="rewardCode" src="/img/wechat.jpg" alt="打赏二维码">
+        </div>
+        
+        <label class="reward-toggle">
+            <input id="rewardToggle" type="checkbox" class="reward-toggle-check"
+                data-wechat="/img/wechat.jpg" data-alipay="/img/alipay.jpg">
+            <div class="reward-toggle-ctrol">
+                <span class="reward-toggle-item wechat">微信</span>
+                <span class="reward-toggle-label"></span>
+                <span class="reward-toggle-item alipay">支付宝</span>
+            </div>
+        </label>
+        
+    </div>
+</div>
+
+
+
+</div>
+
+        <footer class="footer">
+    <div class="top">
+        
+
+        <p>
+            
+                <span><a href="/atom.xml" target="_blank" class="rss" title="rss"><i class="icon icon-lg icon-rss"></i></a></span>
+            
+            <span>博客内容遵循 <a rel="license" href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh">知识共享 署名 - 非商业性 - 相同方式共享 4.0 国际协议</a></span>
+        </p>
+    </div>
+    <div class="bottom">
+        <p><span>WillBean &copy; 2016 - 2017</span>
+            <span>
+                
+                Power by <a href="http://hexo.io/" target="_blank">Hexo</a> Theme <a href="https://github.com/yscoder/hexo-theme-indigo" target="_blank">indigo</a>
+            </span>
+        </p>
+    </div>
+</footer>
+
+    </main>
+    <div class="mask" id="mask"></div>
+<a href="javascript:;" id="gotop" class="waves-effect waves-circle waves-light"><span class="icon icon-lg icon-chevron-up"></span></a>
+
+
+
+<div class="global-share" id="globalShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=https://willbean.github.io/2017/07/02/es5-review-2/&title=《ES5规范回顾系列(二)——内置对象》 — WillBean's Blog&pic=https://willbean.github.io/img/avatar.jpg" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://willbean.github.io/2017/07/02/es5-review-2/&title=《ES5规范回顾系列(二)——内置对象》 — WillBean's Blog&source=这是一个准大四学生的前端博客。" data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https://willbean.github.io/2017/07/02/es5-review-2/" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《ES5规范回顾系列(二)——内置对象》 — WillBean's Blog&url=https://willbean.github.io/2017/07/02/es5-review-2/&via=https://willbean.github.io" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=https://willbean.github.io/2017/07/02/es5-review-2/" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+<div class="page-modal wx-share" id="wxShare">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAMYAAADGCAAAAACs8KCBAAACLUlEQVR42u3ay27CMBAF0Pz/T1OpW0S4dwxV4xyvEK0cHy+GzOM44vX4Xclfnz8n6/n/j28sDAyMyzLaBzw/5tU3+bFmF4GBgXE3RrL1q4clQfk8pJ5fX/QDgIGBgVEG2fxSznfGwMDAmDGSQJx/04Z1DAyMOzOSJLYtis32/HoujoGBcUFG2xj4y89f7G9gYGBchPEo16yR0DZH61NhYGBszZgV5dvSWFuMm7UWMDAwdmXkwTRnJO2EtpD3Zh8MDIytGSt54kpQXmlzLhXdMDAwLsiYDXu16Ws+WjFLZTEwMPZmtCMOKy+IbZqaXysGBgZGEnDbFLQNzVESi4GBsTVjFljbUNsW71ZeKzEwMHZitKFzlqa2yWodlDEwMG7GaI/SNgySX4D2QjEwMPZmzJqXeTmsfVnMr7VOYjEwMC7OWE81Z6R2wOLNqyQGBsamjHbr9lUvT0pnQ2nH7IYwMDAuxVgZoWhbksmhZ0NpGBgYd2CslMZmj28T5mgQBAMDY1PGLCC2LYTZ+EWRAGNgYNyS0Zb+2xZCnYieF/swMDC2ZuSFrbZ5kB+9JWFgYNyN8ShXEpSTYN2OXLwJ/RgYGFszPtUHzAt2s9GKP2pnYmBg/GPGp4JsHrLzRLpoo2JgYNyAMSvuJw/IryAP/S9TWQwMjNsz2obBpwY1ov0xMDAwlpsBeZhuBz4wMDDuw1gv1ifU2StgchIMDIy9GSuTGudBs0101xNmDAyM7Rg/agUd8yeP/KQAAAAASUVORK5CYII=" alt="微信分享二维码">
+</div>
+
+
+
+
+    <script src="//cdn.bootcss.com/node-waves/0.7.4/waves.min.js"></script>
+<script>
+var BLOG = { ROOT: '/', SHARE: true, REWARD: true };
+
+
+</script>
+
+<script src="//unpkg.com/hexo-theme-material-indigo@latest/js/main.min.js"></script>
+
+
+<div class="search-panel" id="search-panel">
+    <ul class="search-result" id="search-result"></ul>
+</div>
+<template id="search-tpl">
+<li class="item">
+    <a href="{path}" class="waves-block waves-effect">
+        <div class="title ellipsis" title="{title}">{title}</div>
+        <div class="flex-row flex-middle">
+            <div class="tags ellipsis">
+                {tags}
+            </div>
+            <time class="flex-col time">{date}</time>
+        </div>
+    </a>
+</li>
+</template>
+
+<script src="//unpkg.com/hexo-theme-material-indigo@latest/js/search.min.js" async></script>
+
+
+
+
+
+
+
+
+<script>
+(function() {
+    var OriginTitile = document.title, titleTime;
+    document.addEventListener('visibilitychange', function() {
+        if (document.hidden) {
+            document.title = '死鬼去哪里了！';
+            clearTimeout(titleTime);
+        } else {
+            document.title = '(つェ⊂)咦!又好了!';
+            titleTime = setTimeout(function() {
+                document.title = OriginTitile;
+            },2000);
+        }
+    });
+})();
+</script>
+
+
+
+</body>
+</html>
