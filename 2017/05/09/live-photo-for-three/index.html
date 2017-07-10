@@ -1,0 +1,507 @@
+<!DOCTYPE html>
+<html>
+<head>
+    
+
+    
+
+    
+
+
+
+    <meta charset="utf-8">
+    
+    
+    
+    <title>Three.js实现仿IOS live图效果 | WillBean&#39;s Blog | 我可能是个假程序猿吧</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+    <meta name="theme-color" content="#cccccc">
+    
+    
+    <meta name="keywords" content="Three.js,Javascript,HTML,Canvas">
+    <meta name="description" content="一、需求分析四月出游浪了一波，拍了一堆live图的照片，于是乎就想做个Web页，把这些照片展示出来，正逢最近学习了一些Three.js，就想着用上着技术做个小玩意出来。上网搜索了一波，苹果官网推出了一个live photos的框架，但是并不适用于canvas，就寻思着模仿着做一个吧~ 二、组件设计既然是模仿，那就要知道别人是怎么做的。新建了个HTML文件，导入livephotoskit.js，看着">
+<meta name="keywords" content="Three.js,Javascript,HTML,Canvas">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Three.js实现仿IOS live图效果">
+<meta property="og:url" content="https://willbean.github.io/2017/05/09/live-photo-for-three/index.html">
+<meta property="og:site_name" content="WillBean&#39;s Blog">
+<meta property="og:description" content="一、需求分析四月出游浪了一波，拍了一堆live图的照片，于是乎就想做个Web页，把这些照片展示出来，正逢最近学习了一些Three.js，就想着用上着技术做个小玩意出来。上网搜索了一波，苹果官网推出了一个live photos的框架，但是并不适用于canvas，就寻思着模仿着做一个吧~ 二、组件设计既然是模仿，那就要知道别人是怎么做的。新建了个HTML文件，导入livephotoskit.js，看着">
+<meta property="og:image" content="https://raw.githubusercontent.com/WillBean/react-native-summary.github.io/master/images/live-photo-for-three/Animation2.gif">
+<meta property="og:image" content="https://raw.githubusercontent.com/WillBean/react-native-summary.github.io/master/images/live-photo-for-three/Animation.gif">
+<meta property="og:updated_time" content="2017-07-09T16:04:46.629Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Three.js实现仿IOS live图效果">
+<meta name="twitter:description" content="一、需求分析四月出游浪了一波，拍了一堆live图的照片，于是乎就想做个Web页，把这些照片展示出来，正逢最近学习了一些Three.js，就想着用上着技术做个小玩意出来。上网搜索了一波，苹果官网推出了一个live photos的框架，但是并不适用于canvas，就寻思着模仿着做一个吧~ 二、组件设计既然是模仿，那就要知道别人是怎么做的。新建了个HTML文件，导入livephotoskit.js，看着">
+<meta name="twitter:image" content="https://raw.githubusercontent.com/WillBean/react-native-summary.github.io/master/images/live-photo-for-three/Animation2.gif">
+    
+        <link rel="alternate" type="application/atom+xml" title="WillBean&#39;s Blog" href="/atom.xml">
+    
+    <link rel="shortcut icon" href="/favicon.ico">
+    <link rel="stylesheet" href="//unpkg.com/hexo-theme-material-indigo@latest/css/style.css">
+    <script>window.lazyScripts=[]</script>
+</head>
+
+<body>
+    <div id="loading" class="active"></div>
+
+    <aside id="menu" class="hide" >
+  <div class="inner flex-row-vertical">
+    <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menu-off">
+        <i class="icon icon-lg icon-close"></i>
+    </a>
+    <div class="brand-wrap" style="background-image:url(/img/brand.jpg)">
+      <div class="brand">
+        <a href="/" class="avatar waves-effect waves-circle waves-light">
+          <img src="/img/avatar.jpg">
+        </a>
+        <hgroup class="introduce">
+          <h5 class="nickname">WillBean</h5>
+          <a href="mailto:182769979@qq.com" title="182769979@qq.com" class="mail">182769979@qq.com</a>
+        </hgroup>
+      </div>
+    </div>
+    <div class="scroll-wrap flex-col">
+      <ul class="nav">
+        
+            <li class="waves-block waves-effect">
+              <a href="/"  >
+                <i class="icon icon-lg icon-home"></i>
+                主页
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/archives"  >
+                <i class="icon icon-lg icon-archives"></i>
+                Archives
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/tags"  >
+                <i class="icon icon-lg icon-tags"></i>
+                Tags
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/categories"  >
+                <i class="icon icon-lg icon-th-list"></i>
+                Categories
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="https://github.com/WillBean" target="_blank" >
+                <i class="icon icon-lg icon-github"></i>
+                Github
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="https://github.com/WillBean/hexo-blog-scourse" target="_blank" >
+                <i class="icon icon-lg icon-link"></i>
+                Repository
+              </a>
+            </li>
+        
+      </ul>
+    </div>
+  </div>
+</aside>
+
+    <main id="main">
+        <header class="top-header" id="header">
+    <div class="flex-row">
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light on" id="menu-toggle">
+          <i class="icon icon-lg icon-navicon"></i>
+        </a>
+        <div class="flex-col header-title ellipsis">Three.js实现仿IOS live图效果</div>
+        
+        <div class="search-wrap" id="search-wrap">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="back">
+                <i class="icon icon-lg icon-chevron-left"></i>
+            </a>
+            <input type="text" id="key" class="search-input" autocomplete="off" placeholder="输入感兴趣的关键字">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="search">
+                <i class="icon icon-lg icon-search"></i>
+            </a>
+        </div>
+        
+        
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menuShare">
+            <i class="icon icon-lg icon-share-alt"></i>
+        </a>
+        
+    </div>
+</header>
+<header class="content-header post-header">
+
+    <div class="container fade-scale">
+        <h1 class="title">Three.js实现仿IOS live图效果</h1>
+        <h5 class="subtitle">
+            
+                <time datetime="2017-05-09T12:57:44.000Z" itemprop="datePublished" class="page-time">
+  2017-05-09
+</time>
+
+
+            
+        </h5>
+    </div>
+
+    
+
+
+</header>
+
+
+<div class="container body-wrap">
+    
+    <aside class="post-widget">
+        <nav class="post-toc-wrap" id="post-toc">
+            <h4>TOC</h4>
+            <ol class="post-toc"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#一、需求分析"><span class="post-toc-number">1.</span> <span class="post-toc-text">一、需求分析</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#二、组件设计"><span class="post-toc-number">2.</span> <span class="post-toc-text">二、组件设计</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#三、效果展示"><span class="post-toc-number">3.</span> <span class="post-toc-text">三、效果展示</span></a></li></ol>
+        </nav>
+    </aside>
+    
+<article id="post-live-photo-for-three"
+  class="post-article article-type-post fade" itemprop="blogPost">
+
+    <div class="post-card">
+        <h1 class="post-card-title">Three.js实现仿IOS live图效果</h1>
+        <div class="post-meta">
+            <time class="post-time" title="2017-05-09 20:57:44" datetime="2017-05-09T12:57:44.000Z"  itemprop="datePublished">2017-05-09</time>
+
+            
+
+
+            
+
+        </div>
+        <div class="post-content" id="post-content" itemprop="postContent">
+            <h3 id="一、需求分析"><a href="#一、需求分析" class="headerlink" title="一、需求分析"></a>一、需求分析</h3><p>四月出游浪了一波，拍了一堆live图的照片，于是乎就想做个Web页，把这些照片展示出来，正逢最近学习了一些Three.js，就想着用上着技术做个小玩意出来。上网搜索了一波，苹果官网推出了一个live photos的<a href="https://cdn.apple-livephotoskit.com/lpk/1/livephotoskit.js" target="_blank" rel="external">框架</a>，但是并不适用于canvas，就寻思着模仿着做一个吧~</p>
+<h3 id="二、组件设计"><a href="#二、组件设计" class="headerlink" title="二、组件设计"></a>二、组件设计</h3><p>既然是模仿，那就要知道别人是怎么做的。新建了个HTML文件，导入<a href="https://cdn.apple-livephotoskit.com/lpk/1/livephotoskit.js" target="_blank" rel="external">livephotoskit.js</a>，看着API写了个Demo，运行，开启开发者工具，粗略地研究了一下。因为将Live图导入到电脑中，会变为JPG和MOV格式的两个文件，大家都知道，一个是图片资源，一个是视频资源，而调用<a href="https://cdn.apple-livephotoskit.com/lpk/1/livephotoskit.js" target="_blank" rel="external">livephotoskit.js</a>时也需要将着两个文件路径作为参数传入，渲染出来的是一个静态的图片，点击图片上方的按钮，就渐出隐藏图片，显示并播放置于图片后方的视频，当视频播放完毕后再渐入显示图片后隐藏视频。</p>
+<p>那么就有大致的实现思路了：将图片和视频重叠放置，必要时显示或隐藏。</p>
+<p>在看Three.js 实例的时候，发现了一个视频播放Demo，效果如下图（图片较大，可能加载很久甚至加载不出来）：</p>
+<div align="center"><br><img src="https://raw.githubusercontent.com/WillBean/react-native-summary.github.io/master/images/live-photo-for-three/Animation2.gif" width="95%"><br></div>
+
+<p>就想着将这个效果改一改，给用上。</p>
+<p>为了便于复用，就将这个组件以类的形式编写出来吧。</p>
+<p>这个类起码要包含以下属性和方法：</p>
+<blockquote>
+<ol>
+<li>options对象，传递组件长宽高、横向纵向块数、动画帧数</li>
+<li>init方法，初始化操作，生成图片、视频实例</li>
+<li>show方法，显示整个组件</li>
+<li>hide方法，隐藏整个组件</li>
+<li>play方法，播放视频</li>
+<li>pause方法，暂停视频</li>
+</ol>
+</blockquote>
+<h3 id="三、效果展示"><a href="#三、效果展示" class="headerlink" title="三、效果展示"></a>三、效果展示</h3><div align="center"><br><img src="https://raw.githubusercontent.com/WillBean/react-native-summary.github.io/master/images/live-photo-for-three/Animation.gif" width="95%"><br></div>
+
+<p>具体代码就不展示了，源码放在<a href="https://github.com/WillBean/photo-for-three.js" target="_blank" rel="external">github</a>，有兴趣的朋友可以去看看。</p>
+
+        </div>
+
+        <blockquote class="post-copyright">
+    <div class="content">
+        
+<span class="post-time">
+    最后更新时间：<time datetime="2017-07-09T16:04:46.629Z" itemprop="dateUpdated">2017-07-10 00:04:46</time>
+</span><br>
+
+
+        
+        欢迎分享转发，转载请指明出处~<br>如有错误，欢迎指出~<br><a href="/2017/05/09/live-photo-for-three/" target="_blank" rel="external">https://willbean.github.io/2017/05/09/live-photo-for-three/</a>
+        
+    </div>
+    <footer>
+        <a href="https://willbean.github.io">
+            <img src="/img/avatar.jpg" alt="WillBean">
+            WillBean
+        </a>
+    </footer>
+</blockquote>
+
+        
+<div class="page-reward">
+    <a id="rewardBtn" href="javascript:;" class="page-reward-btn waves-effect waves-circle waves-light">赏</a>
+</div>
+
+
+
+        <div class="post-footer">
+            
+	<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Canvas/">Canvas</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/HTML/">HTML</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Javascript/">Javascript</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Three-js/">Three.js</a></li></ul>
+
+
+            
+<div class="page-share-wrap">
+    
+
+<div class="page-share" id="pageShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=https://willbean.github.io/2017/05/09/live-photo-for-three/&title=《Three.js实现仿IOS live图效果》 — WillBean's Blog&pic=https://willbean.github.io/img/avatar.jpg" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://willbean.github.io/2017/05/09/live-photo-for-three/&title=《Three.js实现仿IOS live图效果》 — WillBean's Blog&source=这是一个准大四学生的前端博客。" data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https://willbean.github.io/2017/05/09/live-photo-for-three/" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《Three.js实现仿IOS live图效果》 — WillBean's Blog&url=https://willbean.github.io/2017/05/09/live-photo-for-three/&via=https://willbean.github.io" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=https://willbean.github.io/2017/05/09/live-photo-for-three/" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+
+    <a href="javascript:;" id="shareFab" class="page-share-fab waves-effect waves-circle">
+        <i class="icon icon-share-alt icon-lg"></i>
+    </a>
+</div>
+
+
+
+        </div>
+    </div>
+
+    
+<nav class="post-nav flex-row flex-justify-between">
+  
+    <div class="waves-block waves-effect prev">
+      <a href="/2017/06/24/react-native-summary/" id="post-prev" class="post-nav-link">
+        <div class="tips"><i class="icon icon-angle-left icon-lg icon-pr"></i> Prev</div>
+        <h4 class="title">React Native实战总结</h4>
+      </a>
+    </div>
+  
+
+  
+    <div class="waves-block waves-effect next">
+      <a href="/2017/04/02/ubuntu-open-telnet/" id="post-next" class="post-nav-link">
+        <div class="tips">Next <i class="icon icon-angle-right icon-lg icon-pl"></i></div>
+        <h4 class="title">Ubuntu云服务器开启telnet实现远程登录</h4>
+      </a>
+    </div>
+  
+</nav>
+
+
+
+    
+
+
+
+
+
+
+
+
+
+
+
+<section class="comments" id="comments">
+    <div id="gitment_thread"></div>
+    <link rel="stylesheet" href="//unpkg.com/gitment/style/default.css">
+    <script src="//unpkg.com/gitment/dist/gitment.browser.js"></script>
+    <script>
+        var gitment = new Gitment({
+            owner: 'WillBean',
+            repo: 'willbean.github.io',
+            oauth: {
+                client_id: '5d9b308c6ae328be7417',
+                client_secret: '8381cbf6bd0eebd34af19c4aa5dd728dbce84877',
+            },
+        })
+        gitment.render('comments')
+    </script>
+</section>
+
+
+
+
+</article>
+
+<div id="reward" class="page-modal reward-lay">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <h3 class="reward-title">
+        <i class="icon icon-quote-left"></i>
+        谢谢大爷~
+        <i class="icon icon-quote-right"></i>
+    </h3>
+    <div class="reward-content">
+        
+        <div class="reward-code">
+            <img id="rewardCode" src="/img/wechat.jpg" alt="打赏二维码">
+        </div>
+        
+        <label class="reward-toggle">
+            <input id="rewardToggle" type="checkbox" class="reward-toggle-check"
+                data-wechat="/img/wechat.jpg" data-alipay="/img/alipay.jpg">
+            <div class="reward-toggle-ctrol">
+                <span class="reward-toggle-item wechat">微信</span>
+                <span class="reward-toggle-label"></span>
+                <span class="reward-toggle-item alipay">支付宝</span>
+            </div>
+        </label>
+        
+    </div>
+</div>
+
+
+
+</div>
+
+        <footer class="footer">
+    <div class="top">
+        
+
+        <p>
+            
+                <span><a href="/atom.xml" target="_blank" class="rss" title="rss"><i class="icon icon-lg icon-rss"></i></a></span>
+            
+            <span>博客内容遵循 <a rel="license" href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh">知识共享 署名 - 非商业性 - 相同方式共享 4.0 国际协议</a></span>
+        </p>
+    </div>
+    <div class="bottom">
+        <p><span>WillBean &copy; 2016 - 2017</span>
+            <span>
+                
+                Power by <a href="http://hexo.io/" target="_blank">Hexo</a> Theme <a href="https://github.com/yscoder/hexo-theme-indigo" target="_blank">indigo</a>
+            </span>
+        </p>
+    </div>
+</footer>
+
+    </main>
+    <div class="mask" id="mask"></div>
+<a href="javascript:;" id="gotop" class="waves-effect waves-circle waves-light"><span class="icon icon-lg icon-chevron-up"></span></a>
+
+
+
+<div class="global-share" id="globalShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=https://willbean.github.io/2017/05/09/live-photo-for-three/&title=《Three.js实现仿IOS live图效果》 — WillBean's Blog&pic=https://willbean.github.io/img/avatar.jpg" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://willbean.github.io/2017/05/09/live-photo-for-three/&title=《Three.js实现仿IOS live图效果》 — WillBean's Blog&source=这是一个准大四学生的前端博客。" data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https://willbean.github.io/2017/05/09/live-photo-for-three/" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《Three.js实现仿IOS live图效果》 — WillBean's Blog&url=https://willbean.github.io/2017/05/09/live-photo-for-three/&via=https://willbean.github.io" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=https://willbean.github.io/2017/05/09/live-photo-for-three/" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+<div class="page-modal wx-share" id="wxShare">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAMYAAADGCAAAAACs8KCBAAACJUlEQVR42u3aQW7DMAxE0dz/0u62QGvnD6kEkPi9KtLa1suCpTR8vfB1/brIb+8+Se9afMmQIWNbxvV43f3N38WRu1IweYIMGTLmMO4qGCmXd4/mDP7e289lyJAhAxfB57t4kZUhQ4aMtQWXPKfPkyFDhoxa6eTPIU3kl/biMmTI2JDBT92///NH8g0ZMmRsxaiVyLRNrB2xBauSIUPG0Qxe4HhDloYEtYIrQ4aMOYznG8iCeLdWGyZDMBkyZAxg8COwlNRpN4MIQYYMGUcz0qXwJq+2XB4AyJAhYw4j3UySdpCXbB5kvukDZciQMZ5RG49ID+nSbW08dyZDhoxtGTyS/MTQRvplvXmaDBkyDmV02jX+PfWDz+DUUIYMGWMYfPCLt5K1ABWVZhkyZBzN6ISOn8CQIDPoQGXIkHEEI72tNn7aGapAMYMMGTKOZqRFsxYG1BrK1v8KGTJkHMrgRZBHnp1oM24TZciQMZKRxpnp6Gpno/vPXTJkyBjGSBu1zjD9qvZUhgwZExjk9XybWivotWZRhgwZMvgr+caVhKPxamXIkHEo4wqvZ3Y6ckGeHzeFMmTIOI5Rizk7o2CdwYs0WpAhQ8ZJDF5kycayPzZRaxllyJAxgbGq8PGi3NnEonxDhgwZgxnkk/TwjgcSywquDBkyxjD4sRov3LzdXFZwZciQsQmjHwb0g890pEOGDBlzGP2zrFqpTY/wFgSZMmTI2I/xAx4qA/HvfFG1AAAAAElFTkSuQmCC" alt="微信分享二维码">
+</div>
+
+
+
+
+    <script src="//cdn.bootcss.com/node-waves/0.7.4/waves.min.js"></script>
+<script>
+var BLOG = { ROOT: '/', SHARE: true, REWARD: true };
+
+
+</script>
+
+<script src="//unpkg.com/hexo-theme-material-indigo@latest/js/main.min.js"></script>
+
+
+<div class="search-panel" id="search-panel">
+    <ul class="search-result" id="search-result"></ul>
+</div>
+<template id="search-tpl">
+<li class="item">
+    <a href="{path}" class="waves-block waves-effect">
+        <div class="title ellipsis" title="{title}">{title}</div>
+        <div class="flex-row flex-middle">
+            <div class="tags ellipsis">
+                {tags}
+            </div>
+            <time class="flex-col time">{date}</time>
+        </div>
+    </a>
+</li>
+</template>
+
+<script src="//unpkg.com/hexo-theme-material-indigo@latest/js/search.min.js" async></script>
+
+
+
+
+
+
+
+
+<script>
+(function() {
+    var OriginTitile = document.title, titleTime;
+    document.addEventListener('visibilitychange', function() {
+        if (document.hidden) {
+            document.title = '死鬼去哪里了！';
+            clearTimeout(titleTime);
+        } else {
+            document.title = '(つェ⊂)咦!又好了!';
+            titleTime = setTimeout(function() {
+                document.title = OriginTitile;
+            },2000);
+        }
+    });
+})();
+</script>
+
+
+
+</body>
+</html>
