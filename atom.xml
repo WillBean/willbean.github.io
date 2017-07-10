@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="https://willbean.github.io/"/>
-  <updated>2017-07-04T13:47:01.030Z</updated>
+  <updated>2017-07-10T14:50:15.889Z</updated>
   <id>https://willbean.github.io/</id>
   
   <author>
@@ -14,6 +14,46 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>Three.js碰撞检测</title>
+    <link href="https://willbean.github.io/2017/07/10/three-js-crash-detection/"/>
+    <id>https://willbean.github.io/2017/07/10/three-js-crash-detection/</id>
+    <published>2017-07-10T13:54:00.000Z</published>
+    <updated>2017-07-10T14:50:15.889Z</updated>
+    
+    <content type="html"><![CDATA[<p>先前想做个3D人物移动场景，那就必然会遇到碰撞检测的问题，那么今天就来浅谈一下Three.js的碰撞检测。</p>
+<h3 id="规则几何体"><a href="#规则几何体" class="headerlink" title="规则几何体"></a>规则几何体</h3><h4 id="球体"><a href="#球体" class="headerlink" title="球体"></a>球体</h4><p>在规则几何体，球体的碰撞检测是最好处理的，只要判断两点圆心之间的距离是否小于两球体半径之和便可判断是否发生碰撞。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">isCrashed</span>(<span class="params"></span>) </span>&#123;</div><div class="line">    <span class="keyword">var</span> dist = sphereL.position.clone().distanceTo(sphereR.position.clone());</div><div class="line">    <span class="keyword">return</span> dist &lt; <span class="number">10</span>;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>效果如下：</p>
+<div align="center"><br><img src="https://raw.githubusercontent.com/WillBean/react-native-summary.github.io/master/images/three-js-crash-detection/Animation.gif" width="95%"><br></div>
+
+<h4 id="矩形"><a href="#矩形" class="headerlink" title="矩形"></a>矩形</h4><p>如果矩形像球体一样处理，判断会不太精确。</p>
+<p>如下图：</p>
+<div align="center"><br><img src="https://raw.githubusercontent.com/WillBean/react-native-summary.github.io/master/images/three-js-crash-detection/Animation2.gif" width="95%"><br></div>
+
+<p>所幸，Three.js提供了一种方法让我们来进行碰撞检测，那既是射线（Raycaster）。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">isCrashed</span>(<span class="params"></span>) </span>&#123;</div><div class="line">    <span class="comment">//获取到底部cube的中心点坐标</span></div><div class="line">    <span class="keyword">var</span> originPoint = sphereR.position.clone();</div><div class="line"></div><div class="line">    <span class="keyword">for</span>(<span class="keyword">var</span> vertexIndex = <span class="number">0</span>; vertexIndex &lt; sphereR.geometry.vertices.length; vertexIndex++)&#123;</div><div class="line">        <span class="comment">//顶点原始坐标</span></div><div class="line">        <span class="keyword">var</span> localVertex = sphereR.geometry.vertices[vertexIndex].clone();</div><div class="line">        <span class="comment">//顶点经过变换后的坐标</span></div><div class="line">        <span class="keyword">var</span> globaVertex = localVertex.applyMatrix4(sphereR.matrix);</div><div class="line">        <span class="comment">//获得由中心指向顶点的向量</span></div><div class="line">        <span class="keyword">var</span> directionVector = globaVertex.sub(sphereR.position);</div><div class="line"></div><div class="line">        <span class="comment">//将方向向量初始化</span></div><div class="line">        <span class="keyword">var</span> ray = <span class="keyword">new</span> THREE.Raycaster(originPoint, directionVector.clone().normalize());</div><div class="line">        <span class="comment">//检测射线与多个物体相交的情况</span></div><div class="line">        <span class="keyword">var</span> collisionResults = ray.intersectObjects([sphereL]);</div><div class="line"></div><div class="line">        <span class="comment">//如果返回结果不为空，且交点与射线起点的距离小于物体中心至顶点的距离，则发生碰撞</span></div><div class="line">        <span class="keyword">if</span>(collisionResults.length &gt; <span class="number">0</span> &amp;&amp; collisionResults[<span class="number">0</span>].distance &lt; directionVector.length() + <span class="number">1.2</span> )&#123;</div><div class="line">            <span class="keyword">return</span> <span class="literal">true</span></div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="keyword">return</span> <span class="literal">false</span></div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>效果如下：</p>
+<div align="center"><br><img src="https://raw.githubusercontent.com/WillBean/react-native-summary.github.io/master/images/three-js-crash-detection/Animation3.gif" width="95%"><br></div>
+
+<p>从效果可以看出，第二种方法会比第一种方法精确很多。</p>
+<h3 id="不规则几何体"><a href="#不规则几何体" class="headerlink" title="不规则几何体"></a>不规则几何体</h3><p>对于不规则几何体，还是宜用射线，选取任意数量的顶点，以中心至顶点做射线，射线越密则越精确，但是效率却越低，为了提高运行效率，可只对运动的物体在其运动方向做射线，以此来判断物理是否碰撞上物体，而不必判断物体是否被碰撞，以此可提高一倍以上的性能。</p>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;先前想做个3D人物移动场景，那就必然会遇到碰撞检测的问题，那么今天就来浅谈一下Three.js的碰撞检测。&lt;/p&gt;
+&lt;h3 id=&quot;规则几何体&quot;&gt;&lt;a href=&quot;#规则几何体&quot; class=&quot;headerlink&quot; title=&quot;规则几何体&quot;&gt;&lt;/a&gt;规则几何体&lt;/h3&gt;
+    
+    </summary>
+    
+    
+      <category term="Javascript" scheme="https://willbean.github.io/tags/Javascript/"/>
+    
+      <category term="Three.js" scheme="https://willbean.github.io/tags/Three-js/"/>
+    
+  </entry>
   
   <entry>
     <title>ES5规范回顾系列(二)——内置对象</title>
@@ -372,15 +412,15 @@
     </summary>
     
     
-      <category term="Three.js" scheme="https://willbean.github.io/tags/Three-js/"/>
-    
       <category term="Javascript" scheme="https://willbean.github.io/tags/Javascript/"/>
     
       <category term="HTML" scheme="https://willbean.github.io/tags/HTML/"/>
     
-      <category term="Canvas" scheme="https://willbean.github.io/tags/Canvas/"/>
+      <category term="Three.js" scheme="https://willbean.github.io/tags/Three-js/"/>
     
       <category term="WebVR" scheme="https://willbean.github.io/tags/WebVR/"/>
+    
+      <category term="Canvas" scheme="https://willbean.github.io/tags/Canvas/"/>
     
   </entry>
   
@@ -422,11 +462,11 @@
     </summary>
     
     
-      <category term="Three.js" scheme="https://willbean.github.io/tags/Three-js/"/>
-    
       <category term="Javascript" scheme="https://willbean.github.io/tags/Javascript/"/>
     
       <category term="HTML" scheme="https://willbean.github.io/tags/HTML/"/>
+    
+      <category term="Three.js" scheme="https://willbean.github.io/tags/Three-js/"/>
     
       <category term="Canvas" scheme="https://willbean.github.io/tags/Canvas/"/>
     
@@ -507,7 +547,7 @@
 <div align="center"><br><img src="https://raw.githubusercontent.com/WillBean/react-native-summary.github.io/master/images/long-polling-and-server-push/dir.png" width="50%"><br></div>
 
 <p>1）request client &gt; index.html （客户端A代码）</p>
-<figure class="highlight html"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div></pre></td><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">body</span>&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">button</span> <span class="attr">id</span>=<span class="string">"send"</span>&gt;</span>发送请求<span class="tag">&lt;/<span class="name">button</span>&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">script</span>&gt;</span><span class="javascript"></span></div><div class="line">    <span class="keyword">var</span> send = <span class="built_in">document</span>.querySelector(<span class="string">'#send'</span>)</div><div class="line">    send.onclick = <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</div><div class="line">        polling(<span class="string">'http://localhost:8888/longPolling'</span>,<span class="number">5000</span>)</div><div class="line">    &#125;</div><div class="line">    <span class="function"><span class="keyword">function</span> <span class="title">polling</span>(<span class="params">url,timeout</span>) </span>&#123;</div><div class="line">        <span class="keyword">var</span> xhr = <span class="keyword">new</span> XMLHttpRequest()</div><div class="line">        xhr.open(<span class="string">"get"</span>,url)</div><div class="line">        xhr.timeout = timeout;</div><div class="line">        xhr.onreadystatechange = <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</div><div class="line">            <span class="keyword">if</span>( xhr.readyState === <span class="number">4</span> &amp;&amp; xhr.status === <span class="number">200</span>)&#123;</div><div class="line">                alert(<span class="string">'对方选择了·确定·'</span>)</div><div class="line">            &#125;<span class="keyword">else</span> <span class="keyword">if</span>( xhr.readyState === <span class="number">4</span> &amp;&amp; xhr.status === <span class="number">204</span>)&#123;</div><div class="line">                alert(<span class="string">'对方选择了·取消·'</span>)</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line">        xhr.ontimeout = <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</div><div class="line">            <span class="built_in">console</span>.log(<span class="string">'Timeout resend '</span>+ <span class="keyword">new</span> <span class="built_in">Date</span>());</div><div class="line">            polling(url,<span class="number">5000</span>)</div><div class="line">        &#125;</div><div class="line">        xhr.send()</div><div class="line">    &#125;</div><div class="line"><span class="tag">&lt;/<span class="name">script</span>&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">body</span>&gt;</span></div></pre></td></tr></table></figure>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div></pre></td><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">body</span>&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">button</span> <span class="attr">id</span>=<span class="string">"send"</span>&gt;</span>发送请求<span class="tag">&lt;/<span class="name">button</span>&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">script</span>&gt;</span><span class="undefined"></span></div><div class="line">    var send = document.querySelector('#send')</div><div class="line">    send.onclick = function () &#123;</div><div class="line">        polling('http://localhost:8888/longPolling',5000)</div><div class="line">    &#125;</div><div class="line">    function polling(url,timeout) &#123;</div><div class="line">        var xhr = new XMLHttpRequest()</div><div class="line">        xhr.open("get",url)</div><div class="line">        xhr.timeout = timeout;</div><div class="line">        xhr.onreadystatechange = function () &#123;</div><div class="line">            if( xhr.readyState === 4 &amp;&amp; xhr.status === 200)&#123;</div><div class="line">                alert('对方选择了·确定·')</div><div class="line">            &#125;else if( xhr.readyState === 4 &amp;&amp; xhr.status === 204)&#123;</div><div class="line">                alert('对方选择了·取消·')</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line">        xhr.ontimeout = function () &#123;</div><div class="line">            console.log('Timeout resend '+ new Date());</div><div class="line">            polling(url,5000)</div><div class="line">        &#125;</div><div class="line">        xhr.send()</div><div class="line">    &#125;</div><div class="line"><span class="tag">&lt;/<span class="name">script</span>&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">body</span>&gt;</span></div></pre></td></tr></table></figure>
 <p>一个按钮，绑定了polling函数，传入请求地址与超时时间，超时则重新请求。</p>
 <p>2.1）request server &gt; app.js （服务器B代码）</p>
 <figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line"><span class="meta">'use strict'</span>;</div><div class="line"><span class="keyword">const</span> Koa = <span class="built_in">require</span>(<span class="string">'koa'</span>);</div><div class="line"><span class="keyword">const</span> app = <span class="keyword">new</span> Koa();</div><div class="line"><span class="keyword">const</span> router = <span class="built_in">require</span>(<span class="string">'koa-router'</span>)();</div><div class="line"><span class="keyword">const</span> cors = <span class="built_in">require</span>(<span class="string">'koa-cors'</span>);</div><div class="line"><span class="keyword">const</span> routers = <span class="built_in">require</span>(<span class="string">'./routes'</span>);</div><div class="line"></div><div class="line"><span class="keyword">let</span> repPort = <span class="number">8888</span>;</div><div class="line"></div><div class="line">router.use(<span class="string">'/'</span>, routers.routes(), routers.allowedMethods());</div><div class="line"></div><div class="line">app.use(cors());</div><div class="line">app.use(router.routes(), router.allowedMethods());</div><div class="line"></div><div class="line">app.listen(repPort)</div></pre></td></tr></table></figure>
@@ -536,13 +576,13 @@
     </summary>
     
     
-      <category term="Javascript" scheme="https://willbean.github.io/tags/Javascript/"/>
-    
-      <category term="HTML" scheme="https://willbean.github.io/tags/HTML/"/>
-    
       <category term="长轮询" scheme="https://willbean.github.io/tags/%E9%95%BF%E8%BD%AE%E8%AF%A2/"/>
     
       <category term="服务器推送" scheme="https://willbean.github.io/tags/%E6%9C%8D%E5%8A%A1%E5%99%A8%E6%8E%A8%E9%80%81/"/>
+    
+      <category term="Javascript" scheme="https://willbean.github.io/tags/Javascript/"/>
+    
+      <category term="HTML" scheme="https://willbean.github.io/tags/HTML/"/>
     
   </entry>
   

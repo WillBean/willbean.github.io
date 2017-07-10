@@ -1,0 +1,496 @@
+<!DOCTYPE html>
+<html>
+<head>
+    
+
+    
+
+    
+
+
+
+    <meta charset="utf-8">
+    
+    
+    
+    <title>Three.js碰撞检测 | WillBean&#39;s Blog | 我可能是个假程序猿吧</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+    <meta name="theme-color" content="#cccccc">
+    
+    
+    <meta name="keywords" content="Javascript,Three.js">
+    <meta name="description" content="先前想做个3D人物移动场景，那就必然会遇到碰撞检测的问题，那么今天就来浅谈一下Three.js的碰撞检测。 规则几何体球体在规则几何体，球体的碰撞检测是最好处理的，只要判断两点圆心之间的距离是否小于两球体半径之和便可判断是否发生碰撞。 1234function isCrashed() &amp;#123;    var dist = sphereL.position.clone().distanceTo(">
+<meta name="keywords" content="Javascript,Three.js">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Three.js碰撞检测">
+<meta property="og:url" content="https://willbean.github.io/2017/07/10/three-js-crash-detection/index.html">
+<meta property="og:site_name" content="WillBean&#39;s Blog">
+<meta property="og:description" content="先前想做个3D人物移动场景，那就必然会遇到碰撞检测的问题，那么今天就来浅谈一下Three.js的碰撞检测。 规则几何体球体在规则几何体，球体的碰撞检测是最好处理的，只要判断两点圆心之间的距离是否小于两球体半径之和便可判断是否发生碰撞。 1234function isCrashed() &amp;#123;    var dist = sphereL.position.clone().distanceTo(">
+<meta property="og:image" content="https://raw.githubusercontent.com/WillBean/react-native-summary.github.io/master/images/three-js-crash-detection/Animation.gif">
+<meta property="og:image" content="https://raw.githubusercontent.com/WillBean/react-native-summary.github.io/master/images/three-js-crash-detection/Animation2.gif">
+<meta property="og:image" content="https://raw.githubusercontent.com/WillBean/react-native-summary.github.io/master/images/three-js-crash-detection/Animation3.gif">
+<meta property="og:updated_time" content="2017-07-10T14:50:15.889Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Three.js碰撞检测">
+<meta name="twitter:description" content="先前想做个3D人物移动场景，那就必然会遇到碰撞检测的问题，那么今天就来浅谈一下Three.js的碰撞检测。 规则几何体球体在规则几何体，球体的碰撞检测是最好处理的，只要判断两点圆心之间的距离是否小于两球体半径之和便可判断是否发生碰撞。 1234function isCrashed() &amp;#123;    var dist = sphereL.position.clone().distanceTo(">
+<meta name="twitter:image" content="https://raw.githubusercontent.com/WillBean/react-native-summary.github.io/master/images/three-js-crash-detection/Animation.gif">
+    
+        <link rel="alternate" type="application/atom+xml" title="WillBean&#39;s Blog" href="/atom.xml">
+    
+    <link rel="shortcut icon" href="/favicon.ico">
+    <link rel="stylesheet" href="//unpkg.com/hexo-theme-material-indigo@latest/css/style.css">
+    <script>window.lazyScripts=[]</script>
+</head>
+
+<body>
+    <div id="loading" class="active"></div>
+
+    <aside id="menu" class="hide" >
+  <div class="inner flex-row-vertical">
+    <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menu-off">
+        <i class="icon icon-lg icon-close"></i>
+    </a>
+    <div class="brand-wrap" style="background-image:url(/img/brand.jpg)">
+      <div class="brand">
+        <a href="/" class="avatar waves-effect waves-circle waves-light">
+          <img src="/img/avatar.jpg">
+        </a>
+        <hgroup class="introduce">
+          <h5 class="nickname">WillBean</h5>
+          <a href="mailto:182769979@qq.com" title="182769979@qq.com" class="mail">182769979@qq.com</a>
+        </hgroup>
+      </div>
+    </div>
+    <div class="scroll-wrap flex-col">
+      <ul class="nav">
+        
+            <li class="waves-block waves-effect">
+              <a href="/"  >
+                <i class="icon icon-lg icon-home"></i>
+                主页
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/archives"  >
+                <i class="icon icon-lg icon-archives"></i>
+                Archives
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/tags"  >
+                <i class="icon icon-lg icon-tags"></i>
+                Tags
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/categories"  >
+                <i class="icon icon-lg icon-th-list"></i>
+                Categories
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="https://github.com/WillBean" target="_blank" >
+                <i class="icon icon-lg icon-github"></i>
+                Github
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="https://github.com/WillBean/hexo-blog-scourse" target="_blank" >
+                <i class="icon icon-lg icon-link"></i>
+                Repository
+              </a>
+            </li>
+        
+      </ul>
+    </div>
+  </div>
+</aside>
+
+    <main id="main">
+        <header class="top-header" id="header">
+    <div class="flex-row">
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light on" id="menu-toggle">
+          <i class="icon icon-lg icon-navicon"></i>
+        </a>
+        <div class="flex-col header-title ellipsis">Three.js碰撞检测</div>
+        
+        <div class="search-wrap" id="search-wrap">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="back">
+                <i class="icon icon-lg icon-chevron-left"></i>
+            </a>
+            <input type="text" id="key" class="search-input" autocomplete="off" placeholder="输入感兴趣的关键字">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="search">
+                <i class="icon icon-lg icon-search"></i>
+            </a>
+        </div>
+        
+        
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menuShare">
+            <i class="icon icon-lg icon-share-alt"></i>
+        </a>
+        
+    </div>
+</header>
+<header class="content-header post-header">
+
+    <div class="container fade-scale">
+        <h1 class="title">Three.js碰撞检测</h1>
+        <h5 class="subtitle">
+            
+                <time datetime="2017-07-10T13:54:00.000Z" itemprop="datePublished" class="page-time">
+  2017-07-10
+</time>
+
+
+            
+        </h5>
+    </div>
+
+    
+
+
+</header>
+
+
+<div class="container body-wrap">
+    
+    <aside class="post-widget">
+        <nav class="post-toc-wrap" id="post-toc">
+            <h4>TOC</h4>
+            <ol class="post-toc"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#规则几何体"><span class="post-toc-number">1.</span> <span class="post-toc-text">规则几何体</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#球体"><span class="post-toc-number">1.1.</span> <span class="post-toc-text">球体</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#矩形"><span class="post-toc-number">1.2.</span> <span class="post-toc-text">矩形</span></a></li></ol></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#不规则几何体"><span class="post-toc-number">2.</span> <span class="post-toc-text">不规则几何体</span></a></li></ol>
+        </nav>
+    </aside>
+    
+<article id="post-three-js-crash-detection"
+  class="post-article article-type-post fade" itemprop="blogPost">
+
+    <div class="post-card">
+        <h1 class="post-card-title">Three.js碰撞检测</h1>
+        <div class="post-meta">
+            <time class="post-time" title="2017-07-10 21:54:00" datetime="2017-07-10T13:54:00.000Z"  itemprop="datePublished">2017-07-10</time>
+
+            
+
+
+            
+
+        </div>
+        <div class="post-content" id="post-content" itemprop="postContent">
+            <p>先前想做个3D人物移动场景，那就必然会遇到碰撞检测的问题，那么今天就来浅谈一下Three.js的碰撞检测。</p>
+<h3 id="规则几何体"><a href="#规则几何体" class="headerlink" title="规则几何体"></a>规则几何体</h3><h4 id="球体"><a href="#球体" class="headerlink" title="球体"></a>球体</h4><p>在规则几何体，球体的碰撞检测是最好处理的，只要判断两点圆心之间的距离是否小于两球体半径之和便可判断是否发生碰撞。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">isCrashed</span>(<span class="params"></span>) </span>&#123;</div><div class="line">    <span class="keyword">var</span> dist = sphereL.position.clone().distanceTo(sphereR.position.clone());</div><div class="line">    <span class="keyword">return</span> dist &lt; <span class="number">10</span>;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>效果如下：</p>
+<div align="center"><br><img src="https://raw.githubusercontent.com/WillBean/react-native-summary.github.io/master/images/three-js-crash-detection/Animation.gif" width="95%"><br></div>
+
+<h4 id="矩形"><a href="#矩形" class="headerlink" title="矩形"></a>矩形</h4><p>如果矩形像球体一样处理，判断会不太精确。</p>
+<p>如下图：</p>
+<div align="center"><br><img src="https://raw.githubusercontent.com/WillBean/react-native-summary.github.io/master/images/three-js-crash-detection/Animation2.gif" width="95%"><br></div>
+
+<p>所幸，Three.js提供了一种方法让我们来进行碰撞检测，那既是射线（Raycaster）。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">isCrashed</span>(<span class="params"></span>) </span>&#123;</div><div class="line">    <span class="comment">//获取到底部cube的中心点坐标</span></div><div class="line">    <span class="keyword">var</span> originPoint = sphereR.position.clone();</div><div class="line"></div><div class="line">    <span class="keyword">for</span>(<span class="keyword">var</span> vertexIndex = <span class="number">0</span>; vertexIndex &lt; sphereR.geometry.vertices.length; vertexIndex++)&#123;</div><div class="line">        <span class="comment">//顶点原始坐标</span></div><div class="line">        <span class="keyword">var</span> localVertex = sphereR.geometry.vertices[vertexIndex].clone();</div><div class="line">        <span class="comment">//顶点经过变换后的坐标</span></div><div class="line">        <span class="keyword">var</span> globaVertex = localVertex.applyMatrix4(sphereR.matrix);</div><div class="line">        <span class="comment">//获得由中心指向顶点的向量</span></div><div class="line">        <span class="keyword">var</span> directionVector = globaVertex.sub(sphereR.position);</div><div class="line"></div><div class="line">        <span class="comment">//将方向向量初始化</span></div><div class="line">        <span class="keyword">var</span> ray = <span class="keyword">new</span> THREE.Raycaster(originPoint, directionVector.clone().normalize());</div><div class="line">        <span class="comment">//检测射线与多个物体相交的情况</span></div><div class="line">        <span class="keyword">var</span> collisionResults = ray.intersectObjects([sphereL]);</div><div class="line"></div><div class="line">        <span class="comment">//如果返回结果不为空，且交点与射线起点的距离小于物体中心至顶点的距离，则发生碰撞</span></div><div class="line">        <span class="keyword">if</span>(collisionResults.length &gt; <span class="number">0</span> &amp;&amp; collisionResults[<span class="number">0</span>].distance &lt; directionVector.length() + <span class="number">1.2</span> )&#123;</div><div class="line">            <span class="keyword">return</span> <span class="literal">true</span></div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="keyword">return</span> <span class="literal">false</span></div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>效果如下：</p>
+<div align="center"><br><img src="https://raw.githubusercontent.com/WillBean/react-native-summary.github.io/master/images/three-js-crash-detection/Animation3.gif" width="95%"><br></div>
+
+<p>从效果可以看出，第二种方法会比第一种方法精确很多。</p>
+<h3 id="不规则几何体"><a href="#不规则几何体" class="headerlink" title="不规则几何体"></a>不规则几何体</h3><p>对于不规则几何体，还是宜用射线，选取任意数量的顶点，以中心至顶点做射线，射线越密则越精确，但是效率却越低，为了提高运行效率，可只对运动的物体在其运动方向做射线，以此来判断物理是否碰撞上物体，而不必判断物体是否被碰撞，以此可提高一倍以上的性能。</p>
+
+        </div>
+
+        <blockquote class="post-copyright">
+    <div class="content">
+        
+<span class="post-time">
+    最后更新时间：<time datetime="2017-07-10T14:50:15.889Z" itemprop="dateUpdated">2017-07-10 22:50:15</time>
+</span><br>
+
+
+        
+        欢迎分享转发，转载请指明出处~<br>如有错误，欢迎指出~<br><a href="/2017/07/10/three-js-crash-detection/" target="_blank" rel="external">https://willbean.github.io/2017/07/10/three-js-crash-detection/</a>
+        
+    </div>
+    <footer>
+        <a href="https://willbean.github.io">
+            <img src="/img/avatar.jpg" alt="WillBean">
+            WillBean
+        </a>
+    </footer>
+</blockquote>
+
+        
+<div class="page-reward">
+    <a id="rewardBtn" href="javascript:;" class="page-reward-btn waves-effect waves-circle waves-light">赏</a>
+</div>
+
+
+
+        <div class="post-footer">
+            
+	<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Javascript/">Javascript</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Three-js/">Three.js</a></li></ul>
+
+
+            
+<div class="page-share-wrap">
+    
+
+<div class="page-share" id="pageShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=https://willbean.github.io/2017/07/10/three-js-crash-detection/&title=《Three.js碰撞检测》 — WillBean's Blog&pic=https://willbean.github.io/img/avatar.jpg" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://willbean.github.io/2017/07/10/three-js-crash-detection/&title=《Three.js碰撞检测》 — WillBean's Blog&source=这是一个准大四学生的前端博客。" data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https://willbean.github.io/2017/07/10/three-js-crash-detection/" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《Three.js碰撞检测》 — WillBean's Blog&url=https://willbean.github.io/2017/07/10/three-js-crash-detection/&via=https://willbean.github.io" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=https://willbean.github.io/2017/07/10/three-js-crash-detection/" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+
+    <a href="javascript:;" id="shareFab" class="page-share-fab waves-effect waves-circle">
+        <i class="icon icon-share-alt icon-lg"></i>
+    </a>
+</div>
+
+
+
+        </div>
+    </div>
+
+    
+<nav class="post-nav flex-row flex-justify-between flex-row-reverse">
+  
+
+  
+    <div class="waves-block waves-effect next">
+      <a href="/2017/07/02/es5-review-2/" id="post-next" class="post-nav-link">
+        <div class="tips">Next <i class="icon icon-angle-right icon-lg icon-pl"></i></div>
+        <h4 class="title">ES5规范回顾系列(二)——内置对象</h4>
+      </a>
+    </div>
+  
+</nav>
+
+
+
+    
+
+
+
+
+
+
+
+
+
+
+
+<section class="comments" id="comments">
+    <div id="gitment_thread"></div>
+    <link rel="stylesheet" href="//unpkg.com/gitment/style/default.css">
+    <script src="//unpkg.com/gitment/dist/gitment.browser.js"></script>
+    <script>
+        var gitment = new Gitment({
+            owner: 'WillBean',
+            repo: 'willbean.github.io',
+            oauth: {
+                client_id: '5d9b308c6ae328be7417',
+                client_secret: '8381cbf6bd0eebd34af19c4aa5dd728dbce84877',
+            },
+        })
+        gitment.render('comments')
+    </script>
+</section>
+
+
+
+
+</article>
+
+<div id="reward" class="page-modal reward-lay">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <h3 class="reward-title">
+        <i class="icon icon-quote-left"></i>
+        谢谢大爷~
+        <i class="icon icon-quote-right"></i>
+    </h3>
+    <div class="reward-content">
+        
+        <div class="reward-code">
+            <img id="rewardCode" src="/img/wechat.jpg" alt="打赏二维码">
+        </div>
+        
+        <label class="reward-toggle">
+            <input id="rewardToggle" type="checkbox" class="reward-toggle-check"
+                data-wechat="/img/wechat.jpg" data-alipay="/img/alipay.jpg">
+            <div class="reward-toggle-ctrol">
+                <span class="reward-toggle-item wechat">微信</span>
+                <span class="reward-toggle-label"></span>
+                <span class="reward-toggle-item alipay">支付宝</span>
+            </div>
+        </label>
+        
+    </div>
+</div>
+
+
+
+</div>
+
+        <footer class="footer">
+    <div class="top">
+        
+
+        <p>
+            
+                <span><a href="/atom.xml" target="_blank" class="rss" title="rss"><i class="icon icon-lg icon-rss"></i></a></span>
+            
+            <span>博客内容遵循 <a rel="license" href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh">知识共享 署名 - 非商业性 - 相同方式共享 4.0 国际协议</a></span>
+        </p>
+    </div>
+    <div class="bottom">
+        <p><span>WillBean &copy; 2016 - 2017</span>
+            <span>
+                
+                Power by <a href="http://hexo.io/" target="_blank">Hexo</a> Theme <a href="https://github.com/yscoder/hexo-theme-indigo" target="_blank">indigo</a>
+            </span>
+        </p>
+    </div>
+</footer>
+
+    </main>
+    <div class="mask" id="mask"></div>
+<a href="javascript:;" id="gotop" class="waves-effect waves-circle waves-light"><span class="icon icon-lg icon-chevron-up"></span></a>
+
+
+
+<div class="global-share" id="globalShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=https://willbean.github.io/2017/07/10/three-js-crash-detection/&title=《Three.js碰撞检测》 — WillBean's Blog&pic=https://willbean.github.io/img/avatar.jpg" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://willbean.github.io/2017/07/10/three-js-crash-detection/&title=《Three.js碰撞检测》 — WillBean's Blog&source=这是一个准大四学生的前端博客。" data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https://willbean.github.io/2017/07/10/three-js-crash-detection/" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《Three.js碰撞检测》 — WillBean's Blog&url=https://willbean.github.io/2017/07/10/three-js-crash-detection/&via=https://willbean.github.io" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=https://willbean.github.io/2017/07/10/three-js-crash-detection/" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+<div class="page-modal wx-share" id="wxShare">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAN4AAADeCAAAAAB3DOFrAAACpklEQVR42u3aQY7CMAwF0N7/0sxmdojybccCpNcVGtqmryMl5jvXFR+Pp+P+zOerXn37/Pn+btfGgYeHhzd+9FePdT9Y79v5i3tzBzw8PLw1XnVSTgB7j548Mx4eHt6v8CakXmmOh4eH9yu8VwMn3yaFex5k4OHh4X2K17t1cmYSPfQi3cNZCx4eHl7My7tI3/N5pb+Hh4eHN+6q582wajyRl9S95/y/Fg8PD2+Bl0+41UZUNX7NRy+fiYeHh3eUV21iTWr2+fJTboPh4eHhLfCS4DWPJHqPe20feHh4eMu8+wI6DyPyDQH5uPkCg4eHh7fHq07TSSiQvJpexFD+Fg8PD2+ZV8UkE3d180ESARdKeTw8PLwFXi8mqEaxCbt3ZmF5wMPDwzvKO9ugqpbL1SWnubEADw8P7xAv33ial9351N+LbvMOFx4eHt4GL2lQVSOA6uKRg3t3w8PDwzvL29tulW9NyEevXoWHh4e3wZvcoreEJAFEbxND9J/Ew8PDG/N6U/OpTVQ9fCHSxcPDw1vm9dpR1XBh8rLy4AMPDw9vmzdZHqobCHpbDZKC+2VJjYeHh7fAO9Xmr4YRvRZaedMVHh4e3gIvGaa6SNw/bl64j2JfPDw8vAXefJGoxhb54nHqL3h4eHgbvMlbycvlPICYByLNBAUPDw+vyJtED/NmWC/MjQp3PDw8vDVe+ed9UIj3Ngdc4wMPDw9vj/coHtUtWb2NXElwHL1WPDw8vAVedaqtXnwqesg/j1YSPDw8vJhXbfn32mAJMm+JFcbFw8PDW+Plk/Je4Ju/psKZeHh4eF/D68Wye/eJ+nt4eHh4H+KVi9r4bvnGgsIyg4eHh7fGSy7LG2N5+JuX5s2r8PDw8BZ4vR/883Bh8oJW+nt4eHh470f8A0jpfYKF+qqgAAAAAElFTkSuQmCC" alt="微信分享二维码">
+</div>
+
+
+
+
+    <script src="//cdn.bootcss.com/node-waves/0.7.4/waves.min.js"></script>
+<script>
+var BLOG = { ROOT: '/', SHARE: true, REWARD: true };
+
+
+</script>
+
+<script src="//unpkg.com/hexo-theme-material-indigo@latest/js/main.min.js"></script>
+
+
+<div class="search-panel" id="search-panel">
+    <ul class="search-result" id="search-result"></ul>
+</div>
+<template id="search-tpl">
+<li class="item">
+    <a href="{path}" class="waves-block waves-effect">
+        <div class="title ellipsis" title="{title}">{title}</div>
+        <div class="flex-row flex-middle">
+            <div class="tags ellipsis">
+                {tags}
+            </div>
+            <time class="flex-col time">{date}</time>
+        </div>
+    </a>
+</li>
+</template>
+
+<script src="//unpkg.com/hexo-theme-material-indigo@latest/js/search.min.js" async></script>
+
+
+
+
+
+
+
+
+<script>
+(function() {
+    var OriginTitile = document.title, titleTime;
+    document.addEventListener('visibilitychange', function() {
+        if (document.hidden) {
+            document.title = '死鬼去哪里了！';
+            clearTimeout(titleTime);
+        } else {
+            document.title = '(つェ⊂)咦!又好了!';
+            titleTime = setTimeout(function() {
+                document.title = OriginTitile;
+            },2000);
+        }
+    });
+})();
+</script>
+
+
+
+</body>
+</html>
