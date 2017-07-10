@@ -220,7 +220,7 @@
 <li>React native的元素堆叠顺序无法通过zIndex，所以如果将导航组件写在最前面的话，搜索页会被下面的ScrollView遮盖。<br><br>解决方案：将搜索框改为绝对定位并置于文档最后。</li>
 <li>导航标题字数不一，如果搜索框宽度固定，可能会与标题重叠。<br><br>解决方案：在原有导航位置放置一个仅有背景色和高度的View组件，将标题和搜索框作为一个整体放置在文档最下面，然后通过绝对定位覆盖在View组件上层，此时搜索框就可以设置为自适应宽度了。</li>
 </ul>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">&lt;View style=&#123;[styles.container, Platform.OS === <span class="string">'android'</span> &amp;&amp; !isTeacher ? &#123;<span class="attr">marginTop</span>: tag.get(<span class="string">'hideStatusBar'</span>) ? statusBarHeight : <span class="number">0</span>&#125; : &#123;<span class="attr">marginTop</span>: <span class="number">0</span>&#125;]&#125;&gt;</div><div class="line">  &#123;isTeacher ? <span class="literal">null</span> : &lt;View style=&#123;styles.headNav&#125;/&gt;&#125; // 这个&lt;View&gt;仅用于占位</div><div class="line">  &lt;ScrollView&gt;</div><div class="line">  ...</div><div class="line">  &lt;/ScrollView&gt;</div><div class="line">  &#123;this._renderFixedNav(tag, this.state.isYoudaoCourseApp)&#125; // 真正的导航栏</div><div class="line">&lt;/View&gt;</div></pre></td></tr></table></figure>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">&lt;View style=&#123;[styles.container, Platform.OS === <span class="string">'android'</span> &amp;&amp; !isTeacher ? &#123;<span class="attr">marginTop</span>: tag.get(<span class="string">'hideStatusBar'</span>) ? statusBarHeight : <span class="number">0</span>&#125; : &#123;<span class="attr">marginTop</span>: <span class="number">0</span>&#125;]&#125;&gt;</div><div class="line">  &#123;isTeacher ? <span class="literal">null</span> : <span class="xml"><span class="tag">&lt;<span class="name">View</span> <span class="attr">style</span>=<span class="string">&#123;styles.headNav&#125;/</span>&gt;</span>&#125; // 这个<span class="tag">&lt;<span class="name">View</span>&gt;</span>仅用于占位</span></div><div class="line">  <span class="tag">&lt;<span class="name">ScrollView</span>&gt;</span></div><div class="line">  ...</div><div class="line">  <span class="tag">&lt;/<span class="name">ScrollView</span>&gt;</span></div><div class="line">  &#123;this._renderFixedNav(tag, this.state.isYoudaoCourseApp)&#125; // 真正的导航栏</div><div class="line"><span class="tag">&lt;/<span class="name">View</span>&gt;</span></div></pre></td></tr></table></figure>
 <h4 id="四、Banner"><a href="#四、Banner" class="headerlink" title="四、Banner"></a>四、Banner</h4><h5 id="问题描述-3"><a href="#问题描述-3" class="headerlink" title="问题描述"></a>问题描述</h5><p>如上图，新版Banner每个图片并不占据整个屏宽，两边露出上下两张图片的一小部分，以做WEB的滑动组件的经验来说，要实现这样的功能，无非也就是通过绝对定位设置滚动栏，滚动时通过改变left或者translate来改变位置，如下图：</p>
 <div align="center"><br><img src="https://raw.githubusercontent.com/WillBean/react-native-summary.github.io/master/images/react-native-summary/prototype.png" width="95%"><br></div>
 
@@ -382,9 +382,9 @@
 
   
     <div class="waves-block waves-effect next">
-      <a href="/2017/05/09/live-photo-for-three/" id="post-next" class="post-nav-link">
+      <a href="/2017/05/10/three-js-webvr-practice/" id="post-next" class="post-nav-link">
         <div class="tips">Next <i class="icon icon-angle-right icon-lg icon-pl"></i></div>
-        <h4 class="title">Three.js实现仿IOS live图效果</h4>
+        <h4 class="title">WebVR初体验</h4>
       </a>
     </div>
   

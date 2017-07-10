@@ -1,0 +1,511 @@
+<!DOCTYPE html>
+<html>
+<head>
+    
+
+    
+
+    
+
+
+
+    <meta charset="utf-8">
+    
+    
+    
+    <title>WebVR初体验 | WillBean&#39;s Blog | 我可能是个假程序猿吧</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+    <meta name="theme-color" content="#cccccc">
+    
+    
+    <meta name="keywords" content="Three.js,Javascript,HTML,Canvas,WebVR">
+    <meta name="description" content="结合上一篇文章Three.js实现仿IOS live图效果，我们来体验一波WebVR~ 本文基于webvr-polyfill，苦于没钱购买专业版的VR设备，就只能做个可以用普通VR眼镜看的程序了。所用到的原理倒也简单，webvr-polyfill会把屏幕分为左右两视图，并加入基于陀螺仪的控制器，当佩戴VR眼镜时即可看到3D效果。 加入背景上一篇中实现了Photo.js组件，现在给场景加入一些星星背">
+<meta name="keywords" content="Three.js,Javascript,HTML,Canvas,WebVR">
+<meta property="og:type" content="article">
+<meta property="og:title" content="WebVR初体验">
+<meta property="og:url" content="https://willbean.github.io/2017/05/10/three-js-webvr-practice/index.html">
+<meta property="og:site_name" content="WillBean&#39;s Blog">
+<meta property="og:description" content="结合上一篇文章Three.js实现仿IOS live图效果，我们来体验一波WebVR~ 本文基于webvr-polyfill，苦于没钱购买专业版的VR设备，就只能做个可以用普通VR眼镜看的程序了。所用到的原理倒也简单，webvr-polyfill会把屏幕分为左右两视图，并加入基于陀螺仪的控制器，当佩戴VR眼镜时即可看到3D效果。 加入背景上一篇中实现了Photo.js组件，现在给场景加入一些星星背">
+<meta property="og:image" content="https://raw.githubusercontent.com/WillBean/react-native-summary.github.io/master/images/three-js-webvr-practice/three.png">
+<meta property="og:updated_time" content="2017-07-10T13:05:24.588Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="WebVR初体验">
+<meta name="twitter:description" content="结合上一篇文章Three.js实现仿IOS live图效果，我们来体验一波WebVR~ 本文基于webvr-polyfill，苦于没钱购买专业版的VR设备，就只能做个可以用普通VR眼镜看的程序了。所用到的原理倒也简单，webvr-polyfill会把屏幕分为左右两视图，并加入基于陀螺仪的控制器，当佩戴VR眼镜时即可看到3D效果。 加入背景上一篇中实现了Photo.js组件，现在给场景加入一些星星背">
+<meta name="twitter:image" content="https://raw.githubusercontent.com/WillBean/react-native-summary.github.io/master/images/three-js-webvr-practice/three.png">
+    
+        <link rel="alternate" type="application/atom+xml" title="WillBean&#39;s Blog" href="/atom.xml">
+    
+    <link rel="shortcut icon" href="/favicon.ico">
+    <link rel="stylesheet" href="//unpkg.com/hexo-theme-material-indigo@latest/css/style.css">
+    <script>window.lazyScripts=[]</script>
+</head>
+
+<body>
+    <div id="loading" class="active"></div>
+
+    <aside id="menu" class="hide" >
+  <div class="inner flex-row-vertical">
+    <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menu-off">
+        <i class="icon icon-lg icon-close"></i>
+    </a>
+    <div class="brand-wrap" style="background-image:url(/img/brand.jpg)">
+      <div class="brand">
+        <a href="/" class="avatar waves-effect waves-circle waves-light">
+          <img src="/img/avatar.jpg">
+        </a>
+        <hgroup class="introduce">
+          <h5 class="nickname">WillBean</h5>
+          <a href="mailto:182769979@qq.com" title="182769979@qq.com" class="mail">182769979@qq.com</a>
+        </hgroup>
+      </div>
+    </div>
+    <div class="scroll-wrap flex-col">
+      <ul class="nav">
+        
+            <li class="waves-block waves-effect">
+              <a href="/"  >
+                <i class="icon icon-lg icon-home"></i>
+                主页
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/archives"  >
+                <i class="icon icon-lg icon-archives"></i>
+                Archives
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/tags"  >
+                <i class="icon icon-lg icon-tags"></i>
+                Tags
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/categories"  >
+                <i class="icon icon-lg icon-th-list"></i>
+                Categories
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="https://github.com/WillBean" target="_blank" >
+                <i class="icon icon-lg icon-github"></i>
+                Github
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="https://github.com/WillBean/hexo-blog-scourse" target="_blank" >
+                <i class="icon icon-lg icon-link"></i>
+                Repository
+              </a>
+            </li>
+        
+      </ul>
+    </div>
+  </div>
+</aside>
+
+    <main id="main">
+        <header class="top-header" id="header">
+    <div class="flex-row">
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light on" id="menu-toggle">
+          <i class="icon icon-lg icon-navicon"></i>
+        </a>
+        <div class="flex-col header-title ellipsis">WebVR初体验</div>
+        
+        <div class="search-wrap" id="search-wrap">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="back">
+                <i class="icon icon-lg icon-chevron-left"></i>
+            </a>
+            <input type="text" id="key" class="search-input" autocomplete="off" placeholder="输入感兴趣的关键字">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="search">
+                <i class="icon icon-lg icon-search"></i>
+            </a>
+        </div>
+        
+        
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menuShare">
+            <i class="icon icon-lg icon-share-alt"></i>
+        </a>
+        
+    </div>
+</header>
+<header class="content-header post-header">
+
+    <div class="container fade-scale">
+        <h1 class="title">WebVR初体验</h1>
+        <h5 class="subtitle">
+            
+                <time datetime="2017-05-10T02:50:44.000Z" itemprop="datePublished" class="page-time">
+  2017-05-10
+</time>
+
+
+            
+        </h5>
+    </div>
+
+    
+
+
+</header>
+
+
+<div class="container body-wrap">
+    
+    <aside class="post-widget">
+        <nav class="post-toc-wrap" id="post-toc">
+            <h4>TOC</h4>
+            <ol class="post-toc"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#加入背景"><span class="post-toc-number">1.</span> <span class="post-toc-text">加入背景</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#随机分布Photo对象"><span class="post-toc-number">2.</span> <span class="post-toc-text">随机分布Photo对象</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#控制Photo对象的显示与隐藏"><span class="post-toc-number">3.</span> <span class="post-toc-text">控制Photo对象的显示与隐藏</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#加入WebVR"><span class="post-toc-number">4.</span> <span class="post-toc-text">加入WebVR</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#效果展示"><span class="post-toc-number">5.</span> <span class="post-toc-text">效果展示</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#性能优化方案"><span class="post-toc-number">6.</span> <span class="post-toc-text">性能优化方案</span></a></li></ol>
+        </nav>
+    </aside>
+    
+<article id="post-three-js-webvr-practice"
+  class="post-article article-type-post fade" itemprop="blogPost">
+
+    <div class="post-card">
+        <h1 class="post-card-title">WebVR初体验</h1>
+        <div class="post-meta">
+            <time class="post-time" title="2017-05-10 10:50:44" datetime="2017-05-10T02:50:44.000Z"  itemprop="datePublished">2017-05-10</time>
+
+            
+
+
+            
+
+        </div>
+        <div class="post-content" id="post-content" itemprop="postContent">
+            <p>结合上一篇文章<a href="https://willbean.github.io/2017/05/09/live-photo-for-three/">Three.js实现仿IOS live图效果</a>，我们来体验一波WebVR~</p>
+<p>本文基于<a href="https://github.com/googlevr/webvr-polyfill" target="_blank" rel="external">webvr-polyfill</a>，苦于没钱购买专业版的VR设备，就只能做个可以用普通VR眼镜看的程序了。所用到的原理倒也简单，<a href="https://github.com/googlevr/webvr-polyfill" target="_blank" rel="external">webvr-polyfill</a>会把屏幕分为左右两视图，并加入基于陀螺仪的控制器，当佩戴VR眼镜时即可看到3D效果。</p>
+<h3 id="加入背景"><a href="#加入背景" class="headerlink" title="加入背景"></a>加入背景</h3><p>上一篇中实现了<a href="https://github.com/WillBean/photo-for-three.js/blob/master/js/Photo.js" target="_blank" rel="external">Photo.js</a>组件，现在给场景加入一些星星背景，以免过于单调。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div><div class="line">73</div></pre></td><td class="code"><pre><div class="line"><span class="comment">/*背景星星*/</span></div><div class="line"><span class="keyword">var</span> particles = <span class="number">20000</span>;  <span class="comment">//星星数量</span></div><div class="line"><span class="comment">/*buffer做星星*/</span></div><div class="line"><span class="keyword">var</span> bufferGeometry = <span class="keyword">new</span> THREE.BufferGeometry();</div><div class="line"></div><div class="line"><span class="keyword">var</span> positions = <span class="keyword">new</span> <span class="built_in">Float32Array</span>( particles * <span class="number">3</span> );</div><div class="line"><span class="keyword">var</span> colors = <span class="keyword">new</span> <span class="built_in">Float32Array</span>( particles * <span class="number">3</span> );</div><div class="line"></div><div class="line"><span class="keyword">var</span> color = <span class="keyword">new</span> THREE.Color();</div><div class="line"></div><div class="line"><span class="keyword">var</span> gap = <span class="number">1000</span>; <span class="comment">// 定义星星的最近出现位置</span></div><div class="line"></div><div class="line"><span class="keyword">for</span> ( <span class="keyword">var</span> i = <span class="number">0</span>; i &lt; positions.length; i += <span class="number">3</span> ) &#123;</div><div class="line"></div><div class="line"><span class="comment">// positions</span></div><div class="line"></div><div class="line">  <span class="comment">/*-2gap &lt; x &lt; 2gap */</span></div><div class="line">  <span class="keyword">var</span> x = ( <span class="built_in">Math</span>.random() * gap *<span class="number">2</span> )* (<span class="built_in">Math</span>.random()&lt;<span class="number">.5</span>? <span class="number">-1</span> : <span class="number">1</span>);</div><div class="line">  <span class="keyword">var</span> y = ( <span class="built_in">Math</span>.random() * gap *<span class="number">2</span> )* (<span class="built_in">Math</span>.random()&lt;<span class="number">.5</span>? <span class="number">-1</span> : <span class="number">1</span>);</div><div class="line">  <span class="keyword">var</span> z = ( <span class="built_in">Math</span>.random() * gap *<span class="number">2</span> )* (<span class="built_in">Math</span>.random()&lt;<span class="number">.5</span>? <span class="number">-1</span> : <span class="number">1</span>);</div><div class="line"></div><div class="line">  <span class="comment">/*找出x,y,z中绝对值最大的一个数*/</span></div><div class="line">  <span class="keyword">var</span> biggest = <span class="built_in">Math</span>.abs(x) &gt; <span class="built_in">Math</span>.abs(y) ? <span class="built_in">Math</span>.abs(x) &gt; <span class="built_in">Math</span>.abs(z) ?　<span class="string">'x'</span> : <span class="string">'z'</span> :</div><div class="line">    <span class="built_in">Math</span>.abs(y) &gt; <span class="built_in">Math</span>.abs(z) ? <span class="string">'y'</span> : <span class="string">'z'</span>;</div><div class="line"></div><div class="line">  <span class="keyword">var</span> pos = &#123; x, y, z&#125;;</div><div class="line"></div><div class="line">  <span class="comment">/*如果最大值比n要小（因为要在一个距离之外才出现星星）则赋值为n（-n）*/</span></div><div class="line">  <span class="keyword">if</span>(<span class="built_in">Math</span>.abs(pos[biggest]) &lt; gap) pos[biggest] = pos[biggest] &lt; <span class="number">0</span> ? -gap : gap;</div><div class="line"></div><div class="line">  x = pos[<span class="string">'x'</span>];</div><div class="line">  y = pos[<span class="string">'y'</span>];</div><div class="line">  z = pos[<span class="string">'z'</span>];</div><div class="line"></div><div class="line">  positions[ i ]     = x;</div><div class="line">  positions[ i + <span class="number">1</span> ] = y;</div><div class="line">  positions[ i + <span class="number">2</span> ] = z;</div><div class="line"></div><div class="line"><span class="comment">// colors</span></div><div class="line"></div><div class="line">  <span class="comment">/*70%星星有颜色*/</span></div><div class="line">  <span class="keyword">var</span> hasColor = <span class="built_in">Math</span>.random() &gt; <span class="number">0.3</span>;</div><div class="line">  <span class="keyword">var</span> vx, vy, vz;</div><div class="line"></div><div class="line">  <span class="keyword">if</span>(hasColor)&#123;</div><div class="line">    vx = (<span class="built_in">Math</span>.random()+<span class="number">1</span>) / <span class="number">2</span> ;</div><div class="line">    vy = (<span class="built_in">Math</span>.random()+<span class="number">1</span>) / <span class="number">2</span> ;</div><div class="line">    vz = (<span class="built_in">Math</span>.random()+<span class="number">1</span>) / <span class="number">2</span> ;</div><div class="line">  &#125;<span class="keyword">else</span>&#123;</div><div class="line">    vx = <span class="number">1</span> ;</div><div class="line">    vy = <span class="number">1</span> ;</div><div class="line">    vz = <span class="number">1</span> ;</div><div class="line">  &#125;</div><div class="line"></div><div class="line">  <span class="comment">/*var vx = ( Math.abs(x) / n*2 ) ;</span></div><div class="line">   var vy = ( Math.abs(y) / n*2 ) ;</div><div class="line">   var vz = ( Math.abs(z) / n*2 ) ;*/</div><div class="line"></div><div class="line">  color.setRGB( vx, vy, vz );</div><div class="line"></div><div class="line">  colors[ i ]     = color.r;</div><div class="line">  colors[ i + <span class="number">1</span> ] = color.g;</div><div class="line">  colors[ i + <span class="number">2</span> ] = color.b;</div><div class="line">&#125;</div><div class="line"></div><div class="line">bufferGeometry.addAttribute( <span class="string">'position'</span>, <span class="keyword">new</span> THREE.BufferAttribute( positions, <span class="number">3</span> ) );</div><div class="line">bufferGeometry.addAttribute( <span class="string">'color'</span>, <span class="keyword">new</span> THREE.BufferAttribute( colors, <span class="number">3</span> ) );</div><div class="line">bufferGeometry.computeBoundingSphere();</div><div class="line"></div><div class="line"><span class="comment">/*星星的material*/</span></div><div class="line"><span class="keyword">var</span> material = <span class="keyword">new</span> THREE.PointsMaterial( &#123; <span class="attr">size</span>: <span class="number">6</span>, <span class="attr">vertexColors</span>: THREE.VertexColors &#125; );</div><div class="line"><span class="keyword">var</span> particleSystem = <span class="keyword">new</span> THREE.Points( bufferGeometry, material );</div><div class="line">scene.add( particleSystem );</div></pre></td></tr></table></figure>
+<p>以上代码引自<a href="https://github.com/SoAanyip/SolarSystem.git" target="_blank" rel="external">SolarSystem</a>，实例化一个BufferGeometry对象，随机生成星星的位置与颜色并绑定到该对象上，而后以BufferGeometry对象为参数实例化Points对象并加入到场景中。</p>
+<h3 id="随机分布Photo对象"><a href="#随机分布Photo对象" class="headerlink" title="随机分布Photo对象"></a>随机分布Photo对象</h3><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">setRandomPosition</span>(<span class="params">mesh, distance</span>) </span>&#123;</div><div class="line">  <span class="keyword">var</span> ang1 = <span class="built_in">Math</span>.PI * <span class="built_in">Math</span>.random() - <span class="built_in">Math</span>.PI / <span class="number">2</span>,</div><div class="line">    ang2 = <span class="built_in">Math</span>.PI * <span class="built_in">Math</span>.random() * <span class="number">2</span>,</div><div class="line">    dist = <span class="built_in">Math</span>.cos(ang1) * distance;</div><div class="line"></div><div class="line">  mesh.position.y = <span class="built_in">Math</span>.sin(ang1) * distance;</div><div class="line">  mesh.position.x = <span class="built_in">Math</span>.cos(ang2) * dist;</div><div class="line">  mesh.position.z = <span class="built_in">Math</span>.sin(ang2) * dist;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>初始化Photo对象时调用以上函数，将其随机分布到以半径为distance的球体表面。</p>
+<h3 id="控制Photo对象的显示与隐藏"><a href="#控制Photo对象的显示与隐藏" class="headerlink" title="控制Photo对象的显示与隐藏"></a>控制Photo对象的显示与隐藏</h3><p>现在要使Photo对象位于显示器中部时显示并播放视频，其它时候隐藏。</p>
+<p>在循环体中加入以下代码</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> smallCamera = camera.clone(); <span class="comment">// 克隆camera</span></div><div class="line">smallCamera.fov = <span class="number">20</span>; <span class="comment">// 缩小视角</span></div><div class="line">smallCamera.updateProjectionMatrix();</div><div class="line"><span class="keyword">for</span>(<span class="keyword">var</span> i =<span class="number">0</span>;i&lt;meshes.length;i++)&#123;</div><div class="line">  <span class="keyword">var</span> cont = meshes[i];</div><div class="line">  showUp = cont.position.clone().project(smallCamera)</div><div class="line">  <span class="keyword">var</span> shouldShow = (showUp.x &lt; <span class="number">1</span> &amp;&amp; showUp.x &gt; <span class="number">-1</span> &amp;&amp; showUp.y &lt; <span class="number">1</span> &amp;&amp; showUp.y &gt; <span class="number">-1</span> &amp;&amp; showUp.z &lt; <span class="number">1</span> &amp;&amp; showUp.z &gt; <span class="number">-1</span>) <span class="comment">// 判断是否应该显示</span></div><div class="line"></div><div class="line">  <span class="keyword">if</span>(shouldShow )&#123;</div><div class="line">    cont.show()</div><div class="line">  &#125;</div><div class="line">  <span class="keyword">if</span>(!cont.counter)&#123;</div><div class="line">    cont.play()</div><div class="line">  &#125;</div><div class="line">  <span class="keyword">if</span>( !shouldShow )&#123;</div><div class="line">    cont.hide()</div><div class="line">  &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>以上代码用于判断对象是否出现在camera可视范围内，但有个bug，就是存在于camera正后方的元素，shouldShow也会为true。</p>
+<h3 id="加入WebVR"><a href="#加入WebVR" class="headerlink" title="加入WebVR"></a>加入WebVR</h3><p>重头戏来了，现在我们要加入WebVR使之成为3D场景。</p>
+<p>引入js框架</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">script</span> <span class="attr">src</span>=<span class="string">"js/VRControls.js"</span>&gt;</span><span class="undefined"></span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">script</span> <span class="attr">src</span>=<span class="string">"js/VREffect.js"</span>&gt;</span><span class="undefined"></span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">script</span> <span class="attr">src</span>=<span class="string">"js/webvr-polyfill.js"</span>&gt;</span><span class="undefined"></span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></div></pre></td></tr></table></figure>
+<p>实例化组件</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line">controls = <span class="keyword">new</span> THREE.VRControls(camera);</div><div class="line">effect = <span class="keyword">new</span> THREE.VREffect(renderer);</div><div class="line">effect.setSize(<span class="built_in">window</span>.innerWidth, <span class="built_in">window</span>.innerHeight);</div><div class="line"></div><div class="line">navigator.getVRDisplays().then(<span class="function"><span class="keyword">function</span>(<span class="params">displays</span>) </span>&#123;</div><div class="line">  <span class="keyword">if</span> (displays.length &gt; <span class="number">0</span>) &#123;</div><div class="line">    vrDisplay = displays[<span class="number">0</span>];</div><div class="line">    <span class="comment">// Kick off the render loop.</span></div><div class="line">    vrDisplay.requestAnimationFrame(loop);</div><div class="line">  &#125;</div><div class="line">&#125;);</div></pre></td></tr></table></figure>
+<p>调用</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="built_in">document</span>.querySelector(<span class="string">'button#vr'</span>).addEventListener(<span class="string">'click'</span>, <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</div><div class="line">  vrDisplay.requestPresent([&#123;<span class="attr">source</span>: renderer.domElement&#125;]);</div><div class="line">&#125;);</div></pre></td></tr></table></figure>
+<h3 id="效果展示"><a href="#效果展示" class="headerlink" title="效果展示"></a>效果展示</h3><div align="center"><br><img src="https://raw.githubusercontent.com/WillBean/react-native-summary.github.io/master/images/three-js-webvr-practice/three.png" width="95%"><br></div>
+
+<h3 id="性能优化方案"><a href="#性能优化方案" class="headerlink" title="性能优化方案"></a>性能优化方案</h3><p>开启VR模式后，卡顿现象异常严重，甚至无法正常使用，主要可能是因为Photo渐入渐出动画的计算量过于巨大，这就有几点优化的方案：</p>
+<ol>
+<li>减少动画帧数，让动画尽快完成。</li>
+<li>离散分布对象，减少对象重叠的可能性，防止多个对象同时渐入渐出。</li>
+<li>以上办法如果都不能缓解卡顿现象的话，就只能去掉动画了。</li>
+</ol>
+<p>源码放在<a href="https://github.com/WillBean/photo-for-three.js" target="_blank" rel="external">github</a>，有兴趣的朋友可以去看看。</p>
+
+        </div>
+
+        <blockquote class="post-copyright">
+    <div class="content">
+        
+<span class="post-time">
+    最后更新时间：<time datetime="2017-07-10T13:05:24.588Z" itemprop="dateUpdated">2017-07-10 21:05:24</time>
+</span><br>
+
+
+        
+        欢迎分享转发，转载请指明出处~<br>如有错误，欢迎指出~<br><a href="/2017/05/10/three-js-webvr-practice/" target="_blank" rel="external">https://willbean.github.io/2017/05/10/three-js-webvr-practice/</a>
+        
+    </div>
+    <footer>
+        <a href="https://willbean.github.io">
+            <img src="/img/avatar.jpg" alt="WillBean">
+            WillBean
+        </a>
+    </footer>
+</blockquote>
+
+        
+<div class="page-reward">
+    <a id="rewardBtn" href="javascript:;" class="page-reward-btn waves-effect waves-circle waves-light">赏</a>
+</div>
+
+
+
+        <div class="post-footer">
+            
+	<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Canvas/">Canvas</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/HTML/">HTML</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Javascript/">Javascript</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Three-js/">Three.js</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/WebVR/">WebVR</a></li></ul>
+
+
+            
+<div class="page-share-wrap">
+    
+
+<div class="page-share" id="pageShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=https://willbean.github.io/2017/05/10/three-js-webvr-practice/&title=《WebVR初体验》 — WillBean's Blog&pic=https://willbean.github.io/img/avatar.jpg" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://willbean.github.io/2017/05/10/three-js-webvr-practice/&title=《WebVR初体验》 — WillBean's Blog&source=这是一个准大四学生的前端博客。" data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https://willbean.github.io/2017/05/10/three-js-webvr-practice/" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《WebVR初体验》 — WillBean's Blog&url=https://willbean.github.io/2017/05/10/three-js-webvr-practice/&via=https://willbean.github.io" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=https://willbean.github.io/2017/05/10/three-js-webvr-practice/" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+
+    <a href="javascript:;" id="shareFab" class="page-share-fab waves-effect waves-circle">
+        <i class="icon icon-share-alt icon-lg"></i>
+    </a>
+</div>
+
+
+
+        </div>
+    </div>
+
+    
+<nav class="post-nav flex-row flex-justify-between">
+  
+    <div class="waves-block waves-effect prev">
+      <a href="/2017/06/24/react-native-summary/" id="post-prev" class="post-nav-link">
+        <div class="tips"><i class="icon icon-angle-left icon-lg icon-pr"></i> Prev</div>
+        <h4 class="title">React Native实战总结</h4>
+      </a>
+    </div>
+  
+
+  
+    <div class="waves-block waves-effect next">
+      <a href="/2017/05/09/live-photo-for-three/" id="post-next" class="post-nav-link">
+        <div class="tips">Next <i class="icon icon-angle-right icon-lg icon-pl"></i></div>
+        <h4 class="title">Three.js实现仿IOS live图效果</h4>
+      </a>
+    </div>
+  
+</nav>
+
+
+
+    
+
+
+
+
+
+
+
+
+
+
+
+<section class="comments" id="comments">
+    <div id="gitment_thread"></div>
+    <link rel="stylesheet" href="//unpkg.com/gitment/style/default.css">
+    <script src="//unpkg.com/gitment/dist/gitment.browser.js"></script>
+    <script>
+        var gitment = new Gitment({
+            owner: 'WillBean',
+            repo: 'willbean.github.io',
+            oauth: {
+                client_id: '5d9b308c6ae328be7417',
+                client_secret: '8381cbf6bd0eebd34af19c4aa5dd728dbce84877',
+            },
+        })
+        gitment.render('comments')
+    </script>
+</section>
+
+
+
+
+</article>
+
+<div id="reward" class="page-modal reward-lay">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <h3 class="reward-title">
+        <i class="icon icon-quote-left"></i>
+        谢谢大爷~
+        <i class="icon icon-quote-right"></i>
+    </h3>
+    <div class="reward-content">
+        
+        <div class="reward-code">
+            <img id="rewardCode" src="/img/wechat.jpg" alt="打赏二维码">
+        </div>
+        
+        <label class="reward-toggle">
+            <input id="rewardToggle" type="checkbox" class="reward-toggle-check"
+                data-wechat="/img/wechat.jpg" data-alipay="/img/alipay.jpg">
+            <div class="reward-toggle-ctrol">
+                <span class="reward-toggle-item wechat">微信</span>
+                <span class="reward-toggle-label"></span>
+                <span class="reward-toggle-item alipay">支付宝</span>
+            </div>
+        </label>
+        
+    </div>
+</div>
+
+
+
+</div>
+
+        <footer class="footer">
+    <div class="top">
+        
+
+        <p>
+            
+                <span><a href="/atom.xml" target="_blank" class="rss" title="rss"><i class="icon icon-lg icon-rss"></i></a></span>
+            
+            <span>博客内容遵循 <a rel="license" href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh">知识共享 署名 - 非商业性 - 相同方式共享 4.0 国际协议</a></span>
+        </p>
+    </div>
+    <div class="bottom">
+        <p><span>WillBean &copy; 2016 - 2017</span>
+            <span>
+                
+                Power by <a href="http://hexo.io/" target="_blank">Hexo</a> Theme <a href="https://github.com/yscoder/hexo-theme-indigo" target="_blank">indigo</a>
+            </span>
+        </p>
+    </div>
+</footer>
+
+    </main>
+    <div class="mask" id="mask"></div>
+<a href="javascript:;" id="gotop" class="waves-effect waves-circle waves-light"><span class="icon icon-lg icon-chevron-up"></span></a>
+
+
+
+<div class="global-share" id="globalShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=https://willbean.github.io/2017/05/10/three-js-webvr-practice/&title=《WebVR初体验》 — WillBean's Blog&pic=https://willbean.github.io/img/avatar.jpg" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://willbean.github.io/2017/05/10/three-js-webvr-practice/&title=《WebVR初体验》 — WillBean's Blog&source=这是一个准大四学生的前端博客。" data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https://willbean.github.io/2017/05/10/three-js-webvr-practice/" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《WebVR初体验》 — WillBean's Blog&url=https://willbean.github.io/2017/05/10/three-js-webvr-practice/&via=https://willbean.github.io" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=https://willbean.github.io/2017/05/10/three-js-webvr-practice/" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+<div class="page-modal wx-share" id="wxShare">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAMYAAADGCAAAAACs8KCBAAACOUlEQVR42u3aS27DMAwFwNz/0um2QGD1kXQKSB6vikapNVqw4uf1ip/38vm95nP956frNZ8rb3swMDC2ZeRbvPo02WjyrI9j/XYMDIwnMK4iWHWLkzCdvPfy9xgYGBjLNetwWb04YmBgYHw74Capae9QMDAwMOaltOoFcb3mi7k4BgbGhoy86v7/P3+lv4GBgbEVo1e4z8tk1RJb78HAwDibkQe49YWsmqDmf62wHwwMjAcwJgMWeVKaHEES3KMLIgYGxnGM5AvVVHNSPquW/DAwMM5m5IloHhbz9LXXAMDAwHgOIy/BT8JrEnzz876sGmJgYBzK6H0huT5Wt1tNa19zNwYGxlaM3uBFb1SiN1I2+TeAgYGxO2MyZpGE4zxc5onxZRKLgYFxKKNcjYsjd3UsIx87i3aIgYFxECMv2U8ak3lBrTkohoGBcTSj15KcBOv5COzluzAwMI5m9C5wvQGyXmI8qgtiYGBszsiHR/Pwlzc+56EZAwPjCYzeFnNGtVR326UQAwPjOEa1QJYU3arUfIDjMohjYGA8jDEp3+fNyLy/Gu0BAwPjAYx5Vljdbq+49scoGAYGxnGMd/GpBuhe4zNPmzEwMJ7AqDY1q5fIXhM0T1/LGAwMjG0Z1QbkZH3vyEYnjYGBcRAjD3yThDYfxcgTaQwMDIycUS3h3dAM+EbAxcDAOIJRfUE1Kc2boKOAi4GBsSGj2gyYJ7rV1uZt5TYMDIwNGZPUsRpq8yGw+dsxMDCOYPwA0rQi4EoF3pIAAAAASUVORK5CYII=" alt="微信分享二维码">
+</div>
+
+
+
+
+    <script src="//cdn.bootcss.com/node-waves/0.7.4/waves.min.js"></script>
+<script>
+var BLOG = { ROOT: '/', SHARE: true, REWARD: true };
+
+
+</script>
+
+<script src="//unpkg.com/hexo-theme-material-indigo@latest/js/main.min.js"></script>
+
+
+<div class="search-panel" id="search-panel">
+    <ul class="search-result" id="search-result"></ul>
+</div>
+<template id="search-tpl">
+<li class="item">
+    <a href="{path}" class="waves-block waves-effect">
+        <div class="title ellipsis" title="{title}">{title}</div>
+        <div class="flex-row flex-middle">
+            <div class="tags ellipsis">
+                {tags}
+            </div>
+            <time class="flex-col time">{date}</time>
+        </div>
+    </a>
+</li>
+</template>
+
+<script src="//unpkg.com/hexo-theme-material-indigo@latest/js/search.min.js" async></script>
+
+
+
+
+
+
+
+
+<script>
+(function() {
+    var OriginTitile = document.title, titleTime;
+    document.addEventListener('visibilitychange', function() {
+        if (document.hidden) {
+            document.title = '死鬼去哪里了！';
+            clearTimeout(titleTime);
+        } else {
+            document.title = '(つェ⊂)咦!又好了!';
+            titleTime = setTimeout(function() {
+                document.title = OriginTitile;
+            },2000);
+        }
+    });
+})();
+</script>
+
+
+
+</body>
+</html>
